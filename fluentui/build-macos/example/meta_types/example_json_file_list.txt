@@ -1,0 +1,6 @@
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/example/example_autogen/include/../J2GTEGTQQV/moc_IPC.cpp.json
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/example/example_autogen/include/../KECQXMYYOW/moc_ChatController.cpp.json
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/example/example_autogen/include/../LF6EBIP2YV/moc_En.cpp.json
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/example/example_autogen/include/../LF6EBIP2YV/moc_Lang.cpp.json
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/example/example_autogen/include/../LF6EBIP2YV/moc_Zh.cpp.json
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/example/example_autogen/include/../UVLADIE3JM/moc_AppInfo.cpp.json

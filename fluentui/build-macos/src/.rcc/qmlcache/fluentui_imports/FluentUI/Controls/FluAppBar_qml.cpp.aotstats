@@ -1,0 +1,431 @@
+{
+    "formatRevision": 1,
+    "modules": [
+        {
+            "moduleFiles": [
+                {
+                    "entries": [
+                        {
+                            "codegenResult": 0,
+                            "column": 31,
+                            "durationMicroseconds": 296,
+                            "functionName": "textColor",
+                            "line": 15,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 41,
+                            "durationMicroseconds": 183,
+                            "functionName": "minimizeNormalColor",
+                            "line": 16,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: call to method rgba, returning QVariant -> QColor stored as QVariant"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 40,
+                            "durationMicroseconds": 331,
+                            "functionName": "minimizeHoverColor",
+                            "line": 17,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: conversion to QVariant -> QColor stored as QVariant"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 41,
+                            "durationMicroseconds": 131,
+                            "functionName": "maximizeNormalColor",
+                            "line": 18,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: call to method rgba, returning QVariant -> QColor stored as QVariant"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 40,
+                            "durationMicroseconds": 300,
+                            "functionName": "maximizeHoverColor",
+                            "line": 19,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: conversion to QVariant -> QColor stored as QVariant"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 38,
+                            "durationMicroseconds": 454,
+                            "functionName": "closeNormalColor",
+                            "line": 20,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: call to method rgba, returning QVariant -> QColor stored as QVariant"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 38,
+                            "durationMicroseconds": 574,
+                            "functionName": "closeHoverColor",
+                            "line": 21,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: call to method rgba, returning QVariant -> QColor stored as QVariant"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 37,
+                            "durationMicroseconds": 63,
+                            "functionName": "borerlessColor",
+                            "line": 23,
+                            "message": "Cannot load property primaryColor from FluTheme."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 12,
+                            "durationMicroseconds": 155,
+                            "functionName": "color",
+                            "line": 33,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: call to method rgba, returning QVariant -> QColor stored as QVariant"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 14,
+                            "durationMicroseconds": 67,
+                            "functionName": "visible",
+                            "line": 34,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 13,
+                            "durationMicroseconds": 87,
+                            "functionName": "height",
+                            "line": 35,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 14,
+                            "durationMicroseconds": 87,
+                            "functionName": "opacity",
+                            "line": 36,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 5,
+                            "durationMicroseconds": 180,
+                            "functionName": "toggleMaximized",
+                            "line": 145,
+                            "message": "Cannot load property visibility from (component in /Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/src/imports/FluentUI/Controls/FluAppBar.qml)::win with type QVariant."
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 27,
+                            "durationMicroseconds": 93,
+                            "functionName": "win",
+                            "line": 27,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 34,
+                            "durationMicroseconds": 52,
+                            "functionName": "isRestore",
+                            "line": 28,
+                            "message": "Cannot load property visibility from (component in /Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/src/imports/FluentUI/Controls/FluAppBar.qml)::win with type QVariant."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 34,
+                            "durationMicroseconds": 84,
+                            "functionName": "resizable",
+                            "line": 29,
+                            "message": "Cannot load property minimumHeight from (component in /Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/src/imports/FluentUI/Controls/FluAppBar.qml)::win with type QVariant."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 154,
+                            "functionName": "onTapped",
+                            "line": 40,
+                            "message": "method toggleMaximized cannot be resolved."
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 24,
+                            "durationMicroseconds": 85,
+                            "functionName": "gesturePolicy",
+                            "line": 41,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 26,
+                            "durationMicroseconds": 2344,
+                            "functionName": "grabPermissions",
+                            "line": 46,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 26,
+                            "durationMicroseconds": 634,
+                            "functionName": "onActiveChanged",
+                            "line": 47,
+                            "message": "Cannot generate efficient code for call to untyped JavaScript function"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 15,
+                            "durationMicroseconds": 37,
+                            "functionName": "text",
+                            "line": 51,
+                            "message": "Cannot access value for name title"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 15,
+                            "durationMicroseconds": 84,
+                            "functionName": "color",
+                            "line": 57,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 29,
+                            "durationMicroseconds": 394,
+                            "functionName": "verticalCenter",
+                            "line": 53,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 19,
+                            "durationMicroseconds": 89,
+                            "functionName": "left",
+                            "line": 54,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 17,
+                            "durationMicroseconds": 81,
+                            "functionName": "height",
+                            "line": 62,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 24,
+                            "durationMicroseconds": 198,
+                            "functionName": "right",
+                            "line": 61,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 22,
+                            "durationMicroseconds": 42,
+                            "functionName": "visible",
+                            "line": 68,
+                            "message": "Cannot access value for name showDark"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 31,
+                            "durationMicroseconds": 76,
+                            "functionName": "alignment",
+                            "line": 66,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 22,
+                            "durationMicroseconds": 51,
+                            "functionName": "text",
+                            "line": 71,
+                            "message": "Cannot access value for name darkText"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 23,
+                            "durationMicroseconds": 105,
+                            "functionName": "color",
+                            "line": 72,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 27,
+                            "durationMicroseconds": 97,
+                            "functionName": "selected",
+                            "line": 75,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 27,
+                            "durationMicroseconds": 234,
+                            "functionName": "clickFunc",
+                            "line": 76,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 27,
+                            "durationMicroseconds": 41,
+                            "functionName": "clickFunc",
+                            "line": 76,
+                            "message": "Cannot generate efficient code for LoadClosure"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 26,
+                            "durationMicroseconds": 60,
+                            "functionName": "iconSource",
+                            "line": 103,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 18,
+                            "durationMicroseconds": 33,
+                            "functionName": "text",
+                            "line": 106,
+                            "message": "Cannot access value for name minimizeText"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 24,
+                            "durationMicroseconds": 72,
+                            "functionName": "iconColor",
+                            "line": 108,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 20,
+                            "durationMicroseconds": 64,
+                            "functionName": "color",
+                            "line": 109,
+                            "message": "Cannot access value for name minimizeHoverColor"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 24,
+                            "durationMicroseconds": 101,
+                            "functionName": "onClicked",
+                            "line": 110,
+                            "message": "Cannot generate efficient code for call to untyped JavaScript function"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 31,
+                            "durationMicroseconds": 54,
+                            "functionName": "alignment",
+                            "line": 104,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 26,
+                            "durationMicroseconds": 150,
+                            "functionName": "iconSource",
+                            "line": 117,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 20,
+                            "durationMicroseconds": 175,
+                            "functionName": "color",
+                            "line": 118,
+                            "message": "Cannot access value for name maximizeHoverColor"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 22,
+                            "durationMicroseconds": 59,
+                            "functionName": "visible",
+                            "line": 120,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 24,
+                            "durationMicroseconds": 68,
+                            "functionName": "iconColor",
+                            "line": 122,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 18,
+                            "durationMicroseconds": 63,
+                            "functionName": "text",
+                            "line": 123,
+                            "message": "Cannot access value for name restoreText"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 24,
+                            "durationMicroseconds": 414,
+                            "functionName": "onClicked",
+                            "line": 125,
+                            "message": "method toggleMaximized cannot be resolved."
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 31,
+                            "durationMicroseconds": 78,
+                            "functionName": "alignment",
+                            "line": 119,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 26,
+                            "durationMicroseconds": 60,
+                            "functionName": "iconSource",
+                            "line": 130,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 18,
+                            "durationMicroseconds": 31,
+                            "functionName": "text",
+                            "line": 132,
+                            "message": "Cannot access value for name closeText"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 24,
+                            "durationMicroseconds": 297,
+                            "functionName": "iconColor",
+                            "line": 137,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: conversion to QVariant -> QColor stored as QVariant"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 61,
+                            "functionName": "color",
+                            "line": 138,
+                            "message": "Cannot access value for name closeHoverColor"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 24,
+                            "durationMicroseconds": 97,
+                            "functionName": "onClicked",
+                            "line": 139,
+                            "message": "Cannot generate efficient code for call to untyped JavaScript function"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 31,
+                            "durationMicroseconds": 61,
+                            "functionName": "alignment",
+                            "line": 131,
+                            "message": ""
+                        }
+                    ],
+                    "filePath": "/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/src/imports/FluentUI/Controls/FluAppBar.qml"
+                }
+            ],
+            "moduleId": "FluentUI(fluentui)"
+        }
+    ]
+}

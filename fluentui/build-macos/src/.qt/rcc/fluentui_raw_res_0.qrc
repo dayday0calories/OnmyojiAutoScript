@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/FluentUI/">
+    <file alias="Font/Segoe_Fluent_Icons.ttf">/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/src/imports/FluentUI/Font/Segoe_Fluent_Icons.ttf</file>
+  </qresource>
+</RCC>
+

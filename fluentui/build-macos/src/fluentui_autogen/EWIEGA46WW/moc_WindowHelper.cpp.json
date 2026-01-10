@@ -1,0 +1,70 @@
+{
+    "classes": [
+        {
+            "classInfos": [
+                {
+                    "name": "QML.Element",
+                    "value": "WindowHelper"
+                }
+            ],
+            "className": "WindowHelper",
+            "lineNumber": 14,
+            "methods": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "window",
+                            "type": "QQuickWindow*"
+                        }
+                    ],
+                    "index": 0,
+                    "lineNumber": 25,
+                    "name": "initWindow",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 1,
+                    "lineNumber": 30,
+                    "name": "destoryWindow",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "window",
+                            "type": "QQuickWindow*"
+                        },
+                        {
+                            "name": "path",
+                            "type": "QString"
+                        }
+                    ],
+                    "index": 2,
+                    "lineNumber": 38,
+                    "name": "createRegister",
+                    "returnType": "QVariant"
+                },
+                {
+                    "access": "public",
+                    "index": 3,
+                    "lineNumber": 43,
+                    "name": "firstUpdate",
+                    "returnType": "void"
+                }
+            ],
+            "object": true,
+            "qualifiedClassName": "WindowHelper",
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "WindowHelper.h",
+    "outputRevision": 69
+}

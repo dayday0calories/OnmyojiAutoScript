@@ -1,0 +1,15 @@
+-rootPath
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/example
+-cmake-output
+-output-file
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/example/.qt/qml_imports/example_conf.cmake
+-importPath
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/example/example
+-importPath
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/example
+-importPath
+/Users/rainyu/Qt/6.10.1/macos/qml
+-qrcFiles
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/example/.qt/rcc/qmake_example.qrc
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/example/.qt/rcc/example_raw_qml_0.qrc
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/example/.qt/rcc/example_raw_res_0.qrc

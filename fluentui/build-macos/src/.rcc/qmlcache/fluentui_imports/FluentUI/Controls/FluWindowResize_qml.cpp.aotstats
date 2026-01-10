@@ -1,0 +1,95 @@
+{
+    "formatRevision": 1,
+    "modules": [
+        {
+            "moduleFiles": [
+                {
+                    "entries": [
+                        {
+                            "codegenResult": 0,
+                            "column": 26,
+                            "durationMicroseconds": 445,
+                            "functionName": "window",
+                            "line": 9,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 30,
+                            "durationMicroseconds": 334,
+                            "functionName": "fixedSize",
+                            "line": 10,
+                            "message": "Cannot load property visibility from (component in /Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/src/imports/FluentUI/Controls/FluWindowResize.qml)::window with type QVariant."
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 22,
+                            "durationMicroseconds": 364,
+                            "functionName": "acceptedButtons",
+                            "line": 20,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 9,
+                            "durationMicroseconds": 907,
+                            "functionName": "onPressed",
+                            "line": 27,
+                            "message": "Cannot load property width from (component in /Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/src/imports/FluentUI/Controls/FluWindowResize.qml)::window with type QVariant."
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 9,
+                            "durationMicroseconds": 62,
+                            "functionName": "onPressed",
+                            "line": 27,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 9,
+                            "durationMicroseconds": 519,
+                            "functionName": "onPositionChanged",
+                            "line": 83,
+                            "message": "Cannot load property width from (component in /Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/src/imports/FluentUI/Controls/FluWindowResize.qml)::window with type QVariant."
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 9,
+                            "durationMicroseconds": 41,
+                            "functionName": "onPositionChanged",
+                            "line": 83,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 15,
+                            "durationMicroseconds": 98,
+                            "functionName": "onExited",
+                            "line": 131,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 5,
+                            "durationMicroseconds": 0,
+                            "functionName": "ptInRect",
+                            "line": 135,
+                            "message": "Functions without type annotations won't be compiled"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 19,
+                            "durationMicroseconds": 63,
+                            "functionName": "fill",
+                            "line": 19,
+                            "message": ""
+                        }
+                    ],
+                    "filePath": "/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/src/imports/FluentUI/Controls/FluWindowResize.qml"
+                }
+            ],
+            "moduleId": "FluentUI(fluentui)"
+        }
+    ]
+}

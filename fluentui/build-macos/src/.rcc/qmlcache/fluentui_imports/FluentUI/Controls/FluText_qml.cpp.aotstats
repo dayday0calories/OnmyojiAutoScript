@@ -1,0 +1,47 @@
+{
+    "formatRevision": 1,
+    "modules": [
+        {
+            "moduleFiles": [
+                {
+                    "entries": [
+                        {
+                            "codegenResult": 2,
+                            "column": 31,
+                            "durationMicroseconds": 1128,
+                            "functionName": "textColor",
+                            "line": 7,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: FluColors::White with type QString (stored as QVariant) -> FluColors::White with type QString (adjusted to QColor, stored as QVariant)"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 12,
+                            "durationMicroseconds": 182,
+                            "functionName": "color",
+                            "line": 10,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 17,
+                            "durationMicroseconds": 315,
+                            "functionName": "renderType",
+                            "line": 11,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 11,
+                            "durationMicroseconds": 219,
+                            "functionName": "font",
+                            "line": 12,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: FluTextStyle::Body with type QFont (stored as QVariant) -> FluTextStyle::Body with type QFont (adjusted to QFont, stored as QVariant)"
+                        }
+                    ],
+                    "filePath": "/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/src/imports/FluentUI/Controls/FluText.qml"
+                }
+            ],
+            "moduleId": "FluentUI(fluentui)"
+        }
+    ]
+}

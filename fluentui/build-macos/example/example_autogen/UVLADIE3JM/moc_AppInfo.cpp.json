@@ -1,0 +1,88 @@
+{
+    "classes": [
+        {
+            "className": "AppInfo",
+            "lineNumber": 8,
+            "methods": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "locale",
+                            "type": "QString"
+                        }
+                    ],
+                    "index": 3,
+                    "lineNumber": 15,
+                    "name": "changeLang",
+                    "returnType": "void"
+                }
+            ],
+            "object": true,
+            "properties": [
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 0,
+                    "lineNumber": 11,
+                    "member": "_version",
+                    "name": "version",
+                    "notify": "versionChanged",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 1,
+                    "lineNumber": 12,
+                    "member": "_lang",
+                    "name": "lang",
+                    "notify": "langChanged",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "Lang*",
+                    "user": false
+                }
+            ],
+            "qualifiedClassName": "AppInfo",
+            "signals": [
+                {
+                    "access": "public",
+                    "index": 0,
+                    "lineNumber": 11,
+                    "name": "versionChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 1,
+                    "lineNumber": 12,
+                    "name": "langChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 2,
+                    "lineNumber": 16,
+                    "name": "activeWindow",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "AppInfo.h",
+    "outputRevision": 69
+}

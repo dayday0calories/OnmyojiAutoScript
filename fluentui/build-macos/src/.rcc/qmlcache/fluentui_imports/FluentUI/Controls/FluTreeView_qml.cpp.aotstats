@@ -1,0 +1,463 @@
+{
+    "formatRevision": 1,
+    "modules": [
+        {
+            "moduleFiles": [
+                {
+                    "entries": [
+                        {
+                            "codegenResult": 0,
+                            "column": 33,
+                            "durationMicroseconds": 9733,
+                            "functionName": "selectionMode",
+                            "line": 15,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 29,
+                            "durationMicroseconds": 385,
+                            "functionName": "rootModel",
+                            "line": 18,
+                            "message": "Cannot generate efficient code for lookup in QJSValue"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 5,
+                            "durationMicroseconds": 0,
+                            "functionName": "updateData",
+                            "line": 281,
+                            "message": "Functions without type annotations won't be compiled"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 5,
+                            "durationMicroseconds": 29,
+                            "functionName": "signleData",
+                            "line": 286,
+                            "message": "function without return type annotation returns (component in /Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/src/imports/FluentUI/Controls/FluTreeView.qml)::currentElement with type QVariant. This may prevent proper compilation to Cpp."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 5,
+                            "durationMicroseconds": 2682,
+                            "functionName": "multipData",
+                            "line": 290,
+                            "message": "Cannot load property multipSelected from call to method pop, returning QVariant."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 5,
+                            "durationMicroseconds": 0,
+                            "functionName": "createItem",
+                            "line": 306,
+                            "message": "Functions without type annotations won't be compiled"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 5,
+                            "durationMicroseconds": 106,
+                            "functionName": "uniqueRandom",
+                            "line": 310,
+                            "message": "function without return type annotation returns QJSPrimitiveValue. This may prevent proper compilation to Cpp."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "items",
+                            "line": 27,
+                            "message": "Could not find property \"items\"."
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 20,
+                            "durationMicroseconds": 113,
+                            "functionName": "width",
+                            "line": 38,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 37,
+                            "durationMicroseconds": 199,
+                            "functionName": "itemModel",
+                            "line": 39,
+                            "message": "Cannot access value for name model"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 13,
+                            "durationMicroseconds": 1014,
+                            "functionName": "calculateWidth",
+                            "line": 45,
+                            "message": "Cannot load property width_hint from call to method itemAt, returning QQuickItem."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 24,
+                            "durationMicroseconds": 183,
+                            "functionName": "model",
+                            "line": 42,
+                            "message": "Cannot access value for name items"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 27,
+                            "durationMicroseconds": 34,
+                            "functionName": "delegate",
+                            "line": 43,
+                            "message": "Cannot access value for name delegate_items"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 34,
+                            "durationMicroseconds": 122,
+                            "functionName": "level",
+                            "line": 64,
+                            "message": "Cannot access value for name list_root"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 32,
+                            "durationMicroseconds": 206,
+                            "functionName": "text",
+                            "line": 65,
+                            "message": "Cannot access value for name model"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 38,
+                            "durationMicroseconds": 313,
+                            "functionName": "hasChild",
+                            "line": 66,
+                            "message": "Cannot access value for name model"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 33,
+                            "durationMicroseconds": 150,
+                            "functionName": "items",
+                            "line": 67,
+                            "message": "Cannot access value for name model"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 36,
+                            "durationMicroseconds": 145,
+                            "functionName": "expanded",
+                            "line": 68,
+                            "message": "Cannot access value for name model"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 38,
+                            "durationMicroseconds": 142,
+                            "functionName": "width_hint",
+                            "line": 69,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 43,
+                            "durationMicroseconds": 173,
+                            "functionName": "singleSelected",
+                            "line": 70,
+                            "message": "Cannot access value for name currentElement"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 37,
+                            "durationMicroseconds": 125,
+                            "functionName": "itemModel",
+                            "line": 71,
+                            "message": "Cannot access value for name model"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 13,
+                            "durationMicroseconds": 1761,
+                            "functionName": "calculateWidth",
+                            "line": 73,
+                            "message": "Cannot access value for name list_root"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 24,
+                            "durationMicroseconds": 38,
+                            "functionName": "width",
+                            "line": 87,
+                            "message": "Cannot access value for name list_root"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 25,
+                            "durationMicroseconds": 241,
+                            "functionName": "height",
+                            "line": 88,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 17,
+                            "durationMicroseconds": 1573,
+                            "functionName": "onClickItem",
+                            "line": 131,
+                            "message": "Cannot access value for name selectionMode"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 27,
+                            "durationMicroseconds": 854,
+                            "functionName": "color",
+                            "line": 94,
+                            "message": "Cannot access value for name selectionMode"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 35,
+                            "durationMicroseconds": 119,
+                            "functionName": "fill",
+                            "line": 92,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 31,
+                            "durationMicroseconds": 53,
+                            "functionName": "color",
+                            "line": 110,
+                            "message": "Cannot load property primaryColor from FluTheme."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 34,
+                            "durationMicroseconds": 102,
+                            "functionName": "visible",
+                            "line": 111,
+                            "message": "Cannot access value for name selectionMode"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 35,
+                            "durationMicroseconds": 123,
+                            "functionName": "left",
+                            "line": 115,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 45,
+                            "durationMicroseconds": 86,
+                            "functionName": "verticalCenter",
+                            "line": 116,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 36,
+                            "durationMicroseconds": 213,
+                            "functionName": "onClicked",
+                            "line": 124,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 39,
+                            "durationMicroseconds": 78,
+                            "functionName": "fill",
+                            "line": 122,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 45,
+                            "durationMicroseconds": 99,
+                            "functionName": "verticalCenter",
+                            "line": 153,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 32,
+                            "durationMicroseconds": 44,
+                            "functionName": "width",
+                            "line": 156,
+                            "message": "Cannot access value for name level"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 43,
+                            "durationMicroseconds": 83,
+                            "functionName": "alignment",
+                            "line": 157,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 35,
+                            "durationMicroseconds": 190,
+                            "functionName": "selected",
+                            "line": 163,
+                            "message": "Cannot access value for name itemModel"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 34,
+                            "durationMicroseconds": 77,
+                            "functionName": "visible",
+                            "line": 164,
+                            "message": "Cannot access value for name selectionMode"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 25,
+                            "durationMicroseconds": 7783,
+                            "functionName": "refreshCheckBox",
+                            "line": 167,
+                            "message": "Cannot access value for name tree_model"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 35,
+                            "durationMicroseconds": 1280,
+                            "functionName": "clickFunc",
+                            "line": 199,
+                            "message": "Cannot access value for name hasChild"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 35,
+                            "durationMicroseconds": 92,
+                            "functionName": "clickFunc",
+                            "line": 199,
+                            "message": "Cannot generate efficient code for LoadClosure"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 36,
+                            "durationMicroseconds": 274,
+                            "functionName": "iconSource",
+                            "line": 222,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 34,
+                            "durationMicroseconds": 94,
+                            "functionName": "opacity",
+                            "line": 223,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 36,
+                            "durationMicroseconds": 586,
+                            "functionName": "onClicked",
+                            "line": 227,
+                            "message": "Cannot access value for name model"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 32,
+                            "durationMicroseconds": 79,
+                            "functionName": "text",
+                            "line": 237,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 43,
+                            "durationMicroseconds": 88,
+                            "functionName": "alignment",
+                            "line": 238,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 26,
+                            "durationMicroseconds": 130,
+                            "functionName": "visible",
+                            "line": 247,
+                            "message": "Cannot access value for name hasChild"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 24,
+                            "durationMicroseconds": 217,
+                            "functionName": "width",
+                            "line": 254,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 25,
+                            "durationMicroseconds": 179,
+                            "functionName": "height",
+                            "line": 255,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 32,
+                            "durationMicroseconds": 852,
+                            "functionName": "model",
+                            "line": 261,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 35,
+                            "durationMicroseconds": 113,
+                            "functionName": "delegate",
+                            "line": 262,
+                            "message": "Cannot access value for name delegate_items"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 19,
+                            "durationMicroseconds": 179,
+                            "functionName": "delegate",
+                            "line": 272,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 23,
+                            "durationMicroseconds": 177,
+                            "functionName": "contentWidth",
+                            "line": 273,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 16,
+                            "durationMicroseconds": 151,
+                            "functionName": "model",
+                            "line": 274,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 29,
+                            "durationMicroseconds": 79,
+                            "functionName": "flickableDirection",
+                            "line": 275,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 23,
+                            "durationMicroseconds": 55,
+                            "functionName": "fill",
+                            "line": 271,
+                            "message": ""
+                        }
+                    ],
+                    "filePath": "/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/src/imports/FluentUI/Controls/FluTreeView.qml"
+                }
+            ],
+            "moduleId": "FluentUI(fluentui)"
+        }
+    ]
+}

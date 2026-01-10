@@ -1,0 +1,33 @@
+{
+    "classes": [
+        {
+            "className": "IPC",
+            "lineNumber": 15,
+            "object": true,
+            "qualifiedClassName": "IPC",
+            "slots": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "profileId",
+                            "type": "uint32_t"
+                        }
+                    ],
+                    "index": 0,
+                    "lineNumber": 58,
+                    "name": "setProfileId",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "IPC.h",
+    "outputRevision": 69
+}

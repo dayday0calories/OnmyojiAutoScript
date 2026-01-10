@@ -1,0 +1,12 @@
+-I
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/module/gui
+-I
+/Users/rainyu/Qt/6.10.1/macos/qml
+--resource
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/src/.qt/rcc/qmake_FluentUI.qrc
+--resource
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/src/.qt/rcc/fluentui_raw_qml_0.qrc
+--resource
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/src/.qt/rcc/fluentui_raw_res_0.qrc
+--module
+FluentUI

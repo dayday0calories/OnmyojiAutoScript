@@ -1,0 +1,9 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/cmake_install.cmake",
+		"/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/src/cmake_install.cmake",
+		"/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/example/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

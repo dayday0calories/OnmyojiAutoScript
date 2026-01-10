@@ -1,0 +1,9 @@
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/src/fluentui_autogen/include/../EWIEGA46WW/moc_Def.cpp.json
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/src/fluentui_autogen/include/../EWIEGA46WW/moc_FluApp.cpp.json
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/src/fluentui_autogen/include/../EWIEGA46WW/moc_FluColorSet.cpp.json
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/src/fluentui_autogen/include/../EWIEGA46WW/moc_FluColors.cpp.json
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/src/fluentui_autogen/include/../EWIEGA46WW/moc_FluRegister.cpp.json
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/src/fluentui_autogen/include/../EWIEGA46WW/moc_FluTextStyle.cpp.json
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/src/fluentui_autogen/include/../EWIEGA46WW/moc_FluTheme.cpp.json
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/src/fluentui_autogen/include/../EWIEGA46WW/moc_FluTools.cpp.json
+/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/src/fluentui_autogen/include/../EWIEGA46WW/moc_WindowHelper.cpp.json

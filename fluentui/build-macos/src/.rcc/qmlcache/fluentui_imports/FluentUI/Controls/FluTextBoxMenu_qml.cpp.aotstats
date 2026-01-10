@@ -1,0 +1,135 @@
+{
+    "formatRevision": 1,
+    "modules": [
+        {
+            "moduleFiles": [
+                {
+                    "entries": [
+                        {
+                            "codegenResult": 2,
+                            "column": 23,
+                            "durationMicroseconds": 0,
+                            "functionName": "onVisibleChanged",
+                            "line": 17,
+                            "message": "Could not find signal \"visibleChanged\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 17,
+                            "durationMicroseconds": 88,
+                            "functionName": "target",
+                            "line": 24,
+                            "message": "Cannot access value for name inputItem"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 9,
+                            "durationMicroseconds": 89,
+                            "functionName": "onTextChanged",
+                            "line": 25,
+                            "message": "Cannot retrieve a non-object type by ID: menu"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 15,
+                            "durationMicroseconds": 41,
+                            "functionName": "text",
+                            "line": 31,
+                            "message": "Cannot access value for name cutText"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 18,
+                            "durationMicroseconds": 92,
+                            "functionName": "visible",
+                            "line": 32,
+                            "message": "Cannot access value for name inputItem"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 20,
+                            "durationMicroseconds": 38,
+                            "functionName": "onClicked",
+                            "line": 33,
+                            "message": "Cannot access value for name inputItem"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 15,
+                            "durationMicroseconds": 27,
+                            "functionName": "text",
+                            "line": 39,
+                            "message": "Cannot access value for name copyText"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 18,
+                            "durationMicroseconds": 34,
+                            "functionName": "visible",
+                            "line": 40,
+                            "message": "Cannot access value for name inputItem"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 20,
+                            "durationMicroseconds": 32,
+                            "functionName": "onClicked",
+                            "line": 41,
+                            "message": "Cannot access value for name inputItem"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 15,
+                            "durationMicroseconds": 25,
+                            "functionName": "text",
+                            "line": 46,
+                            "message": "Cannot access value for name pasteText"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 18,
+                            "durationMicroseconds": 31,
+                            "functionName": "visible",
+                            "line": 47,
+                            "message": "Cannot access value for name inputItem"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 20,
+                            "durationMicroseconds": 33,
+                            "functionName": "onClicked",
+                            "line": 48,
+                            "message": "Cannot access value for name inputItem"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 15,
+                            "durationMicroseconds": 28,
+                            "functionName": "text",
+                            "line": 53,
+                            "message": "Cannot access value for name selectAllText"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 18,
+                            "durationMicroseconds": 32,
+                            "functionName": "visible",
+                            "line": 54,
+                            "message": "Cannot access value for name inputItem"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 20,
+                            "durationMicroseconds": 32,
+                            "functionName": "onClicked",
+                            "line": 55,
+                            "message": "Cannot access value for name inputItem"
+                        }
+                    ],
+                    "filePath": "/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/src/imports/FluentUI/Controls/FluTextBoxMenu.qml"
+                }
+            ],
+            "moduleId": "FluentUI(fluentui)"
+        }
+    ]
+}

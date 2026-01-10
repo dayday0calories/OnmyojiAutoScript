@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/">
+    <file alias="/FluentUI">/Users/rainyu/Downloads/OnmyojiAutoScript-dev/module/gui/FluentUI</file>
+
+  </qresource>
+</RCC>

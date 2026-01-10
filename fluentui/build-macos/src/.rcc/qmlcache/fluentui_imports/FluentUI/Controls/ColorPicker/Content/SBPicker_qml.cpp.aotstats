@@ -1,0 +1,223 @@
+{
+    "formatRevision": 1,
+    "modules": [
+        {
+            "moduleFiles": [
+                {
+                    "entries": [
+                        {
+                            "codegenResult": 0,
+                            "column": 32,
+                            "durationMicroseconds": 442,
+                            "functionName": "saturation",
+                            "line": 6,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 32,
+                            "durationMicroseconds": 653,
+                            "functionName": "brightness",
+                            "line": 7,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 22,
+                            "durationMicroseconds": 1698,
+                            "functionName": "r",
+                            "line": 8,
+                            "message": "Cannot access value for name colorHandleRadius"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 13,
+                            "durationMicroseconds": 1484,
+                            "functionName": "x",
+                            "line": 11,
+                            "message": "Cannot access value for name r"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 13,
+                            "durationMicroseconds": 118,
+                            "functionName": "y",
+                            "line": 12,
+                            "message": "Cannot access value for name r"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 26,
+                            "durationMicroseconds": 1396,
+                            "functionName": "transformOrigin",
+                            "line": 14,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 16,
+                            "durationMicroseconds": 154,
+                            "functionName": "width",
+                            "line": 15,
+                            "message": "Cannot access value for name r"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 17,
+                            "durationMicroseconds": 55,
+                            "functionName": "height",
+                            "line": 16,
+                            "message": "Cannot access value for name r"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 50,
+                            "durationMicroseconds": 142,
+                            "functionName": "color",
+                            "line": 19,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 12,
+                            "durationMicroseconds": 171,
+                            "functionName": "x",
+                            "line": 23,
+                            "message": "Cannot access value for name r"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 12,
+                            "durationMicroseconds": 113,
+                            "functionName": "y",
+                            "line": 24,
+                            "message": "Cannot access value for name r"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 16,
+                            "durationMicroseconds": 55,
+                            "functionName": "width",
+                            "line": 25,
+                            "message": "Cannot access value for name r"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 17,
+                            "durationMicroseconds": 31,
+                            "functionName": "height",
+                            "line": 26,
+                            "message": "Cannot access value for name r"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 20,
+                            "durationMicroseconds": 34,
+                            "functionName": "width",
+                            "line": 35,
+                            "message": "Cannot access value for name r"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 33,
+                            "durationMicroseconds": 495,
+                            "functionName": "height",
+                            "line": 35,
+                            "message": "Cannot access value for name r"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 21,
+                            "durationMicroseconds": 19,
+                            "functionName": "radius",
+                            "line": 36,
+                            "message": "Cannot access value for name r"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 25,
+                            "durationMicroseconds": 829,
+                            "functionName": "radius",
+                            "line": 42,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 31,
+                            "durationMicroseconds": 58,
+                            "functionName": "fill",
+                            "line": 40,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 12,
+                            "durationMicroseconds": 22,
+                            "functionName": "x",
+                            "line": 49,
+                            "message": "Cannot access value for name r"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 12,
+                            "durationMicroseconds": 17,
+                            "functionName": "y",
+                            "line": 50,
+                            "message": "Cannot access value for name r"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 9,
+                            "durationMicroseconds": 0,
+                            "functionName": "handleMouse",
+                            "line": 52,
+                            "message": "Functions without type annotations won't be compiled"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 27,
+                            "durationMicroseconds": 335,
+                            "functionName": "onPositionChanged",
+                            "line": 58,
+                            "message": "Cannot generate efficient code for call to untyped JavaScript function"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 27,
+                            "durationMicroseconds": 114,
+                            "functionName": "onPositionChanged",
+                            "line": 58,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 100,
+                            "functionName": "onPressed",
+                            "line": 59,
+                            "message": "Cannot generate efficient code for call to untyped JavaScript function"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 19,
+                            "durationMicroseconds": 34,
+                            "functionName": "onPressed",
+                            "line": 59,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 23,
+                            "durationMicroseconds": 76,
+                            "functionName": "fill",
+                            "line": 48,
+                            "message": ""
+                        }
+                    ],
+                    "filePath": "/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/src/imports/FluentUI/Controls/ColorPicker/Content/SBPicker.qml"
+                }
+            ],
+            "moduleId": "FluentUI(fluentui)"
+        }
+    ]
+}

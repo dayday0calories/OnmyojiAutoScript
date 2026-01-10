@@ -1,0 +1,23 @@
+{
+    "formatRevision": 1,
+    "modules": [
+        {
+            "moduleFiles": [
+                {
+                    "entries": [
+                        {
+                            "codegenResult": 2,
+                            "column": 32,
+                            "durationMicroseconds": 3053,
+                            "functionName": "displayMode",
+                            "line": 8,
+                            "message": "Cannot access value for name FluNavigationView"
+                        }
+                    ],
+                    "filePath": "/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/example/qml/global/MainEvent.qml"
+                }
+            ],
+            "moduleId": "example(example)"
+        }
+    ]
+}

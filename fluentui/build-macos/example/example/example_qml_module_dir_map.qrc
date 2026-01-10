@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/">
+    <file alias="/example">/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/example/example</file>
+
+  </qresource>
+</RCC>

@@ -1,0 +1,231 @@
+{
+    "classes": [
+        {
+            "classInfos": [
+                {
+                    "name": "QML.Element",
+                    "value": "FluApp"
+                },
+                {
+                    "name": "QML.Singleton",
+                    "value": "true"
+                }
+            ],
+            "className": "FluApp",
+            "lineNumber": 21,
+            "methods": [
+                {
+                    "access": "public",
+                    "index": 2,
+                    "lineNumber": 44,
+                    "name": "run",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "route",
+                            "type": "QString"
+                        },
+                        {
+                            "name": "argument",
+                            "type": "QJsonObject"
+                        },
+                        {
+                            "name": "fluRegister",
+                            "type": "FluRegister*"
+                        }
+                    ],
+                    "index": 3,
+                    "lineNumber": 52,
+                    "name": "navigate",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "route",
+                            "type": "QString"
+                        },
+                        {
+                            "name": "argument",
+                            "type": "QJsonObject"
+                        }
+                    ],
+                    "index": 4,
+                    "isCloned": true,
+                    "lineNumber": 52,
+                    "name": "navigate",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "route",
+                            "type": "QString"
+                        }
+                    ],
+                    "index": 5,
+                    "isCloned": true,
+                    "lineNumber": 52,
+                    "name": "navigate",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "window",
+                            "type": "QQuickWindow*"
+                        }
+                    ],
+                    "index": 6,
+                    "lineNumber": 58,
+                    "name": "init",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "keyword",
+                            "type": "QString"
+                        }
+                    ],
+                    "index": 7,
+                    "lineNumber": 65,
+                    "name": "awesomelist",
+                    "returnType": "QJsonArray"
+                },
+                {
+                    "access": "public",
+                    "index": 8,
+                    "isCloned": true,
+                    "lineNumber": 65,
+                    "name": "awesomelist",
+                    "returnType": "QJsonArray"
+                },
+                {
+                    "access": "public",
+                    "index": 9,
+                    "lineNumber": 70,
+                    "name": "closeApp",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "val",
+                            "type": "FluApp*"
+                        }
+                    ],
+                    "index": 10,
+                    "lineNumber": 76,
+                    "name": "setFluApp",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "val",
+                            "type": "FluTheme*"
+                        }
+                    ],
+                    "index": 11,
+                    "lineNumber": 82,
+                    "name": "setFluTheme",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "val",
+                            "type": "FluColors*"
+                        }
+                    ],
+                    "index": 12,
+                    "lineNumber": 88,
+                    "name": "setFluColors",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "val",
+                            "type": "FluTools*"
+                        }
+                    ],
+                    "index": 13,
+                    "lineNumber": 94,
+                    "name": "setFluTools",
+                    "returnType": "void"
+                }
+            ],
+            "object": true,
+            "properties": [
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 0,
+                    "lineNumber": 27,
+                    "member": "_initialRoute",
+                    "name": "initialRoute",
+                    "notify": "initialRouteChanged",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 1,
+                    "lineNumber": 32,
+                    "member": "_routes",
+                    "name": "routes",
+                    "notify": "routesChanged",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QJsonObject",
+                    "user": false
+                }
+            ],
+            "qualifiedClassName": "FluApp",
+            "signals": [
+                {
+                    "access": "public",
+                    "index": 0,
+                    "lineNumber": 27,
+                    "name": "initialRouteChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 1,
+                    "lineNumber": 32,
+                    "name": "routesChanged",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "FluApp.h",
+    "outputRevision": 69
+}

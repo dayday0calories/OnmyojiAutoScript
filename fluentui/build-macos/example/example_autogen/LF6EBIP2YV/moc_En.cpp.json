@@ -1,0 +1,18 @@
+{
+    "classes": [
+        {
+            "className": "En",
+            "lineNumber": 7,
+            "object": true,
+            "qualifiedClassName": "En",
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "Lang"
+                }
+            ]
+        }
+    ],
+    "inputFile": "En.h",
+    "outputRevision": 69
+}

@@ -1,0 +1,439 @@
+{
+    "formatRevision": 1,
+    "modules": [
+        {
+            "moduleFiles": [
+                {
+                    "entries": [
+                        {
+                            "codegenResult": 2,
+                            "column": 5,
+                            "durationMicroseconds": 3440,
+                            "functionName": "getRecentlyAddedData",
+                            "line": 284,
+                            "message": "Cannot access value for name children"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 5,
+                            "durationMicroseconds": 741,
+                            "functionName": "getRecentlyUpdatedData",
+                            "line": 304,
+                            "message": "Cannot access value for name FluPaneItem"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 5,
+                            "durationMicroseconds": 816,
+                            "functionName": "getSearchData",
+                            "line": 316,
+                            "message": "Cannot access value for name FluPaneItem"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 5,
+                            "durationMicroseconds": 0,
+                            "functionName": "startPageByItem",
+                            "line": 328,
+                            "message": "Functions without type annotations won't be compiled"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 15,
+                            "durationMicroseconds": 0,
+                            "functionName": "title",
+                            "line": 11,
+                            "message": "Could not find property \"title\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 14,
+                            "durationMicroseconds": 0,
+                            "functionName": "icon",
+                            "line": 12,
+                            "message": "Could not find property \"icon\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 15,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 20,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 15,
+                            "durationMicroseconds": 0,
+                            "functionName": "title",
+                            "line": 26,
+                            "message": "Could not find property \"title\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 14,
+                            "durationMicroseconds": 0,
+                            "functionName": "icon",
+                            "line": 27,
+                            "message": "Could not find property \"icon\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 33,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 39,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 48,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 57,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 63,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 15,
+                            "durationMicroseconds": 0,
+                            "functionName": "title",
+                            "line": 70,
+                            "message": "Could not find property \"title\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 14,
+                            "durationMicroseconds": 0,
+                            "functionName": "icon",
+                            "line": 71,
+                            "message": "Could not find property \"icon\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 74,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 80,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 86,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 92,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 98,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 15,
+                            "durationMicroseconds": 0,
+                            "functionName": "title",
+                            "line": 105,
+                            "message": "Could not find property \"title\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 14,
+                            "durationMicroseconds": 0,
+                            "functionName": "icon",
+                            "line": 106,
+                            "message": "Could not find property \"icon\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 112,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 118,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 124,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 130,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 136,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 142,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 148,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 154,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 15,
+                            "durationMicroseconds": 0,
+                            "functionName": "title",
+                            "line": 161,
+                            "message": "Could not find property \"title\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 14,
+                            "durationMicroseconds": 0,
+                            "functionName": "icon",
+                            "line": 162,
+                            "message": "Could not find property \"icon\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 165,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 171,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 177,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 15,
+                            "durationMicroseconds": 0,
+                            "functionName": "title",
+                            "line": 184,
+                            "message": "Could not find property \"title\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 14,
+                            "durationMicroseconds": 0,
+                            "functionName": "icon",
+                            "line": 185,
+                            "message": "Could not find property \"icon\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 192,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 198,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 208,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 214,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 224,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 230,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 240,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 15,
+                            "durationMicroseconds": 0,
+                            "functionName": "title",
+                            "line": 247,
+                            "message": "Could not find property \"title\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 14,
+                            "durationMicroseconds": 0,
+                            "functionName": "icon",
+                            "line": 248,
+                            "message": "Could not find property \"icon\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 251,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 257,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 263,
+                            "message": "Could not find signal \"tap\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 15,
+                            "durationMicroseconds": 0,
+                            "functionName": "title",
+                            "line": 270,
+                            "message": "Could not find property \"title\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 14,
+                            "durationMicroseconds": 0,
+                            "functionName": "icon",
+                            "line": 271,
+                            "message": "Could not find property \"icon\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "onTap",
+                            "line": 278,
+                            "message": "Could not find signal \"tap\"."
+                        }
+                    ],
+                    "filePath": "/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/example/qml/global/ItemsOriginal.qml"
+                }
+            ],
+            "moduleId": "example(example)"
+        }
+    ]
+}

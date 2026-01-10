@@ -1,0 +1,18 @@
+{
+    "classes": [
+        {
+            "className": "Zh",
+            "lineNumber": 7,
+            "object": true,
+            "qualifiedClassName": "Zh",
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "Lang"
+                }
+            ]
+        }
+    ],
+    "inputFile": "Zh.h",
+    "outputRevision": 69
+}

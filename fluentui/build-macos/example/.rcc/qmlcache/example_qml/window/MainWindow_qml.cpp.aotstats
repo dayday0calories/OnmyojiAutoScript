@@ -1,0 +1,159 @@
+{
+    "formatRevision": 1,
+    "modules": [
+        {
+            "moduleFiles": [
+                {
+                    "entries": [
+                        {
+                            "codegenResult": 2,
+                            "column": 17,
+                            "durationMicroseconds": 0,
+                            "functionName": "launchMode",
+                            "line": 18,
+                            "message": "Could not find property \"launchMode\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 15,
+                            "durationMicroseconds": 0,
+                            "functionName": "closeFunc",
+                            "line": 20,
+                            "message": "Could not find property \"closeFunc\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 15,
+                            "durationMicroseconds": 0,
+                            "functionName": "closeFunc",
+                            "line": 20,
+                            "message": "Could not find property \"closeFunc\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 17,
+                            "durationMicroseconds": 161,
+                            "functionName": "target",
+                            "line": 26,
+                            "message": "Cannot access value for name appInfo"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 9,
+                            "durationMicroseconds": 273,
+                            "functionName": "onActiveWindow",
+                            "line": 27,
+                            "message": "Cannot retrieve a non-object type by ID: window"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 15,
+                            "durationMicroseconds": 0,
+                            "functionName": "width",
+                            "line": 38,
+                            "message": "Could not find property \"width\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "darkText",
+                            "line": 39,
+                            "message": "Could not find property \"darkText\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 13,
+                            "durationMicroseconds": 239,
+                            "functionName": "onActivated",
+                            "line": 57,
+                            "message": "Cannot retrieve a non-object type by ID: window"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 13,
+                            "durationMicroseconds": 153,
+                            "functionName": "onActivated",
+                            "line": 57,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 30,
+                            "durationMicroseconds": 223,
+                            "functionName": "onTriggered",
+                            "line": 50,
+                            "message": "Cannot retrieve a non-object type by ID: window"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 22,
+                            "durationMicroseconds": 0,
+                            "functionName": "buttonFlags",
+                            "line": 71,
+                            "message": "Could not find property \"buttonFlags\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 27,
+                            "durationMicroseconds": 0,
+                            "functionName": "onNegativeClicked",
+                            "line": 72,
+                            "message": "Could not find signal \"negativeClicked\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 27,
+                            "durationMicroseconds": 0,
+                            "functionName": "onPositiveClicked",
+                            "line": 78,
+                            "message": "Could not find signal \"positiveClicked\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 16,
+                            "durationMicroseconds": 0,
+                            "functionName": "items",
+                            "line": 88,
+                            "message": "Could not find property \"items\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 21,
+                            "durationMicroseconds": 0,
+                            "functionName": "footerItems",
+                            "line": 89,
+                            "message": "Could not find property \"footerItems\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 21,
+                            "durationMicroseconds": 0,
+                            "functionName": "displayMode",
+                            "line": 91,
+                            "message": "Could not find property \"displayMode\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 23,
+                            "durationMicroseconds": 0,
+                            "functionName": "fill",
+                            "line": 87,
+                            "message": "Could not find property \"fill\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 32,
+                            "durationMicroseconds": 4915,
+                            "functionName": "onCompleted",
+                            "line": 105,
+                            "message": "Cannot retrieve a non-object type by ID: nav_view"
+                        }
+                    ],
+                    "filePath": "/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/example/qml/window/MainWindow.qml"
+                }
+            ],
+            "moduleId": "example(example)"
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+set(__QT_DEPLOY_TARGET_fluentui_FILE /Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/src/libfluentui.dylib)
+set(__QT_DEPLOY_TARGET_fluentui_TYPE SHARED_LIBRARY)
+set(__QT_DEPLOY_TARGET_fluentuiplugin_FILE /Users/rainyu/Downloads/OnmyojiAutoScript-dev/module/gui/FluentUI/libfluentuiplugin.dylib)
+set(__QT_DEPLOY_TARGET_fluentuiplugin_TYPE MODULE_LIBRARY)
+set(__QT_DEPLOY_TARGET_example_FILE /Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/bin/release/example.app/Contents/MacOS/example)
+set(__QT_DEPLOY_TARGET_example_TYPE EXECUTABLE)

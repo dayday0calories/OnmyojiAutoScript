@@ -1,0 +1,343 @@
+{
+    "formatRevision": 1,
+    "modules": [
+        {
+            "moduleFiles": [
+                {
+                    "entries": [
+                        {
+                            "codegenResult": 0,
+                            "column": 13,
+                            "durationMicroseconds": 187,
+                            "functionName": "height",
+                            "line": 19,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 12,
+                            "durationMicroseconds": 89,
+                            "functionName": "width",
+                            "line": 20,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 15,
+                            "durationMicroseconds": 139,
+                            "functionName": "rotation",
+                            "line": 21,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 5,
+                            "durationMicroseconds": 0,
+                            "functionName": "seek",
+                            "line": 126,
+                            "message": "Functions without type annotations won't be compiled"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 28,
+                            "durationMicroseconds": 123,
+                            "functionName": "onCompleted",
+                            "line": 23,
+                            "message": "Cannot generate efficient code for call to untyped JavaScript function"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 16,
+                            "durationMicroseconds": 74,
+                            "functionName": "width",
+                            "line": 30,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 17,
+                            "durationMicroseconds": 60,
+                            "functionName": "height",
+                            "line": 31,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 13,
+                            "durationMicroseconds": 369,
+                            "functionName": "onClicked",
+                            "line": 34,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 13,
+                            "durationMicroseconds": 53,
+                            "functionName": "onClicked",
+                            "line": 34,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 27,
+                            "durationMicroseconds": 66,
+                            "functionName": "centerIn",
+                            "line": 29,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 16,
+                            "durationMicroseconds": 64,
+                            "functionName": "width",
+                            "line": 51,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 18,
+                            "durationMicroseconds": 56,
+                            "functionName": "height",
+                            "line": 52,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 15,
+                            "durationMicroseconds": 1050,
+                            "functionName": "color",
+                            "line": 55,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: conversion to QVariant -> QColor stored as QVariant"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 33,
+                            "durationMicroseconds": 313,
+                            "functionName": "verticalCenter",
+                            "line": 54,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 20,
+                            "durationMicroseconds": 210,
+                            "functionName": "width",
+                            "line": 59,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 21,
+                            "durationMicroseconds": 275,
+                            "functionName": "height",
+                            "line": 60,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 250,
+                            "functionName": "color",
+                            "line": 61,
+                            "message": "Cannot load property primaryColor from FluTheme."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 16,
+                            "durationMicroseconds": 49,
+                            "functionName": "width",
+                            "line": 67,
+                            "message": "Cannot access value for name dotSize"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 17,
+                            "durationMicroseconds": 28,
+                            "functionName": "height",
+                            "line": 68,
+                            "message": "Cannot access value for name dotSize"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 17,
+                            "durationMicroseconds": 37,
+                            "functionName": "radius",
+                            "line": 72,
+                            "message": "Cannot access value for name dotSize"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 15,
+                            "durationMicroseconds": 893,
+                            "functionName": "color",
+                            "line": 75,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: conversion to QVariant -> QColor stored as QVariant"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 21,
+                            "durationMicroseconds": 71,
+                            "functionName": "radius",
+                            "line": 70,
+                            "message": "Cannot access value for name dotSize"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 33,
+                            "durationMicroseconds": 78,
+                            "functionName": "verticalCenter",
+                            "line": 73,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 35,
+                            "durationMicroseconds": 498,
+                            "functionName": "horizontalCenter",
+                            "line": 74,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 20,
+                            "durationMicroseconds": 49,
+                            "functionName": "width",
+                            "line": 77,
+                            "message": "Cannot access value for name dotSize"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 21,
+                            "durationMicroseconds": 27,
+                            "functionName": "height",
+                            "line": 78,
+                            "message": "Cannot access value for name dotSize"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 21,
+                            "durationMicroseconds": 33,
+                            "functionName": "radius",
+                            "line": 79,
+                            "message": "Cannot access value for name dotSize"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 122,
+                            "functionName": "color",
+                            "line": 80,
+                            "message": "Cannot load property primaryColor from FluTheme."
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 20,
+                            "durationMicroseconds": 699,
+                            "functionName": "scale",
+                            "line": 82,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 31,
+                            "durationMicroseconds": 73,
+                            "functionName": "centerIn",
+                            "line": 81,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 24,
+                            "durationMicroseconds": 131,
+                            "functionName": "onPressed",
+                            "line": 106,
+                            "message": "Cannot access value for name tipEnabled"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 25,
+                            "durationMicroseconds": 37,
+                            "functionName": "onReleased",
+                            "line": 113,
+                            "message": "Cannot retrieve a non-object type by ID: tool_tip"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 27,
+                            "durationMicroseconds": 81,
+                            "functionName": "fill",
+                            "line": 96,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 25,
+                            "durationMicroseconds": 73,
+                            "functionName": "target",
+                            "line": 99,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 23,
+                            "durationMicroseconds": 89,
+                            "functionName": "axis",
+                            "line": 100,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 27,
+                            "durationMicroseconds": 71,
+                            "functionName": "minimumX",
+                            "line": 101,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 27,
+                            "durationMicroseconds": 91,
+                            "functionName": "maximumX",
+                            "line": 102,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 27,
+                            "durationMicroseconds": 92,
+                            "functionName": "minimumY",
+                            "line": 103,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 27,
+                            "durationMicroseconds": 101,
+                            "functionName": "maximumY",
+                            "line": 104,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 18,
+                            "durationMicroseconds": 0,
+                            "functionName": "text",
+                            "line": 121,
+                            "message": "Could not find property \"text\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 16,
+                            "durationMicroseconds": 0,
+                            "functionName": "y",
+                            "line": 122,
+                            "message": "Could not find property \"y\"."
+                        }
+                    ],
+                    "filePath": "/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/src/imports/FluentUI/Controls/FluSlider.qml"
+                }
+            ],
+            "moduleId": "FluentUI(fluentui)"
+        }
+    ]
+}

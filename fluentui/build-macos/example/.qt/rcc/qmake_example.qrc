@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/example">
+    <file alias="qmldir">/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/build-macos/example/example/qmldir</file>
+  </qresource>
+</RCC>
+

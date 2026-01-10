@@ -1,0 +1,367 @@
+{
+    "formatRevision": 1,
+    "modules": [
+        {
+            "moduleFiles": [
+                {
+                    "entries": [
+                        {
+                            "codegenResult": 2,
+                            "column": 39,
+                            "durationMicroseconds": 8560,
+                            "functionName": "handleNormalColor",
+                            "line": 7,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: call to method rgba, returning QVariant -> QColor stored as QVariant"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 38,
+                            "durationMicroseconds": 221,
+                            "functionName": "handleHoverColor",
+                            "line": 8,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: call to method lighter, returning QVariant -> QColor stored as QVariant"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 38,
+                            "durationMicroseconds": 1420,
+                            "functionName": "handlePressColor",
+                            "line": 9,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: call to method darker, returning QVariant -> QColor stored as QVariant"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 20,
+                            "durationMicroseconds": 0,
+                            "functionName": "implicitWidth",
+                            "line": 13,
+                            "message": "Could not find property \"implicitWidth\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 21,
+                            "durationMicroseconds": 0,
+                            "functionName": "implicitHeight",
+                            "line": 15,
+                            "message": "Could not find property \"implicitHeight\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 14,
+                            "durationMicroseconds": 0,
+                            "functionName": "visible",
+                            "line": 18,
+                            "message": "Could not find property \"visible\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 16,
+                            "durationMicroseconds": 0,
+                            "functionName": "topPadding",
+                            "line": 20,
+                            "message": "Could not find property \"topPadding\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 0,
+                            "functionName": "bottomPadding",
+                            "line": 32,
+                            "message": "Could not find property \"bottomPadding\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 17,
+                            "durationMicroseconds": 0,
+                            "functionName": "leftPadding",
+                            "line": 44,
+                            "message": "Could not find property \"leftPadding\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 18,
+                            "durationMicroseconds": 0,
+                            "functionName": "rightPadding",
+                            "line": 56,
+                            "message": "Could not find property \"rightPadding\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 24,
+                            "durationMicroseconds": 70,
+                            "functionName": "implicitWidth",
+                            "line": 90,
+                            "message": "Cannot access value for name expand"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 26,
+                            "durationMicroseconds": 37,
+                            "functionName": "implicitHeight",
+                            "line": 91,
+                            "message": "Cannot access value for name expand"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 17,
+                            "durationMicroseconds": 121,
+                            "functionName": "radius",
+                            "line": 92,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 16,
+                            "durationMicroseconds": 138,
+                            "functionName": "color",
+                            "line": 93,
+                            "message": "Cannot access value for name control"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 17,
+                            "durationMicroseconds": 2291,
+                            "functionName": "opacity",
+                            "line": 94,
+                            "message": "Cannot access value for name control"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 16,
+                            "durationMicroseconds": 186,
+                            "functionName": "color",
+                            "line": 98,
+                            "message": "Cannot access value for name expand"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 24,
+                            "durationMicroseconds": 45,
+                            "functionName": "onEntered",
+                            "line": 111,
+                            "message": "Cannot access value for name timer"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 23,
+                            "durationMicroseconds": 28,
+                            "functionName": "onExited",
+                            "line": 114,
+                            "message": "Cannot access value for name timer"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 27,
+                            "durationMicroseconds": 75,
+                            "functionName": "fill",
+                            "line": 110,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 22,
+                            "durationMicroseconds": 175,
+                            "functionName": "onTriggered",
+                            "line": 122,
+                            "message": "Cannot access value for name mouse_item"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 21,
+                            "durationMicroseconds": 188,
+                            "functionName": "iconSource",
+                            "line": 134,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 20,
+                            "durationMicroseconds": 592,
+                            "functionName": "iconColor",
+                            "line": 139,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: FluColors::Black with type QString (stored as QVariant) -> FluColors::Black with type QString (adjusted to QColor, stored as QVariant)"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 17,
+                            "durationMicroseconds": 36153,
+                            "functionName": "visible",
+                            "line": 143,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 896,
+                            "functionName": "onClicked",
+                            "line": 144,
+                            "message": "method decrease cannot be resolved."
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 35,
+                            "durationMicroseconds": 201,
+                            "functionName": "horizontalCenter",
+                            "line": 135,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 22,
+                            "durationMicroseconds": 88,
+                            "functionName": "top",
+                            "line": 141,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 21,
+                            "durationMicroseconds": 99,
+                            "functionName": "iconSource",
+                            "line": 150,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 17,
+                            "durationMicroseconds": 56763,
+                            "functionName": "visible",
+                            "line": 151,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 20,
+                            "durationMicroseconds": 30424,
+                            "functionName": "iconColor",
+                            "line": 155,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: FluColors::Black with type QString (stored as QVariant) -> FluColors::Black with type QString (adjusted to QColor, stored as QVariant)"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 574,
+                            "functionName": "onClicked",
+                            "line": 159,
+                            "message": "method increase cannot be resolved."
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 35,
+                            "durationMicroseconds": 288,
+                            "functionName": "horizontalCenter",
+                            "line": 156,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 25,
+                            "durationMicroseconds": 214,
+                            "functionName": "bottom",
+                            "line": 157,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 21,
+                            "durationMicroseconds": 145,
+                            "functionName": "iconSource",
+                            "line": 165,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 17,
+                            "durationMicroseconds": 798,
+                            "functionName": "visible",
+                            "line": 166,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 20,
+                            "durationMicroseconds": 369,
+                            "functionName": "iconColor",
+                            "line": 170,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: FluColors::Black with type QString (stored as QVariant) -> FluColors::Black with type QString (adjusted to QColor, stored as QVariant)"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 1216,
+                            "functionName": "onClicked",
+                            "line": 174,
+                            "message": "method decrease cannot be resolved."
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 33,
+                            "durationMicroseconds": 185,
+                            "functionName": "verticalCenter",
+                            "line": 172,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 23,
+                            "durationMicroseconds": 282,
+                            "functionName": "left",
+                            "line": 173,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 21,
+                            "durationMicroseconds": 141,
+                            "functionName": "iconSource",
+                            "line": 180,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 17,
+                            "durationMicroseconds": 2282,
+                            "functionName": "visible",
+                            "line": 181,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 20,
+                            "durationMicroseconds": 360,
+                            "functionName": "iconColor",
+                            "line": 185,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: FluColors::Black with type QString (stored as QVariant) -> FluColors::Black with type QString (adjusted to QColor, stored as QVariant)"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 832,
+                            "functionName": "onClicked",
+                            "line": 189,
+                            "message": "method increase cannot be resolved."
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 33,
+                            "durationMicroseconds": 539,
+                            "functionName": "verticalCenter",
+                            "line": 187,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 24,
+                            "durationMicroseconds": 149,
+                            "functionName": "right",
+                            "line": 188,
+                            "message": ""
+                        }
+                    ],
+                    "filePath": "/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/src/imports/FluentUI/Controls/FluScrollBar.qml"
+                }
+            ],
+            "moduleId": "FluentUI(fluentui)"
+        }
+    ]
+}

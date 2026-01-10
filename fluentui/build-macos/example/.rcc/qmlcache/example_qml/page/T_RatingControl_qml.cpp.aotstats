@@ -1,0 +1,23 @@
+{
+    "formatRevision": 1,
+    "modules": [
+        {
+            "moduleFiles": [
+                {
+                    "entries": [
+                        {
+                            "codegenResult": 0,
+                            "column": 37,
+                            "durationMicroseconds": 224,
+                            "functionName": "verticalCenter",
+                            "line": 24,
+                            "message": ""
+                        }
+                    ],
+                    "filePath": "/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/example/qml/page/T_RatingControl.qml"
+                }
+            ],
+            "moduleId": "example(example)"
+        }
+    ]
+}

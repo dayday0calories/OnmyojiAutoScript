@@ -1,0 +1,736 @@
+{
+    "classes": [
+        {
+            "classInfos": [
+                {
+                    "name": "QML.Element",
+                    "value": "FluColors"
+                },
+                {
+                    "name": "QML.Singleton",
+                    "value": "true"
+                }
+            ],
+            "className": "FluColors",
+            "lineNumber": 12,
+            "object": true,
+            "properties": [
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 0,
+                    "lineNumber": 15,
+                    "member": "_Black",
+                    "name": "Black",
+                    "notify": "BlackChanged",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 1,
+                    "lineNumber": 16,
+                    "member": "_White",
+                    "name": "White",
+                    "notify": "WhiteChanged",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 2,
+                    "lineNumber": 17,
+                    "member": "_Grey10",
+                    "name": "Grey10",
+                    "notify": "Grey10Changed",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 3,
+                    "lineNumber": 18,
+                    "member": "_Grey20",
+                    "name": "Grey20",
+                    "notify": "Grey20Changed",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 4,
+                    "lineNumber": 19,
+                    "member": "_Grey30",
+                    "name": "Grey30",
+                    "notify": "Grey30Changed",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 5,
+                    "lineNumber": 20,
+                    "member": "_Grey40",
+                    "name": "Grey40",
+                    "notify": "Grey40Changed",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 6,
+                    "lineNumber": 21,
+                    "member": "_Grey50",
+                    "name": "Grey50",
+                    "notify": "Grey50Changed",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 7,
+                    "lineNumber": 22,
+                    "member": "_Grey60",
+                    "name": "Grey60",
+                    "notify": "Grey60Changed",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 8,
+                    "lineNumber": 23,
+                    "member": "_Grey70",
+                    "name": "Grey70",
+                    "notify": "Grey70Changed",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 9,
+                    "lineNumber": 24,
+                    "member": "_Grey80",
+                    "name": "Grey80",
+                    "notify": "Grey80Changed",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 10,
+                    "lineNumber": 25,
+                    "member": "_Grey90",
+                    "name": "Grey90",
+                    "notify": "Grey90Changed",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 11,
+                    "lineNumber": 26,
+                    "member": "_Grey100",
+                    "name": "Grey100",
+                    "notify": "Grey100Changed",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 12,
+                    "lineNumber": 27,
+                    "member": "_Grey110",
+                    "name": "Grey110",
+                    "notify": "Grey110Changed",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 13,
+                    "lineNumber": 28,
+                    "member": "_Grey120",
+                    "name": "Grey120",
+                    "notify": "Grey120Changed",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 14,
+                    "lineNumber": 29,
+                    "member": "_Grey130",
+                    "name": "Grey130",
+                    "notify": "Grey130Changed",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 15,
+                    "lineNumber": 30,
+                    "member": "_Grey140",
+                    "name": "Grey140",
+                    "notify": "Grey140Changed",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 16,
+                    "lineNumber": 31,
+                    "member": "_Grey150",
+                    "name": "Grey150",
+                    "notify": "Grey150Changed",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 17,
+                    "lineNumber": 32,
+                    "member": "_Grey160",
+                    "name": "Grey160",
+                    "notify": "Grey160Changed",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 18,
+                    "lineNumber": 33,
+                    "member": "_Grey170",
+                    "name": "Grey170",
+                    "notify": "Grey170Changed",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 19,
+                    "lineNumber": 34,
+                    "member": "_Grey180",
+                    "name": "Grey180",
+                    "notify": "Grey180Changed",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 20,
+                    "lineNumber": 35,
+                    "member": "_Grey190",
+                    "name": "Grey190",
+                    "notify": "Grey190Changed",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 21,
+                    "lineNumber": 36,
+                    "member": "_Grey200",
+                    "name": "Grey200",
+                    "notify": "Grey200Changed",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 22,
+                    "lineNumber": 37,
+                    "member": "_Grey210",
+                    "name": "Grey210",
+                    "notify": "Grey210Changed",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 23,
+                    "lineNumber": 38,
+                    "member": "_Grey220",
+                    "name": "Grey220",
+                    "notify": "Grey220Changed",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 24,
+                    "lineNumber": 39,
+                    "member": "_Yellow",
+                    "name": "Yellow",
+                    "notify": "YellowChanged",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "FluColorSet*",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 25,
+                    "lineNumber": 40,
+                    "member": "_Orange",
+                    "name": "Orange",
+                    "notify": "OrangeChanged",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "FluColorSet*",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 26,
+                    "lineNumber": 41,
+                    "member": "_Red",
+                    "name": "Red",
+                    "notify": "RedChanged",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "FluColorSet*",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 27,
+                    "lineNumber": 42,
+                    "member": "_Magenta",
+                    "name": "Magenta",
+                    "notify": "MagentaChanged",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "FluColorSet*",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 28,
+                    "lineNumber": 43,
+                    "member": "_Purple",
+                    "name": "Purple",
+                    "notify": "PurpleChanged",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "FluColorSet*",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 29,
+                    "lineNumber": 44,
+                    "member": "_Blue",
+                    "name": "Blue",
+                    "notify": "BlueChanged",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "FluColorSet*",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 30,
+                    "lineNumber": 45,
+                    "member": "_Teal",
+                    "name": "Teal",
+                    "notify": "TealChanged",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "FluColorSet*",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 31,
+                    "lineNumber": 46,
+                    "member": "_Green",
+                    "name": "Green",
+                    "notify": "GreenChanged",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "FluColorSet*",
+                    "user": false
+                }
+            ],
+            "qualifiedClassName": "FluColors",
+            "signals": [
+                {
+                    "access": "public",
+                    "index": 0,
+                    "lineNumber": 15,
+                    "name": "BlackChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 1,
+                    "lineNumber": 16,
+                    "name": "WhiteChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 2,
+                    "lineNumber": 17,
+                    "name": "Grey10Changed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 3,
+                    "lineNumber": 18,
+                    "name": "Grey20Changed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 4,
+                    "lineNumber": 19,
+                    "name": "Grey30Changed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 5,
+                    "lineNumber": 20,
+                    "name": "Grey40Changed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 6,
+                    "lineNumber": 21,
+                    "name": "Grey50Changed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 7,
+                    "lineNumber": 22,
+                    "name": "Grey60Changed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 8,
+                    "lineNumber": 23,
+                    "name": "Grey70Changed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 9,
+                    "lineNumber": 24,
+                    "name": "Grey80Changed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 10,
+                    "lineNumber": 25,
+                    "name": "Grey90Changed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 11,
+                    "lineNumber": 26,
+                    "name": "Grey100Changed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 12,
+                    "lineNumber": 27,
+                    "name": "Grey110Changed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 13,
+                    "lineNumber": 28,
+                    "name": "Grey120Changed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 14,
+                    "lineNumber": 29,
+                    "name": "Grey130Changed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 15,
+                    "lineNumber": 30,
+                    "name": "Grey140Changed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 16,
+                    "lineNumber": 31,
+                    "name": "Grey150Changed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 17,
+                    "lineNumber": 32,
+                    "name": "Grey160Changed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 18,
+                    "lineNumber": 33,
+                    "name": "Grey170Changed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 19,
+                    "lineNumber": 34,
+                    "name": "Grey180Changed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 20,
+                    "lineNumber": 35,
+                    "name": "Grey190Changed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 21,
+                    "lineNumber": 36,
+                    "name": "Grey200Changed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 22,
+                    "lineNumber": 37,
+                    "name": "Grey210Changed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 23,
+                    "lineNumber": 38,
+                    "name": "Grey220Changed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 24,
+                    "lineNumber": 39,
+                    "name": "YellowChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 25,
+                    "lineNumber": 40,
+                    "name": "OrangeChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 26,
+                    "lineNumber": 41,
+                    "name": "RedChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 27,
+                    "lineNumber": 42,
+                    "name": "MagentaChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 28,
+                    "lineNumber": 43,
+                    "name": "PurpleChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 29,
+                    "lineNumber": 44,
+                    "name": "BlueChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 30,
+                    "lineNumber": 45,
+                    "name": "TealChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 31,
+                    "lineNumber": 46,
+                    "name": "GreenChanged",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "FluColors.h",
+    "outputRevision": 69
+}

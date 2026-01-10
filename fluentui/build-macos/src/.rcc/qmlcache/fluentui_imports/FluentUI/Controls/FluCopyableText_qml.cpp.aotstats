@@ -1,0 +1,111 @@
+{
+    "formatRevision": 1,
+    "modules": [
+        {
+            "moduleFiles": [
+                {
+                    "entries": [
+                        {
+                            "codegenResult": 2,
+                            "column": 31,
+                            "durationMicroseconds": 310,
+                            "functionName": "textColor",
+                            "line": 7,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: FluColors::White with type QString (stored as QVariant) -> FluColors::White with type QString (adjusted to QColor, stored as QVariant)"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 12,
+                            "durationMicroseconds": 0,
+                            "functionName": "color",
+                            "line": 10,
+                            "message": "Could not find property \"color\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 17,
+                            "durationMicroseconds": 0,
+                            "functionName": "renderType",
+                            "line": 12,
+                            "message": "Could not find property \"renderType\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 21,
+                            "durationMicroseconds": 0,
+                            "functionName": "selectionColor",
+                            "line": 18,
+                            "message": "Could not find property \"selectionColor\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 10,
+                            "durationMicroseconds": 0,
+                            "functionName": "font",
+                            "line": 28,
+                            "message": "Could not find property \"font\"."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 14,
+                            "durationMicroseconds": 35,
+                            "functionName": "font",
+                            "line": 21,
+                            "message": "Cannot retrieve a non-object type by ID: control"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 15,
+                            "durationMicroseconds": 26,
+                            "functionName": "text",
+                            "line": 22,
+                            "message": "Cannot retrieve a non-object type by ID: control"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 24,
+                            "durationMicroseconds": 31,
+                            "functionName": "implicitWidth",
+                            "line": 25,
+                            "message": "Cannot access value for name text_metrics"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 25,
+                            "durationMicroseconds": 47,
+                            "functionName": "implicitHeight",
+                            "line": 26,
+                            "message": "Cannot access value for name text_metrics"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 26,
+                            "durationMicroseconds": 89,
+                            "functionName": "acceptedButtons",
+                            "line": 30,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 96,
+                            "functionName": "onTapped",
+                            "line": 31,
+                            "message": "Cannot retrieve a non-object type by ID: control"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 20,
+                            "durationMicroseconds": 11,
+                            "functionName": "inputItem",
+                            "line": 35,
+                            "message": "Cannot retrieve a non-object type by ID: control"
+                        }
+                    ],
+                    "filePath": "/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/src/imports/FluentUI/Controls/FluCopyableText.qml"
+                }
+            ],
+            "moduleId": "FluentUI(fluentui)"
+        }
+    ]
+}

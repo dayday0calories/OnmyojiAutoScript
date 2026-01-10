@@ -1,0 +1,303 @@
+{
+    "formatRevision": 1,
+    "modules": [
+        {
+            "moduleFiles": [
+                {
+                    "entries": [
+                        {
+                            "codegenResult": 0,
+                            "column": 20,
+                            "durationMicroseconds": 118,
+                            "functionName": "implicitWidth",
+                            "line": 15,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 21,
+                            "durationMicroseconds": 47,
+                            "functionName": "implicitHeight",
+                            "line": 16,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 13,
+                            "durationMicroseconds": 538,
+                            "functionName": "onWheel",
+                            "line": 27,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 13,
+                            "durationMicroseconds": 65,
+                            "functionName": "onWheel",
+                            "line": 27,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 23,
+                            "durationMicroseconds": 48,
+                            "functionName": "fill",
+                            "line": 24,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 22,
+                            "durationMicroseconds": 87,
+                            "functionName": "onTriggered",
+                            "line": 43,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 21,
+                            "durationMicroseconds": 183,
+                            "functionName": "orientation",
+                            "line": 52,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 23,
+                            "durationMicroseconds": 46,
+                            "functionName": "fill",
+                            "line": 53,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 17,
+                            "durationMicroseconds": 49,
+                            "functionName": "height",
+                            "line": 58,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 16,
+                            "durationMicroseconds": 32,
+                            "functionName": "width",
+                            "line": 59,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 18,
+                            "durationMicroseconds": 107,
+                            "functionName": "visible",
+                            "line": 80,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 20,
+                            "durationMicroseconds": 222,
+                            "functionName": "onClicked",
+                            "line": 81,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 63,
+                            "functionName": "left",
+                            "line": 61,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 25,
+                            "durationMicroseconds": 33,
+                            "functionName": "leftMargin",
+                            "line": 62,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 29,
+                            "durationMicroseconds": 53,
+                            "functionName": "verticalCenter",
+                            "line": 63,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 31,
+                            "durationMicroseconds": 52,
+                            "functionName": "horizontalCenter",
+                            "line": 64,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 18,
+                            "durationMicroseconds": 50,
+                            "functionName": "top",
+                            "line": 65,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 24,
+                            "durationMicroseconds": 29,
+                            "functionName": "topMargin",
+                            "line": 66,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 1486,
+                            "functionName": "color",
+                            "line": 70,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: conversion to QVariant -> QColor stored as QVariant"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 25,
+                            "durationMicroseconds": 98,
+                            "functionName": "iconSource",
+                            "line": 73,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 24,
+                            "durationMicroseconds": 242,
+                            "functionName": "iconColor",
+                            "line": 77,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: FluColors::Grey220 with type QString (stored as QVariant) -> FluColors::Grey220 with type QString (adjusted to QColor, stored as QVariant)"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 31,
+                            "durationMicroseconds": 49,
+                            "functionName": "centerIn",
+                            "line": 78,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 17,
+                            "durationMicroseconds": 35,
+                            "functionName": "height",
+                            "line": 88,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 16,
+                            "durationMicroseconds": 28,
+                            "functionName": "width",
+                            "line": 89,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 18,
+                            "durationMicroseconds": 130,
+                            "functionName": "visible",
+                            "line": 102,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 20,
+                            "durationMicroseconds": 249,
+                            "functionName": "onClicked",
+                            "line": 111,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 20,
+                            "durationMicroseconds": 48,
+                            "functionName": "right",
+                            "line": 91,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 26,
+                            "durationMicroseconds": 26,
+                            "functionName": "rightMargin",
+                            "line": 92,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 29,
+                            "durationMicroseconds": 38,
+                            "functionName": "verticalCenter",
+                            "line": 93,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 31,
+                            "durationMicroseconds": 40,
+                            "functionName": "horizontalCenter",
+                            "line": 94,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 21,
+                            "durationMicroseconds": 36,
+                            "functionName": "bottom",
+                            "line": 95,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 27,
+                            "durationMicroseconds": 24,
+                            "functionName": "bottomMargin",
+                            "line": 96,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 476,
+                            "functionName": "color",
+                            "line": 100,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: conversion to QVariant -> QColor stored as QVariant"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 25,
+                            "durationMicroseconds": 51,
+                            "functionName": "iconSource",
+                            "line": 104,
+                            "message": "Cannot access value for name vertical"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 24,
+                            "durationMicroseconds": 182,
+                            "functionName": "iconColor",
+                            "line": 108,
+                            "message": "Cannot generate efficient code for internal conversion with incompatible or ambiguous types: FluColors::Grey220 with type QString (stored as QVariant) -> FluColors::Grey220 with type QString (adjusted to QColor, stored as QVariant)"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 31,
+                            "durationMicroseconds": 40,
+                            "functionName": "centerIn",
+                            "line": 109,
+                            "message": ""
+                        }
+                    ],
+                    "filePath": "/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/src/imports/FluentUI/Controls/FluFlipView.qml"
+                }
+            ],
+            "moduleId": "FluentUI(fluentui)"
+        }
+    ]
+}

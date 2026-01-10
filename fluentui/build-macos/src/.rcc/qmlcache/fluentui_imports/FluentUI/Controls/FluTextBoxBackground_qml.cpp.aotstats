@@ -1,0 +1,103 @@
+{
+    "formatRevision": 1,
+    "modules": [
+        {
+            "moduleFiles": [
+                {
+                    "entries": [
+                        {
+                            "codegenResult": 2,
+                            "column": 12,
+                            "durationMicroseconds": 626,
+                            "functionName": "color",
+                            "line": 13,
+                            "message": "Cannot load property disabled from (component in /Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/src/imports/FluentUI/Controls/FluTextBoxBackground.qml)::inputItem with type QQuickItem."
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 20,
+                            "durationMicroseconds": 46,
+                            "functionName": "width",
+                            "line": 27,
+                            "message": "Cannot access value for name content"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 21,
+                            "durationMicroseconds": 27,
+                            "functionName": "height",
+                            "line": 28,
+                            "message": "Cannot access value for name content"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 19,
+                            "durationMicroseconds": 393,
+                            "functionName": "color",
+                            "line": 33,
+                            "message": "Cannot load property disabled from (component in /Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/src/imports/FluentUI/Controls/FluTextBoxBackground.qml)::inputItem with type QQuickItem."
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 16,
+                            "durationMicroseconds": 157,
+                            "functionName": "width",
+                            "line": 40,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 17,
+                            "durationMicroseconds": 70,
+                            "functionName": "height",
+                            "line": 41,
+                            "message": "Cannot access value for name inputItem"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 18,
+                            "durationMicroseconds": 41,
+                            "functionName": "visible",
+                            "line": 43,
+                            "message": "Cannot access value for name inputItem"
+                        },
+                        {
+                            "codegenResult": 2,
+                            "column": 16,
+                            "durationMicroseconds": 395,
+                            "functionName": "color",
+                            "line": 44,
+                            "message": "Cannot access value for name inputItem"
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 25,
+                            "durationMicroseconds": 126,
+                            "functionName": "bottom",
+                            "line": 42,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 30,
+                            "durationMicroseconds": 89,
+                            "functionName": "type",
+                            "line": 54,
+                            "message": ""
+                        },
+                        {
+                            "codegenResult": 0,
+                            "column": 37,
+                            "durationMicroseconds": 167,
+                            "functionName": "bezierCurve",
+                            "line": 55,
+                            "message": ""
+                        }
+                    ],
+                    "filePath": "/Users/rainyu/Downloads/OnmyojiAutoScript-dev/fluentui/src/imports/FluentUI/Controls/FluTextBoxBackground.qml"
+                }
+            ],
+            "moduleId": "FluentUI(fluentui)"
+        }
+    ]
+}
