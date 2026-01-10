@@ -31,7 +31,12 @@ class Screenshot(Adb, DroidCast, Scrcpy, Window, NemuIpc):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        super(Window, self).__init__(*args, **kwargs)
+        # On Windows, Window mixin may not forward `__init__` via `super()`,
+        # so explicitly continue the MRO chain after Window.
+        # On non-Windows, `Window` is a stub and classes after it may not accept args.
+        if IS_WINDOWS:
+            super(Window, self).__init__(*args, **kwargs)
+
 
     @cached_property
     def screenshot_methods(self):
