@@ -19,6 +19,7 @@ from module.atom.image_grid import ImageGrid
 from module.base.utils import point2str
 from module.base.timer import Timer
 from module.exception import GamePageUnknownError
+from module.team_flow.sync import SyncBarrier
 
 
 
@@ -75,6 +76,10 @@ def random_delay(min_value: float = 1.0, max_value: float = 2.0, decimal: int = 
 
 class ScriptTask(GeneralBattle, GameUi, SwitchSoul, RyouToppaAssets):
     medal_grid: ImageGrid = None
+    _sync_barrier: SyncBarrier = None
+    _sync_run_id: str = ''
+    _sync_timeout: float = 20.0
+    _sync_retain: bool = False
 
     def run(self):
         """
@@ -82,6 +87,8 @@ class ScriptTask(GeneralBattle, GameUi, SwitchSoul, RyouToppaAssets):
         :return:
         """
         ryou_config = self.config.ryou_toppa
+        # Initialize optional MQTT sync (no-op unless enabled in config).
+        self._init_sync(ryou_config)
         time_limit: Time = ryou_config.raid_config.limit_time
         time_delta = timedelta(hours=time_limit.hour, minutes=time_limit.minute, seconds=time_limit.second)
         self.medal_grid = ImageGrid([RealmRaidAssets.I_MEDAL_5, RealmRaidAssets.I_MEDAL_4, RealmRaidAssets.I_MEDAL_3,
@@ -296,6 +303,9 @@ class ScriptTask(GeneralBattle, GameUi, SwitchSoul, RyouToppaAssets):
             delay = random_delay()
             time.sleep(delay)
 
+        # Barrier before attacking so two instances enter battle together.
+        if not self._sync_before_attack(index):
+            logger.warning('Sync wait timeout, continue without sync.')
 
         rcl = area_map[index].get("rule_click")
         # # 点击攻击区域，等待攻击按钮出现。
@@ -321,6 +331,41 @@ class ScriptTask(GeneralBattle, GameUi, SwitchSoul, RyouToppaAssets):
             if self.click(rcl, interval=5):
                 click_failure_count += 1
                 continue
+
+
+
+    def _init_sync(self, ryou_config) -> None:
+        sync_cfg = ryou_config.sync
+        team_flow = self.config.global_game.team_flow
+        # Only enable sync when both task config and global MQTT config are enabled.
+        if not sync_cfg.enable or not team_flow.enable or not team_flow.broker:
+            return
+        try:
+            # Run ID is daily so both accounts share a stable group key per day.
+            self._sync_barrier = SyncBarrier(team_flow, group=sync_cfg.group)
+            self._sync_run_id = datetime.now().strftime('%Y%m%d')
+            self._sync_timeout = float(sync_cfg.timeout_seconds)
+            self._sync_retain = bool(sync_cfg.retain)
+        except Exception as exc:
+            logger.warning(f'Sync init failed: {exc!r}')
+            self._sync_barrier = None
+
+    def _sync_before_attack(self, area_index: int) -> bool:
+        if not self._sync_barrier:
+            return True
+        team_flow = self.config.global_game.team_flow
+        role = self.config.ryou_toppa.sync.role
+        username = team_flow.username or 'unknown'
+        # Use a per-area+count key so both instances sync on the same target cycle.
+        sync_kind = f'ready_area_{area_index}_count_{self.current_count}'
+        self._sync_barrier.publish(
+            sync_kind,
+            self._sync_run_id,
+            {'area': area_index, 'count': self.current_count, 'role': role, 'who': username},
+            retain=self._sync_retain,
+        )
+        # Wait until both instances report ready for the same area+count.
+        return self._sync_barrier.wait_for(self._sync_run_id, sync_kind, 2, timeout=self._sync_timeout)
 
 
 if __name__ == "__main__":

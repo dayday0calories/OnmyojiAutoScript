@@ -34,8 +34,22 @@ class RaidConfig(BaseModel):
 
 
 
+class SyncRole(str, Enum):
+    leader = 'leader'
+    follower = 'follower'
+
+
+class SyncConfig(BaseModel):
+    enable: bool = Field(default=False, description='sync_enable_help')
+    role: SyncRole = Field(default=SyncRole.leader, description='sync_role_help')
+    group: str = Field(default='default', description='sync_group_help')
+    retain: bool = Field(default=False, description='sync_retain_help')
+    timeout_seconds: int = Field(default=20, description='sync_timeout_help')
+
+
 class RyouToppa(ConfigBase):
     scheduler: Scheduler = Field(default_factory=Scheduler)
     raid_config: RaidConfig = Field(default_factory=RaidConfig)
     general_battle_config: GeneralBattleConfig = Field(default_factory=GeneralBattleConfig)
     switch_soul_config: SwitchSoulConfig = Field(default_factory=SwitchSoulConfig)
+    sync: SyncConfig = Field(default_factory=SyncConfig)
