@@ -30,3 +30,28 @@ https://runhey.github.io/OASX/#/main
 目前我发现会有个别 task 在 mac 端运行会报错，如 DailyTrifiles， 大部分其他的没问题
 
 最后最后感谢作者大大
+
+---
+
+如果需要使用寮突破的同步功能，需安装 mosquitto
+
+
+安装并启动 mosquitto (Homebrew):
+brew install mosquitto
+brew services start mosquitto
+
+确认服务在 1883 端口:
+lsof -i :1883
+
+在 oas1.json / oas2.json 里启用 MQTT 同步:
+global_game.team_flow.enable = true
+global_game.team_flow.broker = "127.0.0.1"
+global_game.team_flow.port = 1883
+global_game.team_flow.transport = "TCP"
+global_game.team_flow.username = "oas1"  # oas2 填 oas2
+global_game.team_flow.password = ""
+
+ryou_toppa.sync.enable = true
+ryou_toppa.sync.group = "default"        # 两个账号一致
+ryou_toppa.sync.retain = true
+ryou_toppa.sync.timeout_seconds = 20
