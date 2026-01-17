@@ -802,7 +802,9 @@
       "enable_boss_green": false,
       "boss_green_mark": "green_left1",
       "enable_boss_anti_detect": false
-    }
+    },
+    "slow_mode": false,
+    "slow_factor": 1.5
   },
   "meta_demon": {
     "scheduler": {

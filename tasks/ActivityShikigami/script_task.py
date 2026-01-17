@@ -106,6 +106,14 @@ class StateMachine(BaseTask):
         return self._count_map
 
     # ----------------------------------------------------
+
+    @property
+    def slow_factor(self) -> float:
+        """
+        Scale timing when slow mode is enabled (battery saver, low FPS).
+        """
+        return self.conf.slow_factor if getattr(self.conf, "slow_mode", False) else 1.0
+
     def put_status(self):
         """
         更新全局状态
@@ -250,18 +258,20 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
         logger.hr(f'Start run climb type BOSS')
 
     def start_battle(self):
-        click_times, max_times = 0, random.randint(2, 4)
+        click_times = 0
+        max_times = max(2, int(round(random.randint(2, 4) * self.slow_factor)))
         while 1:
             self.screenshot()
-            if self.is_in_battle(False):
+            # Only treat it as "in battle" if the challenge button is gone.
+            if self.is_in_battle(False) and not self.ocr_appear(self.O_FIRE):
                 break
             if click_times >= max_times:
                 logger.warning(f'Climb {self.climb_type} cannot enter, maybe already end, try next')
                 return
-            if (self.appear_then_click(self.I_UI_CONFIRM_SAMLL, interval=1) or
-                    self.appear_then_click(self.I_UI_CONFIRM, interval=1) ):
+            if (self.appear_then_click(self.I_UI_CONFIRM_SAMLL, interval=1 * self.slow_factor) or
+                    self.appear_then_click(self.I_UI_CONFIRM, interval=1 * self.slow_factor)):
                 continue
-            if self.ocr_appear_click(self.O_FIRE, interval=2):
+            if self.ocr_appear_click(self.O_FIRE, interval=2 * self.slow_factor):
                 click_times += 1
                 logger.info(f'Try click fire, remain times[{max_times - click_times}]')
                 continue
@@ -276,9 +286,9 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
         self.count_map[self.climb_type] = self.current_count
         for btn in (self.C_RANDOM_LEFT, self.C_RANDOM_RIGHT, self.C_RANDOM_TOP, self.C_RANDOM_BOTTOM):
             btn.name = "BATTLE_RANDOM"
-        ok_cnt, max_retry = 0, 5
+        ok_cnt, max_retry = 0, max(5, int(round(5 * self.slow_factor)))
         while 1:
-            sleep(random.uniform(0.5, 1.5))
+            sleep(random.uniform(0.5, 1.5) * self.slow_factor)
             self.screenshot()
             # 达到最大重试次数则直接交给上层处理
             if ok_cnt > max_retry:
@@ -289,10 +299,10 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
             # 战斗失败
             if self.appear(self.I_FALSE):
                 logger.warning("Battle failed")
-                self.ui_click_until_smt_disappear(self.random_reward_click(click_now=False), self.I_FALSE, interval=1.5)
+                self.ui_click_until_smt_disappear(self.random_reward_click(click_now=False), self.I_FALSE, interval=1.5 * self.slow_factor)
                 return False
             # 战斗成功
-            if self.appear_then_click(self.I_WIN, interval=2):
+            if self.appear_then_click(self.I_WIN, interval=2 * self.slow_factor):
                 continue
             #  出现 “魂” 和 紫蛇皮
             if self.appear(self.I_REWARD):
@@ -306,7 +316,7 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
                     if appear_reward or appear_reward_purple_snake_skin:
                         reward_click = random.choice(
                             [self.C_RANDOM_LEFT, self.C_RANDOM_RIGHT, self.C_RANDOM_TOP])
-                        self.click(reward_click, interval=1.8)
+                        self.click(reward_click, interval=1.8 * self.slow_factor)
                         continue
                 return True
             # 已经不在战斗中了, 且奖励也识别过了, 则随机点击
@@ -361,7 +371,7 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
         :return: True 可以运行 or False
         """
         logger.hr(f'Check {self.climb_type} tickets')
-        if not self.wait_until_appear(self.O_FIRE, wait_time=3):
+        if not self.wait_until_appear(self.O_FIRE, wait_time=3 * self.slow_factor):
             logger.warning(f'Detect fire fail, try reidentify')
             return False
         self.screenshot()
@@ -418,5 +428,4 @@ if __name__ == '__main__':
     t = ScriptTask(c, d)
 
     t.run()
-
 

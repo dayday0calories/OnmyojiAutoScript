@@ -101,6 +101,8 @@ class ActivityShikigami(ConfigBase):
     general_climb: GeneralClimb = Field(default_factory=GeneralClimb)
     switch_soul_config: SwitchSoulConfig = Field(default_factory=SwitchSoulConfig)
     general_battle: GeneralBattleConfig = Field(default_factory=GeneralBattleConfig)
+    slow_mode: bool = Field(default=False, description='slow_mode_help')
+    slow_factor: float = Field(default=1.5, description='slow_factor_help')
 
     # @model_validator(mode='after')
     def validate_switch_preset(self):
