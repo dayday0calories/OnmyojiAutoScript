@@ -96,13 +96,17 @@ class GeneralBattleConfig(BaseModel):
     enable_ap100_anti_detect: bool = Field(default=False, description='100体爬塔战斗过程是否随机点击或滑动')
 
 
+
+
+class SlowModeConfig(BaseModel):
+    enable: bool = Field(default=False, description='slow_mode_help')
+    factor: float = Field(default=1.5, description='slow_factor_help')
 class ActivityShikigami(ConfigBase):
     scheduler: Scheduler = Field(default_factory=Scheduler)
     general_climb: GeneralClimb = Field(default_factory=GeneralClimb)
     switch_soul_config: SwitchSoulConfig = Field(default_factory=SwitchSoulConfig)
     general_battle: GeneralBattleConfig = Field(default_factory=GeneralBattleConfig)
-    slow_mode: bool = Field(default=False, description='slow_mode_help')
-    slow_factor: float = Field(default=1.5, description='slow_factor_help')
+    slow_mode_config: SlowModeConfig = Field(default_factory=SlowModeConfig)
 
     # @model_validator(mode='after')
     def validate_switch_preset(self):

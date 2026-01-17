@@ -112,7 +112,10 @@ class StateMachine(BaseTask):
         """
         Scale timing when slow mode is enabled (battery saver, low FPS).
         """
-        return self.conf.slow_factor if getattr(self.conf, "slow_mode", False) else 1.0
+        slow_cfg = getattr(self.conf, "slow_mode_config", None)
+        if not slow_cfg:
+            return 1.0
+        return slow_cfg.factor if slow_cfg.enable else 1.0
 
     def put_status(self):
         """
