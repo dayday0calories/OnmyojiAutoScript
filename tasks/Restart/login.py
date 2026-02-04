@@ -30,6 +30,14 @@ class LoginHandler(BaseTask, RestartAssets):
         orientation_timer = Timer(10)
         login_success = False
 
+        login_wait_seconds = 0
+        if hasattr(self.config.restart, 'login_wait_config'):
+            login_wait_seconds = max(0, int(getattr(self.config.restart.login_wait_config, 'wait_seconds', 0)))
+        else:
+            login_wait_seconds = max(0, int(getattr(self.config.restart, 'login_wait_seconds', 0)))
+        login_wait_timer = Timer(login_wait_seconds)
+        login_wait_started = False
+
         while 1:
             # Watch device rotation
             if not login_success and orientation_timer.reached():
@@ -125,7 +133,15 @@ class LoginHandler(BaseTask, RestartAssets):
             # 点击’进入游戏‘
             if not self.appear(self.I_LOGIN_8):
                 continue
-            
+
+            if login_wait_seconds > 0:
+                if not login_wait_started:
+                    logger.info(f'Login page detected, wait {login_wait_seconds}s before clicking enter')
+                    login_wait_timer.start()
+                    login_wait_started = True
+                if not login_wait_timer.reached():
+                    continue
+
             # 登录体验服时，点击“进入游戏”速度过快，可能会出现体验服的弹窗
             if self.appear(self.I_EARLY_SERVER):
                 if self.appear_then_click(self.I_EARLY_SERVER_CANCEL):

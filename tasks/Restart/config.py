@@ -35,9 +35,14 @@ class LoginCharacterConfig(BaseModel):
     # 同账号同服务器多个角色时,需要登录的角色名/服务器名
     character: str = Field(default="")
 
+class LoginWaitConfig(BaseModel):
+    wait_seconds: int = Field(default=0, description='login_wait_seconds_help')
+
+
 
 class Restart(ConfigBase):
     scheduler: RestartScheduler = Field(default_factory=RestartScheduler)
     tasks_config_reset: TasksReset = Field(default_factory=TasksReset)
     harvest_config: HarvestConfig = Field(default_factory=HarvestConfig)
     login_character_config: LoginCharacterConfig = Field(default_factory=LoginCharacterConfig)
+    login_wait_config: LoginWaitConfig = Field(default_factory=LoginWaitConfig)

@@ -57,7 +57,8 @@
     },
     "login_character_config": {
       "character": ""
-    }
+    },
+    "login_wait_config": {"wait_seconds": 0}
   },
   "global_game": {
     "emergency": {
