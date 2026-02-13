@@ -21,9 +21,9 @@
     "itemName": "toggle_button",
     "imageName": "as_toggle_button.png",
     "roiFront": "1193,463,27,25",
-    "roiBack": "1169,146,73,403",
+    "roiBack": "1080,120,190,500",
     "method": "Template matching",
-    "threshold": 0.8,
+    "threshold": 0.7,
     "description": "description"
   }
 ]

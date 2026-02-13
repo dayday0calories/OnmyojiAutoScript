@@ -291,10 +291,27 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
         self.count_map[self.climb_type] = self.current_count
         for btn in (self.C_RANDOM_LEFT, self.C_RANDOM_RIGHT, self.C_RANDOM_TOP, self.C_RANDOM_BOTTOM):
             btn.name = "BATTLE_RANDOM"
+        reward_markers = (
+            self.I_REWARD,
+            self.I_REWARD_PURPLE_SNAKE_SKIN,
+            self.I_REWARD_GOLD,
+            self.I_REWARD_GOLD_SNAKE_SKIN,
+            self.I_REWARD_EXP_SOUL_4,
+            self.I_REWARD_SOUL_5,
+            self.I_REWARD_SOUL_6,
+        )
+        win_seen = False
+        post_win_click_timer = Timer(max(1.0, 1.0 * self.slow_factor)).start()
+        post_win_timeout = Timer(max(20, int(round(20 * self.slow_factor)))).start()
         ok_cnt, max_retry = 0, max(5, int(round(5 * self.slow_factor)))
+        battle_wait_timeout = Timer(max(45, int(round(45 * self.slow_factor)))).start()
         while 1:
             sleep(random.uniform(0.5, 1.5) * self.slow_factor)
             self.screenshot()
+            ok_cnt += 1
+            if battle_wait_timeout.reached():
+                logger.warning("Battle wait timeout reached, fallback return success")
+                return True
             # 达到最大重试次数则直接交给上层处理
             if ok_cnt > max_retry:
                 break
@@ -308,22 +325,48 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
                 return False
             # 战斗成功
             if self.appear_then_click(self.I_WIN, interval=2 * self.slow_factor):
+                win_seen = True
+                post_win_click_timer.reset()
+                post_win_timeout.reset()
                 continue
-            #  出现 “魂” 和 紫蛇皮
-            if self.appear(self.I_REWARD):
+            # 出现结算奖励标识（兼容不同奖励形态）
+            appear_reward_like = any(self.appear(marker) for marker in reward_markers)
+            if appear_reward_like:
                 logger.info('Win battle')
+                reward_wait_timeout = Timer(max(15, int(round(15 * self.slow_factor)))).start()
                 while 1:
                     self.screenshot()
+                    if reward_wait_timeout.reached():
+                        logger.warning("Reward wait timeout, force clicking continue area")
+                        self.random_reward_click(
+                            exclude_click=[self.C_RANDOM_LEFT, self.C_RANDOM_RIGHT, self.C_RANDOM_TOP],
+                            click_now=True
+                        )
+                        sleep(0.5 * self.slow_factor)
+                        return True
                     appear_reward = self.appear_then_click(self.I_REWARD)
-                    appear_reward_purple_snake_skin = self.appear(self.I_REWARD_PURPLE_SNAKE_SKIN)
-                    if not appear_reward and not appear_reward_purple_snake_skin:
+                    appear_reward_like = appear_reward or any(self.appear(marker) for marker in reward_markers[1:])
+                    if not appear_reward_like:
                         break
-                    if appear_reward or appear_reward_purple_snake_skin:
-                        reward_click = random.choice(
-                            [self.C_RANDOM_LEFT, self.C_RANDOM_RIGHT, self.C_RANDOM_TOP])
-                        self.click(reward_click, interval=1.8 * self.slow_factor)
+                    if appear_reward_like:
+                        # Prefer bottom area to avoid top-bar accidental page opens.
+                        self.click(self.C_RANDOM_BOTTOM, interval=1.8 * self.slow_factor)
                         continue
                 return True
+            # 已点击过胜利，但奖励模板被遮挡时，主动点击“点击屏幕继续”区域推进
+            if win_seen:
+                if post_win_click_timer.reached_and_reset():
+                    logger.info("Post-win fallback click to clear covered reward page")
+                    self.random_reward_click(
+                        exclude_click=[self.C_RANDOM_LEFT, self.C_RANDOM_RIGHT, self.C_RANDOM_TOP],
+                        click_now=True
+                    )
+                if self.ocr_appear(self.O_FIRE):
+                    return True
+                if post_win_timeout.reached():
+                    logger.warning("Post-win fallback timeout reached, continue as success")
+                    return True
+                continue
             # 已经不在战斗中了, 且奖励也识别过了, 则随机点击
             # if ok_cnt > 0 and not self.is_in_battle(False):
             #     self.random_reward_click(exclude_click=[self.C_RANDOM_BOTTOM])
@@ -378,7 +421,17 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
         logger.hr(f'Check {self.climb_type} tickets')
         if not self.wait_until_appear(self.O_FIRE, wait_time=3 * self.slow_factor):
             logger.warning(f'Detect fire fail, try reidentify')
-            return False
+            # Reward overlay may cover FIRE OCR; force click screen to continue and retry.
+            for _ in range(2):
+                self.random_reward_click(
+                    exclude_click=[self.C_RANDOM_LEFT, self.C_RANDOM_RIGHT, self.C_RANDOM_TOP],
+                    click_now=True
+                )
+                sleep(0.4 * self.slow_factor)
+                if self.wait_until_appear(self.O_FIRE, wait_time=1.5 * self.slow_factor):
+                    break
+            else:
+                return False
         self.screenshot()
         remain_times = 0
         if self.climb_type == 'pass':
@@ -433,4 +486,3 @@ if __name__ == '__main__':
     t = ScriptTask(c, d)
 
     t.run()
-

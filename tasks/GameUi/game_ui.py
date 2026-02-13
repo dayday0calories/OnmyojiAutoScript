@@ -280,17 +280,40 @@ class GameUi(BaseTask, GameUiAssets):
                 logger.warning(f"No link from {current_page} to {next_page}")
                 continue
             # 跳转页面
-            max_wait_timer = Timer(6).start()
+            is_link_sequence = isinstance(button, list)
+            max_wait_seconds = 12 if is_link_sequence else 6
+            max_operate_tries = 20 if is_link_sequence else 10
+            operate_interval = 1.0 if is_link_sequence else 0.8
+            max_wait_timer = Timer(max_wait_seconds).start()
+            operate_try_count = 0
             logger.info(f'Wait appear and operate {button} on {current_page}')
             while not max_wait_timer.reached():
                 if timeout_timer.reached():
                     return False
+                if operate_try_count >= max_operate_tries:
+                    break
+                operate_try_count += 1
                 if isinstance(button, list):
-                    exec_operates = [self.appear_then_operate(btn, interval=0.8, skip_first_screenshot=False)
-                                     for btn in button]
-                    if exec_operates[0]:  # 只要第一个成功就跳出
+                    first_operated = False
+                    helper_operated = False
+                    # For list links, button[0] is the primary transition action.
+                    # Other buttons are helper actions (for example, expand a folded panel).
+                    # Only execute one action each loop to avoid clicking helper immediately
+                    # after primary and canceling the transition.
+                    for idx, btn in enumerate(button):
+                        if self.appear_then_operate(btn, interval=operate_interval, skip_first_screenshot=False):
+                            if idx == 0:
+                                first_operated = True
+                            else:
+                                helper_operated = True
+                            break
+                    if first_operated:  # 只要第一个成功就跳出
                         break
-                if self.appear_then_operate(button, interval=0.8, skip_first_screenshot=False):
+                    if helper_operated:
+                        # Give the panel refresh/expand animation time to settle.
+                        sleep(0.4)
+                        continue
+                if self.appear_then_operate(button, interval=operate_interval, skip_first_screenshot=False):
                     break
             else:
                 logger.warning(f'Failed recognize {button} on {current_page}')
