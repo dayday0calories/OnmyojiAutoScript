@@ -28,6 +28,7 @@ from multiprocessing.queues import Queue
 from module.config.utils import convert_to_underscore
 from module.config.config import Config
 from module.config.config import Function
+from module.config.scheduler import TaskScheduler
 from module.config.config_model import ConfigModel
 from module.device.device import Device
 from module.device.env import IS_WINDOWS
@@ -60,8 +61,8 @@ class Script:
 
     def _should_preempt(self, current_task: str) -> bool:
         """
-        Return True when there is a due task with strictly higher priority.
-        Lower priority value means higher priority.
+        Return True when the scheduler-ordered next due task is different
+        from current task and has strictly higher priority (smaller value).
         """
         if not current_task:
             return False
@@ -74,23 +75,31 @@ class Script:
             return False
 
         now = datetime.now()
-        candidates: list[Function] = []
+        due_tasks: list[Function] = []
         for key, value in model_dict.items():
             func = Function(key, value)
             if not func.enable:
                 continue
-            if func.command == current_task:
-                continue
             if not isinstance(func.next_run, datetime):
                 continue
-            if func.next_run <= now and func.priority < current_func.priority:
-                candidates.append(func)
+            if func.next_run <= now:
+                due_tasks.append(func)
 
-        if not candidates:
+        if not due_tasks:
             self._last_preempt_target = None
             return False
 
-        target = sorted(candidates, key=lambda f: (f.priority, f.next_run))[0]
+        rule = self.config.model.script.optimization.schedule_rule
+        ordered_due = TaskScheduler.schedule(rule=rule, pending=due_tasks) or due_tasks
+        # Only preempt when scheduler itself would pick another due task first.
+        target = ordered_due[0]
+        if target.command == current_task:
+            self._last_preempt_target = None
+            return False
+        if target.priority >= current_func.priority:
+            self._last_preempt_target = None
+            return False
+
         if self._last_preempt_target != target.command:
             logger.warning(
                 f'Preempt task `{current_task}` for higher-priority due task `{target.command}`'
