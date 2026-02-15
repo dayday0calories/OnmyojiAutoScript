@@ -508,8 +508,9 @@ class Script:
             failed = 0 if success else failed + 1
             # deep_set(self.failure_record, keys=task, value=failed)
             self.failure_record[task] = failed
-            if failed >= 3:
-                logger.critical(f"Task `{task}` failed 3 or more times.")
+            max_failures = max(1, int(getattr(self.config.script.error, 'max_task_failures', 3)))
+            if failed >= max_failures:
+                logger.critical(f"Task `{task}` failed {max_failures} or more times.")
                 logger.critical("Possible reason #1: You haven't used it correctly. "
                                 "Please read the help text of the options.")
                 logger.critical("Possible reason #2: There is a problem with this task. "

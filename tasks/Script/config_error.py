@@ -22,5 +22,9 @@ class Error(BaseModel):
     notify_enable: bool = Field(default=False,
                                 description='')
     notify_config: MultiLine = Field(default='provider: null', description='notify_config_help')
-
+    max_task_failures: int = Field(
+        default=3,
+        description='Maximum consecutive failures allowed for the same task before stopping script',
+        ge=1,
+    )
 
