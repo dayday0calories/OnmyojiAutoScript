@@ -399,7 +399,24 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
             'pass': self.I_CLIMB_MODE_PASS,
         }
         logger.info(f'Switch climb mode to {mode}')
-        self.ui_click(self.I_CLIMB_MODE_SWITCH, stop=map_check[mode], interval=1.9)
+        target_check = map_check[mode]
+        switch_timeout = Timer(max(20, int(round(20 * self.slow_factor)))).start()
+        while 1:
+            self.screenshot()
+            if self.appear(target_check):
+                logger.info(f'Climb mode already at {mode}')
+                return
+            if self.appear_then_click(self.I_CLIMB_MODE_SWITCH, interval=1.9 * self.slow_factor):
+                continue
+            if switch_timeout.reached():
+                logger.warning(f'Switch climb mode to {mode} timeout, try recover page once')
+                self.ui_get_current_page(skip_first_screenshot=False)
+                self.ui_goto(game.page_climb_act, timeout=20)
+                if self.appear(target_check):
+                    logger.info(f'Climb mode switched to {mode} after recovery')
+                    return
+                logger.warning(f'Switch climb mode to {mode} still failed after recovery')
+                return
 
     def lock_team(self, battle_conf: GeneralBattleConfig):
         """
