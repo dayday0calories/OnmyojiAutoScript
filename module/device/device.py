@@ -17,6 +17,7 @@ from module.device.screenshot import Screenshot
 from module.exception import (GameNotRunningError,
                               GameStuckError,
                               GameTooManyClickError,
+                              TaskPreempted,
                               RequestHumanTakeover,
                               EmulatorNotRunningError)
 from module.logger import logger
@@ -54,6 +55,8 @@ class Device(Platform, Screenshot, Control, AppControl):
             _ = self.emulator_instance
 
         self.screenshot_interval_set()
+        self.preempt_checker = None
+        self.preempt_check_timer = Timer(60).start()
 
         # Auto-select the fastest screenshot method
         if self.config.script.device.screenshot_method == 'auto':
@@ -102,6 +105,9 @@ class Device(Platform, Screenshot, Control, AppControl):
         Returns:
             np.ndarray:
         """
+        if getattr(self, 'preempt_checker', None):
+            if self.preempt_check_timer.reached_and_reset() and self.preempt_checker():
+                raise TaskPreempted('Current task preempted by higher-priority due task')
         self.stuck_record_check()
 
         try:

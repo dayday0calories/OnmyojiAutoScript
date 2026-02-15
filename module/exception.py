@@ -60,3 +60,7 @@ class RequestHumanTakeover(Exception):
 
 class TaskEnd(Exception):
     pass
+
+
+class TaskPreempted(Exception):
+    pass

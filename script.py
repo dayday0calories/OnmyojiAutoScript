@@ -27,6 +27,7 @@ from multiprocessing.queues import Queue
 
 from module.config.utils import convert_to_underscore
 from module.config.config import Config
+from module.config.config import Function
 from module.config.config_model import ConfigModel
 from module.device.device import Device
 from module.device.env import IS_WINDOWS
@@ -53,8 +54,49 @@ class Script:
         # Failure count of tasks
         # Key: str, task name, value: int, failure count
         self.failure_record = {}
+        self._last_preempt_target: str | None = None
         # 运行loop的线程
         self.loop_thread: Thread = None
+
+    def _should_preempt(self, current_task: str) -> bool:
+        """
+        Return True when there is a due task with strictly higher priority.
+        Lower priority value means higher priority.
+        """
+        if not current_task:
+            return False
+        model_dict = self.config.model.dict()
+        current_data = model_dict.get(current_task)
+        if not current_data:
+            return False
+        current_func = Function(current_task, current_data)
+        if not current_func.enable:
+            return False
+
+        now = datetime.now()
+        candidates: list[Function] = []
+        for key, value in model_dict.items():
+            func = Function(key, value)
+            if not func.enable:
+                continue
+            if func.command == current_task:
+                continue
+            if not isinstance(func.next_run, datetime):
+                continue
+            if func.next_run <= now and func.priority < current_func.priority:
+                candidates.append(func)
+
+        if not candidates:
+            self._last_preempt_target = None
+            return False
+
+        target = sorted(candidates, key=lambda f: (f.priority, f.next_run))[0]
+        if self._last_preempt_target != target.command:
+            logger.warning(
+                f'Preempt task `{current_task}` for higher-priority due task `{target.command}`'
+            )
+            self._last_preempt_target = target.command
+        return True
 
     @cached_property
     def config(self) -> "Config":
@@ -375,13 +417,22 @@ class Script:
         if command == 'start' or command == 'goto_main':
             logger.error(f'Invalid command `{command}`')
 
+        checker_set = False
         try:
+            current_task = convert_to_underscore(command)
+            if getattr(self.config.script.optimization, 'enable_preempt', False):
+                self.device.preempt_checker = lambda: self._should_preempt(current_task)
+                self.device.preempt_check_timer.reset()
+                checker_set = True
             self.device.screenshot()
             module_name = 'script_task'
             module_path = str(Path.cwd() / 'tasks' / command / (module_name+'.py'))
             logger.info(f'module_path: {module_path}, module_name: {module_name}')
             task_module = load_module(module_name, module_path)
             task_module.ScriptTask(config=self.config, device=self.device).run()
+        except TaskPreempted as e:
+            logger.warning(str(e))
+            return True
         except TaskEnd:
             return True
         except GameNotRunningError as e:
@@ -436,6 +487,9 @@ class Script:
             self.save_error_log()
             self.config.notifier.push(title=f'{I18n.trans_zh_cn(command)}{command}', content=f"<{self.config_name}> Exception occured")
             exit(1)
+        finally:
+            if checker_set:
+                self.device.preempt_checker = None
 
     def loop(self):
         """

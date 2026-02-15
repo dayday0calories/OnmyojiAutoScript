@@ -25,4 +25,7 @@ class Optimization(BaseModel):
     when_task_queue_empty: WhenTaskQueueEmpty = Field(default=WhenTaskQueueEmpty.GOTO_MAIN,
                                                       description='when_task_queue_empty_help')
     schedule_rule: ScheduleRule = Field(default=ScheduleRule.FILTER, description='schedule_rule_help')
-
+    enable_preempt: bool = Field(
+        default=False,
+        description='Enable task preemption when a due higher-priority task appears'
+    )
