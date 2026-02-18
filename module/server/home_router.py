@@ -86,6 +86,15 @@ async def chinese_translate(data: dict = Body(...)):
     return True
 
 
+@home_app.get('/chinese_translate')
+async def chinese_translate_get() -> dict:
+    try:
+        return I18n.load_zh_cn()
+    except Exception as e:
+        logger.error(e)
+    return {}
+
+
 @home_app.get('/additional_translate')
 async def additional_translate() -> dict:
     try:

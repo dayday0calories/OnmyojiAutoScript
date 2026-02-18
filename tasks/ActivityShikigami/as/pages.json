@@ -38,17 +38,17 @@
   {
     "itemName": "to_battle_main",
     "imageName": "as_to_battle_main.png",
-    "roiFront": "267,277,39,176",
-    "roiBack": "238,242,100,241",
+    "roiFront": "145,277,36,226",
+    "roiBack": "126,242,80,311",
     "method": "Template matching",
-    "threshold": 0.8,
+    "threshold": 0.7,
     "description": "进入主要的战斗界面"
   },
   {
     "itemName": "to_battle_boss",
     "imageName": "as_to_battle_boss.png",
-    "roiFront": "974,327,37,136",
-    "roiBack": "934,317,100,219",
+    "roiFront": "1094,295,37,136",
+    "roiBack": "1085,276,56,228",
     "method": "Template matching",
     "threshold": 0.8,
     "description": "点击进入boss战斗页面"
@@ -65,8 +65,8 @@
   {
     "itemName": "check_battle_boss",
     "imageName": "as_check_battle_boss.png",
-    "roiFront": "0,0,100,100",
-    "roiBack": "0,0,100,100",
+    "roiFront": "33,367,42,34",
+    "roiBack": "18,353,72,50",
     "method": "Template matching",
     "threshold": 0.8,
     "description": "description"

@@ -43,5 +43,23 @@
     "method": "Template matching",
     "threshold": 0.8,
     "description": "切换按键"
+  },
+  {
+    "itemName": "boss_fire",
+    "imageName": "as_boss_fire.png",
+    "roiFront": "1126,589,95,39",
+    "roiBack": "1106,557,136,113",
+    "method": "Template matching",
+    "threshold": 0.8,
+    "description": "boss挑战按钮"
+  },
+  {
+    "itemName": "boss_lock",
+    "imageName": "as_boss_lock.png",
+    "roiFront": "899,657,21,10",
+    "roiBack": "887,642,49,50",
+    "method": "Template matching",
+    "threshold": 0.8,
+    "description": "boss上锁按钮"
   }
 ]

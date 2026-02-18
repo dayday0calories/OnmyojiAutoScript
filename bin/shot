@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Quick screenshot helper for emulator/device via adb.
+# Usage:
+#   bin/shot
+#   bin/shot 127.0.0.1:16416
+#   bin/shot 127.0.0.1:16416 custom_name.png
+
+SERIAL="${1:-127.0.0.1:16416}"
+OUT_NAME="${2:-screen_$(date +%Y%m%d_%H%M%S).png}"
+OUT_PATH="tmp_pic/${OUT_NAME}"
+
+mkdir -p tmp_pic
+
+adb -s "${SERIAL}" exec-out screencap -p > "${OUT_PATH}"
+
+echo "Saved screenshot: ${OUT_PATH}"

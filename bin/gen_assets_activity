@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Regenerate assets.py for ActivityShikigami from its json sources.
+# Usage:
+#   bin/gen_assets_activity
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "${ROOT_DIR}"
+
+PY=".venv/bin/python"
+if [[ ! -x "${PY}" ]]; then
+  echo "Error: ${PY} not found. Activate/create venv first."
+  exit 1
+fi
+
+"${PY}" - <<'PY'
+from dev_tools.assets_extract import AssetsExtractor
+AssetsExtractor('tasks/ActivityShikigami').extract()
+print('Generated: tasks/ActivityShikigami/assets.py')
+PY

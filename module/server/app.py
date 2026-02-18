@@ -8,6 +8,8 @@ from starlette import status
 from starlette.responses import JSONResponse
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
 
 from module.logger import logger
 from module.server.home_router import home_app
@@ -40,6 +42,12 @@ app.add_middleware(
 
 app.include_router(home_app)
 app.include_router(script_app)
+app.mount("/webui", StaticFiles(directory="webui", html=True), name="webui")
+
+
+@app.get("/")
+async def root_redirect():
+    return RedirectResponse(url="/webui")
 
 
 async def on_startup():

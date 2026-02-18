@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Universal assets generator.
+# Usage:
+#   bin/gen_assets ActivityShikigami
+#   bin/gen_assets tasks/ActivityShikigami
+#   bin/gen_assets Component/GeneralBattle
+#   bin/gen_assets tasks/Component/GeneralBattle
+#   bin/gen_assets --all
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "${ROOT_DIR}"
+
+PY=".venv/bin/python"
+if [[ ! -x "${PY}" ]]; then
+  echo "Error: ${PY} not found. Create/activate venv first."
+  exit 1
+fi
+
+ARG="${1:-}"
+if [[ -z "${ARG}" ]]; then
+  echo "Usage: bin/gen_assets <TaskPath|TaskName> | --all"
+  exit 1
+fi
+
+if [[ "${ARG}" == "--all" ]]; then
+  "${PY}" - <<'PY'
+from dev_tools.assets_extract import AllAssetsExtractor
+AllAssetsExtractor()
+print("Generated assets for all tasks.")
+PY
+  exit 0
+fi
+
+# Normalize input into a real path under tasks/
+TARGET="${ARG}"
+if [[ "${TARGET}" != tasks/* ]]; then
+  TARGET="tasks/${TARGET}"
+fi
+TARGET="${TARGET%/}"
+
+if [[ ! -d "${TARGET}" ]]; then
+  echo "Error: task directory not found: ${TARGET}"
+  exit 1
+fi
+
+"${PY}" - "${TARGET}" <<'PY'
+import sys
+from dev_tools.assets_extract import AssetsExtractor
+
+task_path = sys.argv[1]
+AssetsExtractor(task_path).extract()
+print(f"Generated: {task_path}/assets.py")
+PY
