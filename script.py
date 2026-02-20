@@ -429,16 +429,51 @@ class Script:
         checker_set = False
         try:
             current_task = convert_to_underscore(command)
-            if getattr(self.config.script.optimization, 'enable_preempt', False):
-                self.device.preempt_checker = lambda: self._should_preempt(current_task)
-                self.device.preempt_check_timer.reset()
-                checker_set = True
             self.device.screenshot()
             module_name = 'script_task'
             module_path = str(Path.cwd() / 'tasks' / command / (module_name+'.py'))
             logger.info(f'module_path: {module_path}, module_name: {module_name}')
             task_module = load_module(module_name, module_path)
-            task_module.ScriptTask(config=self.config, device=self.device).run()
+            task_instance = task_module.ScriptTask(config=self.config, device=self.device)
+            if getattr(self.config.script.optimization, 'enable_preempt', False):
+                # Global preempt decision: checks whether another due task should run first.
+                self.device.preempt_checker = lambda: self._should_preempt(current_task)
+                self.device.preempt_pending = False
+
+                def _preempt_blocker() -> bool:
+                    # Task-local safety gate:
+                    # 1) always defer in real combat
+                    # 2) also defer on result/reward pages
+                    # 3) allow preempt on prepare page between fights
+                    def _safe_probe(name: str) -> bool:
+                        fn = getattr(task_instance, name, None)
+                        if not callable(fn):
+                            return False
+                        try:
+                            return bool(fn(False))
+                        except TypeError:
+                            return bool(fn())
+                        except Exception:
+                            # Never break task flow because of blocker probing.
+                            return False
+
+                    in_real_battle = _safe_probe('is_in_real_battle')
+                    if in_real_battle:
+                        return True
+
+                    in_battle = _safe_probe('is_in_battle')
+                    if not in_battle:
+                        return False
+
+                    in_prepare = _safe_probe('is_in_prepare')
+                    # If "in battle" but not "in prepare", this is usually
+                    # result/reward/settlement; wait until reward handling ends.
+                    return not in_prepare
+
+                self.device.preempt_blocker = _preempt_blocker
+                self.device.preempt_check_timer.reset()
+                checker_set = True
+            task_instance.run()
         except TaskPreempted as e:
             logger.warning(str(e))
             return True
@@ -499,6 +534,8 @@ class Script:
         finally:
             if checker_set:
                 self.device.preempt_checker = None
+                self.device.preempt_blocker = None
+                self.device.preempt_pending = False
 
     def loop(self):
         """

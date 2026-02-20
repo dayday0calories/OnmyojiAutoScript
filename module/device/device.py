@@ -56,6 +56,10 @@ class Device(Platform, Screenshot, Control, AppControl):
 
         self.screenshot_interval_set()
         self.preempt_checker = None
+        self.preempt_blocker = None
+        # If a preempt request appears during battle, remember it and
+        # execute immediately once battle ends (no need to wait next timer tick).
+        self.preempt_pending = False
         self.preempt_check_timer = Timer(60).start()
 
         # Auto-select the fastest screenshot method
@@ -106,8 +110,25 @@ class Device(Platform, Screenshot, Control, AppControl):
             np.ndarray:
         """
         if getattr(self, 'preempt_checker', None):
-            if self.preempt_check_timer.reached_and_reset() and self.preempt_checker():
-                raise TaskPreempted('Current task preempted by higher-priority due task')
+            # Run preempt check on normal cadence, or immediately if a previous
+            # check was deferred during battle.
+            if self.preempt_pending or self.preempt_check_timer.reached_and_reset():
+                # First ask scheduler whether preemption is actually needed now.
+                should_preempt = self.preempt_checker()
+                # Optional task-level blocker: if task reports "in battle",
+                # defer preemption until a safer handoff point.
+                blocker = getattr(self, 'preempt_blocker', None)
+                if should_preempt and blocker and blocker():
+                    if not self.preempt_pending:
+                        logger.info('Defer task preemption while battle is in progress')
+                    self.preempt_pending = True
+                elif should_preempt:
+                    self.preempt_pending = False
+                    # Scheduler says a higher-priority due task should take over now.
+                    raise TaskPreempted('Current task preempted by higher-priority due task')
+                else:
+                    # Target task is no longer due / no longer higher-priority.
+                    self.preempt_pending = False
         self.stuck_record_check()
 
         try:
