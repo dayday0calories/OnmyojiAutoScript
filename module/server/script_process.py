@@ -5,6 +5,7 @@
 import sys, os
 import signal
 import multiprocessing
+import asyncio
 from asyncio import QueueEmpty, CancelledError, sleep
 from enum import Enum
 
@@ -31,37 +32,51 @@ class ScriptProcess(ScriptWSManager):
         self.state_queue = multiprocessing.Queue()
         self.state: ScriptState = ScriptState.INACTIVE
         self._process = None
+        self._start_stop_lock = asyncio.Lock()
 
-    async def start(self):
-        self.state = ScriptState.RUNNING
-        await self.broadcast_state({"state": self.state})
-        if self._process:
-            logger.warning(f'Script {self.config_name} is initialized')
-        if self._process and self._process.is_alive():
-            logger.warning(f'Script {self.config_name} is already running and first stop it')
-            self.stop()
-        self._process = multiprocessing.Process(target=func,
-                                                args=(self.config_name, self.state_queue, self.log_pipe_in,),
-                                                name=self.config_name,
-                                                daemon=True
-                                                )
-        self._process.start()
-
-    async def stop(self):
-        self.state = ScriptState.INACTIVE
-        await self.broadcast_state({"state": self.state})
+    def _terminate_process(self):
         if self._process is None:
-            logger.warning(f'Script {self.config_name} process is removed')
             return
         if not self._process.is_alive():
-            logger.warning(f'Script {self.config_name} is not running')
+            self._process = None
             return
         self._process.terminate()
         self._process.join(timeout=0.7)
         if self._process.is_alive():
             logger.error(f'Script {self.config_name} subprocess terminate failed')
             self._process.kill()
+            self._process.join(timeout=0.3)
         self._process = None
+
+    async def start(self):
+        async with self._start_stop_lock:
+            if self._process:
+                logger.warning(f'Script {self.config_name} is initialized')
+            if self._process and self._process.is_alive():
+                logger.warning(f'Script {self.config_name} is already running and first stop it')
+                self._terminate_process()
+            self._process = multiprocessing.Process(
+                target=func,
+                args=(self.config_name, self.state_queue, self.log_pipe_in,),
+                name=self.config_name,
+                daemon=True
+            )
+            self._process.start()
+            self.state = ScriptState.RUNNING
+            await self.broadcast_state({"state": self.state})
+
+    async def stop(self):
+        async with self._start_stop_lock:
+            self.state = ScriptState.INACTIVE
+            await self.broadcast_state({"state": self.state})
+            if self._process is None:
+                logger.warning(f'Script {self.config_name} process is removed')
+                return
+            if not self._process.is_alive():
+                logger.warning(f'Script {self.config_name} is not running')
+                self._process = None
+                return
+            self._terminate_process()
 
     async def coroutine_broadcast_state(self):
         try:
@@ -168,5 +183,4 @@ if __name__ == '__main__':
     from time import sleep
     sleep(10)
     logger.info(p._process.exitcode)
-
 
