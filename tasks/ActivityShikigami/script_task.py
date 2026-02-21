@@ -194,7 +194,13 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
         self.ui_clicks([self.I_TO_BATTLE_MAIN, self.I_TO_BATTLE_MAIN_2],
                        stop=self.I_CHECK_BATTLE_MAIN, interval=1)
         self.switch_soul(self.I_BATTLE_MAIN_TO_RECORDS, self.I_CHECK_BATTLE_MAIN)
-        self.switch_climb_mode_in_game('pass')
+        if not self.switch_climb_mode_in_game('pass'):
+            logger.warning('Switch climb mode to pass failed, retry enter battle page once')
+            self.ui_clicks([self.I_TO_BATTLE_MAIN, self.I_TO_BATTLE_MAIN_2],
+                           stop=self.I_CHECK_BATTLE_MAIN, interval=1)
+            if not self.switch_climb_mode_in_game('pass'):
+                logger.warning('Switch climb mode to pass failed twice, abort pass run')
+                return
         self._run_climb_loop(
             fire_appear_fn=self.fire_appear,
             with_confirm=True,
@@ -212,7 +218,13 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
         self.ui_clicks([self.I_TO_BATTLE_MAIN, self.I_TO_BATTLE_MAIN_2],
                        stop=self.I_CHECK_BATTLE_MAIN, interval=1)
         self.switch_soul(self.I_BATTLE_MAIN_TO_RECORDS, self.I_CHECK_BATTLE_MAIN)
-        self.switch_climb_mode_in_game('ap')
+        if not self.switch_climb_mode_in_game('ap'):
+            logger.warning('Switch climb mode to ap failed, retry enter battle page once')
+            self.ui_clicks([self.I_TO_BATTLE_MAIN, self.I_TO_BATTLE_MAIN_2],
+                           stop=self.I_CHECK_BATTLE_MAIN, interval=1)
+            if not self.switch_climb_mode_in_game('ap'):
+                logger.warning('Switch climb mode to ap failed twice, abort ap run')
+                return
         self._run_climb_loop(
             fire_appear_fn=self.fire_appear,
             on_fire_missing_fn=lambda: self.appear_then_click(self.I_CHECK_BATTLE_MAIN, interval=4),
@@ -380,9 +392,40 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
         elif enable_switch:
             group_team = getattr(conf, f"{self.climb_type}_group_team")
             self.run_switch_soul(group_team)
-        self.ui_click(self.I_UI_BACK_YELLOW, stop=cur_img, interval=1)
 
-    def switch_climb_mode_in_game(self, mode: str = 'ap'):
+        def _reenter_battle_page():
+            if self.climb_type == 'boss':
+                self.ui_click(self.I_TO_BATTLE_BOSS, stop=self.I_CHECK_BATTLE_BOSS, interval=1)
+            else:
+                self.ui_clicks([self.I_TO_BATTLE_MAIN, self.I_TO_BATTLE_MAIN_2],
+                               stop=self.I_CHECK_BATTLE_MAIN, interval=1)
+
+        back_timeout = Timer(max(15, int(round(15 * self.slow_factor)))).start()
+        while 1:
+            self.screenshot()
+            if self.appear(cur_img):
+                break
+            # Safety guard: stop backing out if we accidentally return to main page.
+            if self.appear(self.I_CHECK_MAIN):
+                logger.warning(
+                    f"Switch soul returned to main page unexpectedly (target={cur_img.name}), recover"
+                )
+                self.ui_goto(game.page_climb_act, timeout=25)
+                _reenter_battle_page()
+                break
+            # Only click back while still inside soul records page.
+            # Avoid blind double-back that can exit to previous/main pages.
+            if self.appear(self.I_CHECK_RECORDS) and self.appear_then_click(self.I_UI_BACK_YELLOW, interval=1):
+                continue
+            if back_timeout.reached():
+                logger.warning(
+                    f"Switch soul return timeout (target={cur_img.name}), "
+                    f"re-enter battle page and continue"
+                )
+                _reenter_battle_page()
+                break
+
+    def switch_climb_mode_in_game(self, mode: str = 'ap') -> bool:
         map_check = {
             'ap': self.I_CLIMB_MODE_AP,
             'pass': self.I_CLIMB_MODE_PASS,
@@ -394,7 +437,7 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
             self.screenshot()
             if self.appear(target_check):
                 logger.info(f'Climb mode already at {mode}')
-                return
+                return True
             if self.appear_then_click(self.I_CLIMB_MODE_SWITCH, interval=1.9 * self.slow_factor):
                 continue
             if switch_timeout.reached():
@@ -403,9 +446,9 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
                 self.ui_goto(game.page_climb_act, timeout=20)
                 if self.appear(target_check):
                     logger.info(f'Climb mode switched to {mode} after recovery')
-                    return
+                    return True
                 logger.warning(f'Switch climb mode to {mode} still failed after recovery')
-                return
+                return False
 
     def check_tickets_enough(self) -> bool:
         """
@@ -434,20 +477,35 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
                     break
             else:
                 return False
-        self.screenshot()
-        remain_times = 0
-        if self.climb_type == 'pass':
-            remain_times = self.O_REMAIN_PASS.ocr_digit(
-                _prepare_image_for_ocr(self.device.image, asset=self.O_REMAIN_PASS))
-        if self.climb_type == 'ap':
-            remain_times = self.O_REMAIN_AP.ocr_digit(
-                _prepare_image_for_ocr(self.device.image, asset=self.O_REMAIN_AP))
-        if self.climb_type == 'boss':
-            _, remain_times, _ = self.O_REMAIN_BOSS.ocr_digit_counter(self.device.image)
-        if self.climb_type == 'ap100':
-            remain_times = self.O_REMAIN_AP100.ocr_digit(
-                _prepare_image_for_ocr(self.device.image, asset=self.O_REMAIN_AP100))
+        remain_times = self._read_remain_times_with_retry()
         return remain_times > 0
+
+    def _read_remain_times_with_retry(self, tries: int = 3) -> int:
+        samples = []
+        for _ in range(max(1, tries)):
+            self.screenshot()
+            remain_times = 0
+            if self.climb_type == 'pass':
+                remain_times = self.O_REMAIN_PASS.ocr_digit(
+                    _prepare_image_for_ocr(self.device.image, asset=self.O_REMAIN_PASS))
+            elif self.climb_type == 'ap':
+                remain_times = self.O_REMAIN_AP.ocr_digit(
+                    _prepare_image_for_ocr(self.device.image, asset=self.O_REMAIN_AP))
+            elif self.climb_type == 'boss':
+                _, remain_times, _ = self.O_REMAIN_BOSS.ocr_digit_counter(self.device.image)
+            elif self.climb_type == 'ap100':
+                remain_times = self.O_REMAIN_AP100.ocr_digit(
+                    _prepare_image_for_ocr(self.device.image, asset=self.O_REMAIN_AP100))
+            try:
+                remain_times = max(0, int(remain_times))
+            except (TypeError, ValueError):
+                remain_times = 0
+            samples.append(remain_times)
+            sleep(0.15 * self.slow_factor)
+
+        best = max(samples) if samples else 0
+        logger.info(f"{self.climb_type.upper()} tickets OCR samples: {samples}, use {best}")
+        return best
 
     def get_general_battle_conf(self) -> tasks.Component.GeneralBattle.config_general_battle.GeneralBattleConfig:
         from tasks.Component.GeneralBattle.config_general_battle import GeneralBattleConfig as gbc

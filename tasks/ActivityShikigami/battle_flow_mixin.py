@@ -1,6 +1,8 @@
 # This Python file uses the following encoding: utf-8
 from __future__ import annotations
 
+import random
+
 from module.base.protect import random_sleep
 from module.base.timer import Timer
 from module.logger import logger
@@ -11,7 +13,22 @@ class ActivityShikigamiBattleFlowMixin:
         return self.ocr_appear(self.O_FIRE)
 
     def fire_appear_click(self, interval: float = None) -> bool:
-        return self.ocr_appear_click(self.O_FIRE, interval=interval)
+        if not self.fire_appear():
+            return False
+        if interval:
+            timer = self.interval_timer.get(self.O_FIRE.name)
+            if timer is None or timer.limit != interval:
+                timer = Timer(interval)
+                self.interval_timer[self.O_FIRE.name] = timer
+            if not timer.reached():
+                return False
+            timer.reset()
+        # Click inside OCR ROI (not OCR area) to avoid hitting climb-mode switch button.
+        x, y, w, h = self.O_FIRE.roi
+        rx = random.randint(x, x + max(w - 1, 1))
+        ry = random.randint(y, y + max(h - 1, 1))
+        self.device.click(x=rx, y=ry, control_name=self.O_FIRE.name)
+        return True
 
     def wait_until_fire(self, wait_time: float = None) -> bool:
         wait_timer = Timer(wait_time).start() if wait_time else None
