@@ -45,6 +45,20 @@ class MoonSea(MoonSeaMap, MoonSeaL101, MoonSeaL102, MoonSeaL103, MoonSeaL104, Mo
         self.push_notify(content=f'任务已完成{cnt}次,用时: {timedelta(seconds=int((datetime.now() - self.start_time).total_seconds()))}')
         logger.info('Exit Moon Sea')
 
+    def _handle_double_reward_popup(self) -> bool:
+        """
+        兜底处理“是否消耗万相赐福获得双倍掉落”弹窗。
+        该弹窗有时会在 boss 结算后延迟出现，脱离 boss_battle() 处理流程。
+        默认点击取消，避免卡在地图循环中。
+        """
+        if self.appear_then_click(self.I_UI_CANCEL, interval=1):
+            logger.info('Close double-reward popup by cancel')
+            return True
+        if self.appear_then_click(self.I_BOSS_USE_DOUBLE, interval=1):
+            logger.info('Handle double-reward popup by using reward')
+            return True
+        return False
+
     def one(self):
         self.cnt_skill101 = 0
         self.cnt_skillpower = 1
@@ -52,6 +66,8 @@ class MoonSea(MoonSeaMap, MoonSeaL101, MoonSeaL102, MoonSeaL103, MoonSeaL104, Mo
             return False
         while 1:
             self.screenshot()            
+            if self._handle_double_reward_popup():
+                continue
                 
             if self.select_skill(refresh=True):
                 continue
