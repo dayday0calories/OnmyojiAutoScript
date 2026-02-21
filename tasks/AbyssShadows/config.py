@@ -123,8 +123,13 @@ class CodeList(list[Code]):
 
     def __init__(self, v: str):
         def expand_str(v: str):
+            # Canonical form: "A-1"
             if v.find('-') != -1:
                 return [v]
+
+            # Be tolerant to compact form from UI/manual edits: "A1" -> "A-1".
+            if len(v) == 2 and v[0] in "ABCD" and v[1] in "123456":
+                return [f"{v[0]}-{v[1]}"]
 
             VALID_AREAS = [area.value for area in IndexMap if area.name in AreaType.__members__]
             VALID_NUMBERS = [str(i) for i in range(1, 7)]
