@@ -63,12 +63,8 @@ class ScriptTask(GeneralBattle, GameUi, SwitchSoul, AbyssShadowsAssets):
             logger.info(f"Today is not abyss shadows day, exit")
             self.set_next_run(task='AbyssShadows', finish=False, server=True, success=True)
             raise TaskEnd
-        server_time = datetime.combine(datetime.now().date(), cfg.scheduler.server_update)
-        if datetime.now() - server_time > timedelta(hours=2):
-            # 超时两小时未开始,直接退出
-            logger.info("Timeout threshold: 2h (force quit if not started)")
-            self.set_next_run(task='AbyssShadows', finish=False, server=True, success=True)
-            raise TaskEnd
+        # Respect scheduler trigger time directly.
+        # Do not force-quit based on server_update + 2h window.
 
         # 进入狭间
         self.goto_abyss_shadows()
@@ -724,9 +720,12 @@ class ScriptTask(GeneralBattle, GameUi, SwitchSoul, AbyssShadowsAssets):
             switch_soul(v)
 
         self.switch_soul_done = True
-        # 退出式神录
+        # 退出式神录:
+        # `BACK_Y` exists both in shikigami records and in abyss pages.
+        # Using `ui_click_until_disappear(BACK_Y)` may click twice and return to guild.
+        # Stop as soon as abyss navigation is back.
         from tasks.GameUi.assets import GameUiAssets as gua
-        self.ui_click_until_disappear(gua.I_BACK_Y, interval=2)
+        self.ui_click(gua.I_BACK_Y, stop=self.I_ABYSS_NAVIGATION, interval=2)
 
     def check_available(self, item_code: Code):
         # 判断该怪物是否可用
