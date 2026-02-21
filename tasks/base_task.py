@@ -121,6 +121,8 @@ class BaseTask(GlobalGameAssets, CostumeBase):
         截图 引入中间函数的目的是 为了解决如协作的这类突发的事件
         :return:
         """
+        # nemu_ipc 返回为RGB
+        # 其他方式未知
         self.device.screenshot()
         # 判断勾协
         self._burst()
@@ -724,12 +726,12 @@ class BaseTask(GlobalGameAssets, CostumeBase):
             if isinstance(click, RuleOcr):
                 self.click(click)
                 continue
-
     def push_notify(self, content='', title=None, level=3):
         logger.info(f'Push notify: {content}')
 
     def save_image(self, task_name=None, content=None, wait_time=2, image_type=False, push_flag=False, level=3):
         logger.info(f'Save image: {task_name}')
+
     def appear_rgb(self, target, image=None, difference: int = 10):
         """
         判断目标的平均颜色是否与图像中的颜色匹配。
