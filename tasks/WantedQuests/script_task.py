@@ -357,12 +357,17 @@ class ScriptTask(WQExplore, SecretScriptTask, WantedQuestsAssets):
             return tuple(result) if result[0] != -1 else None
 
         logger.hr('Start wanted quests')
+        # Guard against infinite wait when trace panel cannot be re-opened.
+        open_trace_timeout = Timer(20).start()
         while 1:
             self.screenshot()
             if self.appear(self.I_TRACE_TRUE):
                 break
             if self.click(ocr, interval=1):
                 continue
+            if open_trace_timeout.reached():
+                logger.warning('Open wanted quest trace panel timeout, skip this mission')
+                return False
         if not self.appear(self.I_GOTO_1):
             # 如果没有出现 '前往'按钮， 那就是这个可能是神秘任务但是没有解锁
             logger.warning('This is a secret mission but not unlock')
@@ -389,18 +394,44 @@ class ScriptTask(WQExplore, SecretScriptTask, WantedQuestsAssets):
         # sort
         info_wq_list.sort(key=lambda x: x[0])
         filtered = list(filter(lambda x: (x[5] == '秘闻' or x[5] == '挑战') and x[2] >= 3, info_wq_list))
-        if not filtered and len(filtered) != 0:
+        if filtered:
             info_wq_list = filtered
         best_type, destination, once_number, goto_button, func, _ = info_wq_list[0]
         do_number = 1 if once_number >= num_want else num_want // once_number + (1 if num_want % once_number > 0 else 0)
+
+        # Ensure the selected mission row is still visible and has a reachable "前往" button.
+        # Some pages/animations may close the trace panel and cause an infinite wait later.
+        goto_ready_timeout = Timer(12).start()
+        while 1:
+            self.screenshot()
+            if self.appear(goto_button):
+                break
+            if self.click(ocr, interval=1):
+                continue
+            if goto_ready_timeout.reached():
+                logger.warning(f'Goto button not ready for mission `{destination}`, skip this mission')
+                return False
+
         try:
-            func(goto_button, do_number)
+            success = func(goto_button, do_number)
+            if success is False:
+                logger.warning('Execute mission failed to enter target page, skip this mission once')
         except ExploreWantedBoss:
             logger.warning('The extreme case. The quest only needs to challenge one final boss, so skip it')
             self.want_strategy_excluding.append(info_wq_list[0])
 
     def challenge(self, goto_btn, num):
-        self.ui_click(goto_btn, self.I_WQC_FIRE)
+        # `ui_click` has no timeout. Use a bounded enter loop to avoid deadlock.
+        enter_timeout = Timer(25).start()
+        while 1:
+            self.screenshot()
+            if self.appear(self.I_WQC_FIRE):
+                break
+            if self.appear_then_click(goto_btn, interval=1):
+                continue
+            if enter_timeout.reached():
+                logger.warning('Wanted quest challenge entry timeout, cannot find FIRE button')
+                return False
         self.ui_click(self.I_WQC_UNLOCK, self.I_WQC_LOCK)
         self.ui_click_until_disappear(self.I_WQC_FIRE)
         # 锁定阵容进入战斗
@@ -409,11 +440,25 @@ class ScriptTask(WQExplore, SecretScriptTask, WantedQuestsAssets):
         self.wait_until_appear(self.I_WQC_FIRE, wait_time=4)
         self.ui_click_until_disappear(self.I_UI_BACK_RED)
         # 我忘记了打完后是否需要关闭 挑战界面
+        return True
 
     def secret(self, goto, num=1):
-        self.ui_click(goto, self.I_WQSE_FIRE)
+        # `ui_click` has no timeout. Use a bounded loop to avoid deadlock when
+        # secret "前往" cannot be opened from current page state.
+        enter_timeout = Timer(25).start()
+        while 1:
+            self.screenshot()
+            if self.appear(self.I_WQSE_FIRE):
+                break
+            if self.appear_then_click(goto, interval=1):
+                continue
+            if enter_timeout.reached():
+                logger.warning('Wanted quest secret entry timeout, cannot find FIRE button')
+                return False
         for i in range(num):
-            self.wait_until_appear(self.I_WQSE_FIRE)
+            if not self.wait_until_appear(self.I_WQSE_FIRE, wait_time=8):
+                logger.warning('Secret FIRE not found in time, abort this mission attempt')
+                return False
             # self.ui_click_until_disappear(self.I_WQSE_FIRE)
             # 又臭又长的对话针的是服了这个网易
             click_count = 0
@@ -443,6 +488,7 @@ class ScriptTask(WQExplore, SecretScriptTask, WantedQuestsAssets):
             if self.appear_then_click(self.I_UI_BACK_YELLOW, interval=1.5):
                 continue
         logger.info('Secret mission finished')
+        return True
 
     def invite_random(self, add_button: RuleImage):
         self.screenshot()
