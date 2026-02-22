@@ -273,3 +273,4 @@ adb_port.ini
 console.bat
 .vscode/*
 .DS_Store
+/tmp_pic
