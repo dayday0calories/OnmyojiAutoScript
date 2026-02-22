@@ -52,5 +52,68 @@
     "method": "Template matching",
     "threshold": 0.8,
     "description": "速度祝福"
+  },
+  {
+    "itemName": "hero2_skill8_pvp",
+    "imageName": "as_hero2_skill8_pvp.png",
+    "roiFront": "697,360,65,31",
+    "roiBack": "47,346,1171,56",
+    "method": "Template matching",
+    "threshold": 0.8,
+    "description": "PVP技能 泛音 "
+  },
+  {
+    "itemName": "hero2_skill9_pvp",
+    "imageName": "as_hero2_skill9_pvp.png",
+    "roiFront": "1127,358,63,40",
+    "roiBack": "47,346,1171,56",
+    "method": "Template matching",
+    "threshold": 0.8,
+    "description": "PVP技能 凝啸"
+  },
+  {
+    "itemName": "hero2_skill10_pvp",
+    "imageName": "as_hero2_skill10_pvp.png",
+    "roiFront": "1062,357,61,36",
+    "roiBack": "47,346,1171,56",
+    "method": "Template matching",
+    "threshold": 0.8,
+    "description": "PVP技能 韵驰"
+  },
+  {
+    "itemName": "hero2_skill11_pvp",
+    "imageName": "as_hero2_skill11_pvp.png",
+    "roiFront": "455,360,62,33",
+    "roiBack": "47,346,1171,56",
+    "method": "Template matching",
+    "threshold": 0.8,
+    "description": "PVP技能 叩弦"
+  },
+  {
+    "itemName": "hero2_skill12_pvp",
+    "imageName": "as_hero2_skill12_pvp.png",
+    "roiFront": "219,355,61,39",
+    "roiBack": "47,346,1171,56",
+    "method": "Template matching",
+    "threshold": 0.8,
+    "description": "PVP技能 逐空"
+  },
+  {
+    "itemName": "hero2_skill13_pvp",
+    "imageName": "as_hero2_skill13_pvp.png",
+    "roiFront": "522,361,58,34",
+    "roiBack": "47,346,1171,56",
+    "method": "Template matching",
+    "threshold": 0.8,
+    "description": "PVP技能 霆驰"
+  },
+  {
+    "itemName": "hero2_skill14_pvp",
+    "imageName": "as_hero2_skill14_pvp.png",
+    "roiFront": "219,361,57,37",
+    "roiBack": "47,346,1171,56",
+    "method": "Template matching",
+    "threshold": 0.8,
+    "description": "PVP技能 伤害"
   }
 ]

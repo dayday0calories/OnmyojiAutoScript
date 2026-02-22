@@ -99,6 +99,21 @@ class HeroTestAssets:
 	I_HERO2_SKILL3 = RuleImage(roi_front=(520,358,62,38), roi_back=(41,346,1172,63), threshold=0.8, method="Template matching", file="./tasks/HeroTest/as/as_hero2_skill3.png")
 	# 速度祝福 
 	I_HERO2_SKILL6 = RuleImage(roi_front=(427,356,62,38), roi_back=(48,342,1175,67), threshold=0.8, method="Template matching", file="./tasks/HeroTest/as/as_hero2_skill6.png")
+	# PVP技能 泛音 
+	I_HERO2_SKILL8_PVP = RuleImage(roi_front=(520,356,62,38), roi_back=(46,333,1174,82), threshold=0.8, method="Template matching", file="./tasks/HeroTest/as/as_hero2_skill8_pvp.png")
+	# PVP技能 凝啸
+	I_HERO2_SKILL9_PVP = RuleImage(roi_front=(520,356,62,38), roi_back=(46,333,1174,82), threshold=0.8, method="Template matching", file="./tasks/HeroTest/as/as_hero2_skill9_pvp.png")
+	# PVP技能 韵驰
+	I_HERO2_SKILL10_PVP = RuleImage(roi_front=(520,356,62,38), roi_back=(46,333,1174,82), threshold=0.8, method="Template matching", file="./tasks/HeroTest/as/as_hero2_skill10_pvp.png")
+	# PVP技能 叩弦
+	I_HERO2_SKILL11_PVP = RuleImage(roi_front=(520,356,62,38), roi_back=(46,333,1174,82), threshold=0.8, method="Template matching", file="./tasks/HeroTest/as/as_hero2_skill11_pvp.png")
+	# PVP技能 逐空
+	I_HERO2_SKILL12_PVP = RuleImage(roi_front=(520,356,62,38), roi_back=(46,333,1174,82), threshold=0.8, method="Template matching", file="./tasks/HeroTest/as/as_hero2_skill12_pvp.png")
+	# PVP技能 霆驰
+	I_HERO2_SKILL13_PVP = RuleImage(roi_front=(520,356,62,38), roi_back=(46,333,1174,82), threshold=0.8, method="Template matching", file="./tasks/HeroTest/as/as_hero2_skill13_pvp.png")
+	# PVP技能 伤害
+	
+	I_HERO2_SKILL14_PVP = RuleImage(roi_front=(520,356,62,38), roi_back=(46,333,1174,82), threshold=0.8, method="Template matching", file="./tasks/HeroTest/as/as_hero2_skill14_pvp.png")
 
 
 	# Ocr Rule Assets
@@ -110,5 +125,4 @@ class HeroTestAssets:
 	O_ART_WAR_CARD_PLUS = RuleOcr(roi=(916,25,90,29), area=(916,25,90,29), mode="SINGLE", method="Default", keyword="", name="art_war_card_plus")
 	# 挑战按钮 
 	O_FIRE = RuleOcr(roi=(1130,585,92,55), area=(1126,576,100,99), mode="Single", method="Default", keyword="挑战", name="fire")
-
 

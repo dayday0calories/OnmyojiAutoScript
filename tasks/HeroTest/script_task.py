@@ -153,17 +153,74 @@ class ScriptTask(GameUi, GeneralBattle, HeroTestAssets, SwitchSoul):
             self.I_HERO2_SKILL5,  # 敛神祝福
             self.I_HERO2_SKILL6,  # 速度祝福
         ]
-        # TODO: PVP
-        pvp_skill = []
+        # pvp技能列表, 按优先级顺序
+        pvp_skill = [
+            self.I_HERO2_SKILL8_PVP, # 泛音
+            self.I_HERO2_SKILL9_PVP, # 凝啸
+            self.I_HERO2_SKILL10_PVP, # 韵驰
+            self.I_HERO2_SKILL11_PVP, # 叩弦
+            self.I_HERO2_SKILL12_PVP, # 逐空
+            self.I_HERO2_SKILL13_PVP, # 霆驰
+            self.I_HERO2_SKILL14_PVP, # 伤害
+        ]
         target_skill_dict: dict[SkillMode, list] = {
             SkillMode.PVE: pve_skill,
             SkillMode.PVP: pvp_skill,
         }
         target_skills = target_skill_dict[self.conf.herotest.skill_mode]
-        while True:
-            self.screenshot()
-            if any(self.appear_then_click(ts, interval=1) for ts in target_skills):
-                break
+        if self.conf.herotest.skill_mode == SkillMode.PVP:
+            # Track selected PVP skill levels in-memory for this task run.
+            # Base level is 1 for all skills.
+            if not hasattr(self, "_hero2_pvp_skill_level"):
+                self._hero2_pvp_skill_level = {idx: 1 for idx in range(8, 15)}
+            skill_no_map = {
+                8: self.I_HERO2_SKILL8_PVP,
+                9: self.I_HERO2_SKILL9_PVP,
+                10: self.I_HERO2_SKILL10_PVP,
+                11: self.I_HERO2_SKILL11_PVP,
+                12: self.I_HERO2_SKILL12_PVP,
+                13: self.I_HERO2_SKILL13_PVP,
+                14: self.I_HERO2_SKILL14_PVP,
+            }
+
+            timer_start = datetime.now()
+            timeout_s = 10
+            while True:
+                self.screenshot()
+                detected = [num for num, img in skill_no_map.items() if self.appear(img)]
+                pick_num = None
+
+                # Priority stage 1: raise skill 8 and 9 to level 2 first.
+                for must_num in (8, 9):
+                    if self._hero2_pvp_skill_level[must_num] < 2 and must_num in detected:
+                        pick_num = must_num
+                        break
+
+                # Priority stage 2: choose smallest skill number among detected.
+                if pick_num is None and detected:
+                    pick_num = min(detected)
+
+                if pick_num is not None:
+                    # Use match + click first; fallback to direct click if match shifts.
+                    if not self.appear_then_click(skill_no_map[pick_num], interval=0.3):
+                        self.click(skill_no_map[pick_num], interval=0.3)
+                    self._hero2_pvp_skill_level[pick_num] += 1
+                    logger.info(
+                        f"PVP skill pick {pick_num}, tracked level={self._hero2_pvp_skill_level[pick_num]}"
+                    )
+                    break
+
+                # If none detected, click a random skill as fallback.
+                if (datetime.now() - timer_start).total_seconds() >= timeout_s:
+                    fallback = random.choice(target_skills)
+                    self.click(fallback, interval=0.3)
+                    logger.warning("No PVP skill detected, click random fallback")
+                    break
+        else:
+            while True:
+                self.screenshot()
+                if any(self.appear_then_click(ts, interval=1) for ts in target_skills):
+                    break
         self.ui_click_until_disappear(self.I_BCMJ_SKILL_ADD_CONFIRM, interval=1.5)
         return True
 
