@@ -73,13 +73,15 @@ class ReplaceShikigami(BaseTask, ReplaceShikigamiAssets):
                 self.appear_then_click(self.I_RS_LEVEL_MAX, interval=0.5)
         logger.info('Unset all shikigami max lv')
 
-    def set_shikigami(self, shikigami_order: int = 7, stop_image: RuleImage = None):
+    def set_shikigami(self, shikigami_order: int = 7, stop_image: RuleImage = None) -> bool:
         """
         要求在式神育成的界面
         选择式神 1-7
         :param stop_image:  结束的图片，如果不出现就结束
         :param shikigami_order:
         :return:
+            True: 至少成功完成一次替换流程或目标状态已结束
+            False: 长时间无进展（通常是没有可用式神可选）
         """
         # 选择式神
         _click_match = {1: self.C_SHIKIGAMI_LEFT_1,
@@ -90,8 +92,10 @@ class ReplaceShikigami(BaseTask, ReplaceShikigamiAssets):
                         6: self.C_SHIKIGAMI_LEFT_6,
                         7: self.C_SHIKIGAMI_LEFT_7}
         click_match = _click_match[shikigami_order]
-        TIMEOUT_SEC = 120          # 超时时长（秒）
-        start_time = time.time()   # 记录起始时间
+        TIMEOUT_SEC = 120          # 全流程硬超时，避免无限循环
+        NO_PROGRESS_SEC = 15       # 无进展超时：界面始终不弹确认，通常表示没有可选目标
+        start_time = time.time()   # 全流程起始时间
+        no_progress_start = time.time()  # 最近一次“有进展”时间
         click_interval_timer = Timer(1.5).start()  # 点击选择式神间隔
         clicked = False
         while 1:
@@ -99,6 +103,13 @@ class ReplaceShikigami(BaseTask, ReplaceShikigamiAssets):
             if time.time() - start_time > TIMEOUT_SEC:
                 logger.error('寄养等待超过 2 分钟，自动退出')
                 raise GameStuckError('寄养超时（>120 s）')
+            # 长时间没有确认弹窗、也没有状态变化，直接退出当前替换流程
+            # 这能避免一直在同一个卡位（例如 shikigami_left_7）重复点击。
+            if time.time() - no_progress_start > NO_PROGRESS_SEC:
+                logger.warning(f'Set shikigami no progress for {NO_PROGRESS_SEC}s, stop current replace loop')
+                # 清掉点击记录，避免退出时残留的高频点击触发全局防呆。
+                self.click_record_clear()
+                return False
             # 恢复点击操作
             if click_interval_timer.reached_and_reset():
                 clicked = False
@@ -109,6 +120,7 @@ class ReplaceShikigami(BaseTask, ReplaceShikigamiAssets):
                 break
 
             if self.appear_then_click(self.I_U_CONFIRM_SMALL, interval=0.5):
+                no_progress_start = time.time()
                 clicked = False  # 点击了确认, 恢复选式神的操作
                 continue
 
@@ -122,9 +134,11 @@ class ReplaceShikigami(BaseTask, ReplaceShikigamiAssets):
                 clicked = True
                 continue
             if self.appear_then_click(self.I_U_CIRCLE_ALTERNATE, interval=2.5):
+                no_progress_start = time.time()
                 self.appear_then_click(self.I_U_CONFIRM_ALTERNATE, interval=1.5)
                 continue
         logger.info('Set shikigami: %d' % shikigami_order)
+        return True
 
     def detect_no_shikigami(self) -> bool:
         self.screenshot()

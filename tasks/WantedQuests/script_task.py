@@ -60,6 +60,10 @@ class ScriptTask(WQExplore, SecretScriptTask, WantedQuestsAssets):
         self.screenshot()
         number_challenge = self.O_WQ_NUMBER.ocr(self.device.image)
         error_count = 0
+        # Keep a short cooldown for mission rows that just failed to enter.
+        # Key is the OCR row area tuple (x, y, w, h).
+        mission_retry_after: dict[tuple[int, int, int, int], datetime] = {}
+        mission_fail_count: dict[tuple[int, int, int, int], int] = {}
         while 1:
             self.screenshot()
             if not self.is_wq_remained():
@@ -83,10 +87,28 @@ class ScriptTask(WQExplore, SecretScriptTask, WantedQuestsAssets):
                 self.swipe(self.S_WQ_LIST_UP, interval=1)
                 sleep(1)
                 continue
+            area_key = tuple(area)
+            # Skip a recently failed row for a short window to avoid repeated spam clicks.
+            if area_key in mission_retry_after and datetime.now() < mission_retry_after[area_key]:
+                self.swipe(self.S_WQ_LIST_UP, interval=1)
+                sleep(1)
+                continue
             # 找到任务,执行
             error_count=0
             self.O_WQ_TEXT_ALL.area = area
-            self.execute_mission(self.O_WQ_TEXT_ALL, total - cu, number_challenge)
+            mission_ok = self.execute_mission(self.O_WQ_TEXT_ALL, total - cu, number_challenge)
+            if mission_ok is False:
+                mission_fail_count[area_key] = mission_fail_count.get(area_key, 0) + 1
+                # 20s, 40s, 60s ... up to 120s
+                cooldown_sec = min(120, 20 * mission_fail_count[area_key])
+                mission_retry_after[area_key] = datetime.now() + timedelta(seconds=cooldown_sec)
+                logger.warning(f'Mission row enter failed, cooldown {cooldown_sec}s for area={area_key}')
+                # Move list to reduce chance of immediately re-selecting the same row.
+                self.swipe(self.S_WQ_LIST_UP, interval=1)
+                sleep(1)
+                continue
+            mission_fail_count.pop(area_key, None)
+            mission_retry_after.pop(area_key, None)
             sleep(1.5)
 
 
@@ -359,13 +381,17 @@ class ScriptTask(WQExplore, SecretScriptTask, WantedQuestsAssets):
         logger.hr('Start wanted quests')
         # Guard against infinite wait when trace panel cannot be re-opened.
         open_trace_timeout = Timer(20).start()
+        trace_click_attempts = 0
         while 1:
             self.screenshot()
             if self.appear(self.I_TRACE_TRUE):
                 break
-            if self.click(ocr, interval=1):
+            # Keep click rate/attempt count bounded, otherwise this can trigger
+            # click protection if the page is not ready.
+            if self.click(ocr, interval=2.5):
+                trace_click_attempts += 1
                 continue
-            if open_trace_timeout.reached():
+            if trace_click_attempts >= 6 or open_trace_timeout.reached():
                 logger.warning('Open wanted quest trace panel timeout, skip this mission')
                 return False
         if not self.appear(self.I_GOTO_1):
@@ -402,13 +428,15 @@ class ScriptTask(WQExplore, SecretScriptTask, WantedQuestsAssets):
         # Ensure the selected mission row is still visible and has a reachable "前往" button.
         # Some pages/animations may close the trace panel and cause an infinite wait later.
         goto_ready_timeout = Timer(12).start()
+        goto_row_click_attempts = 0
         while 1:
             self.screenshot()
             if self.appear(goto_button):
                 break
-            if self.click(ocr, interval=1):
+            if self.click(ocr, interval=2.5):
+                goto_row_click_attempts += 1
                 continue
-            if goto_ready_timeout.reached():
+            if goto_row_click_attempts >= 6 or goto_ready_timeout.reached():
                 logger.warning(f'Goto button not ready for mission `{destination}`, skip this mission')
                 return False
 
@@ -416,9 +444,11 @@ class ScriptTask(WQExplore, SecretScriptTask, WantedQuestsAssets):
             success = func(goto_button, do_number)
             if success is False:
                 logger.warning('Execute mission failed to enter target page, skip this mission once')
+            return success is not False
         except ExploreWantedBoss:
             logger.warning('The extreme case. The quest only needs to challenge one final boss, so skip it')
             self.want_strategy_excluding.append(info_wq_list[0])
+            return False
 
     def challenge(self, goto_btn, num):
         # `ui_click` has no timeout. Use a bounded enter loop to avoid deadlock.
