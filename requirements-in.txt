@@ -31,7 +31,12 @@ cryptography>=42.0.7
 onepush==1.3.0
 inflection==0.5.1
 
+# Frida (for AutoCheckinBigGod)
+frida==17.6.2
+frida-tools==14.5.2
+
 oashya
+oas-checkin-biggod
 
 # For dev
 #

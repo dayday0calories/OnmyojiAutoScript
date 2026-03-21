@@ -4,12 +4,14 @@
 from contextlib import asynccontextmanager
 
 import argparse
-from starlette import status
-from starlette.responses import JSONResponse
+from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
+from module.server.tool_router import tool_app
+from starlette import status
+from starlette.responses import JSONResponse
+from fastapi.responses import RedirectResponse
 
 from module.logger import logger
 from module.server.home_router import home_app
@@ -43,7 +45,15 @@ app.add_middleware(
 app.include_router(home_app)
 app.include_router(script_app)
 app.mount("/webui", StaticFiles(directory="webui", html=True), name="webui")
+app.include_router(tool_app)
 
+annotator_static_dir = Path(__file__).resolve().parent / "web" / "annotator" / "static"
+if annotator_static_dir.exists():
+    app.mount(
+        "/tool/annotator/static",
+        StaticFiles(directory=str(annotator_static_dir)),
+        name="annotator_static",
+    )
 
 @app.get("/")
 async def root_redirect():

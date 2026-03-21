@@ -42,14 +42,12 @@ oas-backend.bat
 .eslintignore
 .eslintrc.js
 .prettierrc.js
-
-
-
-
-
-
-
-
+# ai
+AGENTS.md
+CLAUDE.md
+.codex/
+.claude/
+openspec/
 
 
 # Created by .ignore support plugin (hsz.mobi)
@@ -274,3 +272,13 @@ console.bat
 .vscode/*
 .DS_Store
 /tmp_pic
+tasks/AutoCheckinBigGod/frida-server-17.6.2-android-x86_64
+oas.bat
+
+# Tauri
+desktop/tauri/node_modules/
+desktop/tauri/src-tauri/target/
+desktop/tauri/src-tauri/gen/
+desktop/tauri/src-tauri/*.dmg
+desktop/tauri/src-tauri/*.app
+!desktop/tauri/src-tauri/Cargo.lock

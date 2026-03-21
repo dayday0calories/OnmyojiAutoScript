@@ -153,8 +153,6 @@ class ScriptTask(GameUi, GeneralBattle, GeneralInvite, SwitchSoul, HuntAssets):
         :param random_click_swipt_enable:
         :return:
         """
-        # if self.kirin_day:
-        #     return super().battle_wait(random_click_swipt_enable)
 
         # 阴界之门
         self.device.stuck_record_add('BATTLE_STATUS_S')

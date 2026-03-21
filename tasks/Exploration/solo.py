@@ -10,6 +10,7 @@ from module.base.timer import Timer
 from tasks.Component.GeneralInvite.config_invite import InviteConfig, InviteNumber, FindMode
 from tasks.Exploration.base import BaseExploration, UpType, Scene
 from tasks.Exploration.config import ChooseRarity, AutoRotate, UserStatus, ExplorationLevel
+from tasks.GameUi.page import page_exploration
 
 
 class SoloExploration(BaseExploration):
@@ -57,8 +58,8 @@ class SoloExploration(BaseExploration):
             #
             elif scene == Scene.MAIN:
                 if not explore_init:
-                    self.ui_click(self.I_E_AUTO_ROTATE_OFF, stop=self.I_E_AUTO_ROTATE_ON)
                     if self._config.exploration_config.auto_rotate == AutoRotate.yes:
+                        self.ui_click(self.I_E_AUTO_ROTATE_OFF, stop=self.I_E_AUTO_ROTATE_ON)
                         self.enter_settings_and_do_operations()
                     explore_init = True
                     continue
@@ -93,6 +94,7 @@ class SoloExploration(BaseExploration):
             elif scene == Scene.BATTLE_PREPARE or scene == Scene.BATTLE_FIGHTING:
                 self.check_take_over_battle(is_screenshot=False, config=self._config.general_battle_config)
             elif scene == Scene.UNKNOWN:
+                self.ui_goto_page(page_exploration)
                 continue
 
     def run_leader(self):
@@ -174,8 +176,8 @@ class SoloExploration(BaseExploration):
             ##
             elif scene == Scene.MAIN:
                 if not explore_init:
-                    self.ui_click(self.I_E_AUTO_ROTATE_OFF, stop=self.I_E_AUTO_ROTATE_ON)
                     if self._config.exploration_config.auto_rotate == AutoRotate.yes:
+                        self.ui_click(self.I_E_AUTO_ROTATE_OFF, stop=self.I_E_AUTO_ROTATE_ON)
                         self.enter_settings_and_do_operations()
                     friend_leave_timer = Timer(10)
                     explore_init = True
@@ -261,8 +263,8 @@ class SoloExploration(BaseExploration):
             #
             elif scene == Scene.MAIN:
                 if not explore_init:
-                    self.ui_click(self.I_E_AUTO_ROTATE_OFF, stop=self.I_E_AUTO_ROTATE_ON)
                     if self._config.exploration_config.auto_rotate == AutoRotate.yes:
+                        self.ui_click(self.I_E_AUTO_ROTATE_OFF, stop=self.I_E_AUTO_ROTATE_ON)
                         self.enter_settings_and_do_operations()
                     explore_init = True
                     continue
@@ -429,22 +431,7 @@ class SoloExploration(BaseExploration):
 class ScriptTask(SoloExploration):
     def run(self):
         logger.hr('exploration')
-        random_click_cnt = 0
-        while 1:
-            self.screenshot()
-            scene = self.get_current_scene()
-            if random_click_cnt >= 2:
-                break
-            if scene == Scene.UNKNOWN:
-                logger.warning('Unknown scene, random click')
-                if self.click(self.C_SAFE_RANDOM, interval=1.5):
-                    random_click_cnt += 1
-                continue
-            else:
-                break
-
-        if scene == Scene.UNKNOWN:
-            self.pre_process()
+        self.pre_process()
 
         match self._config.exploration_config.user_status:
             case UserStatus.ALONE:

@@ -49,7 +49,6 @@ class ThousandThings(GameUi, RichManAssets):
                 continue
         logger.info('Exit Thousand Things')
 
-
     def tt_buy_mystery_amulet(self) -> bool:
         """
 

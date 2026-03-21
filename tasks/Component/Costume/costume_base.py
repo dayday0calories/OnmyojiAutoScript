@@ -21,7 +21,13 @@ main_costume_model = {
         'I_MAIN_GOTO_EXPLORATION': f'I_MAIN_GOTO_EXPLORATION_{i}',
         'I_MAIN_GOTO_SUMMON': f'I_MAIN_GOTO_SUMMON_{i}',
         'I_MAIN_GOTO_TOWN': f'I_MAIN_GOTO_TOWN_{i}',
-        'I_PET_HOUSE': f'I_PET_HOUSE_{i}'
+        'I_PET_HOUSE': f'I_PET_HOUSE_{i}',
+        'I_WQ_DONE': f'I_WQ_DONE_{i}',  # 该条及以下非强制更改, 若对应庭院内容识别不到可以添加
+        'I_HARVEST_SIGN': f'I_HARVEST_SIGN_{i}',
+        'I_HARVEST_JADE': f'I_HARVEST_JADE_{i}',
+        'I_HARVEST_MAIL': f'I_HARVEST_MAIL_{i}',
+        'I_HARVEST_SOUL': f'I_HARVEST_SOUL_{i}',
+        'I_HARVEST_GUILD_REWARD': f'I_HARVEST_GUILD_REWARD_{i}'
     } for i in range(1, 14)
 }
 
@@ -123,7 +129,9 @@ class CostumeBase:
         logger.info(f'Switch main costume to {main_type}')
         costume_assets = CostumeAssets()
         for key, value in main_costume_model[main_type].items():
-            assert_value: RuleImage = getattr(costume_assets, value)
+            assert_value: RuleImage = getattr(costume_assets, value, None)
+            if assert_value is None:
+                continue
             self.replace_img(key, assert_value)
 
     def check_costume_carpbanner(self, carpbanner_type: CarpBannerType):
