@@ -11,6 +11,7 @@ from datetime import datetime, time
 
 from module.logger import logger
 from module.exception import TaskEnd, RequestHumanTakeover
+from module.device.env import IS_MACINTOSH
 
 
 class ScriptTask(LoginHandler):
@@ -37,8 +38,19 @@ class ScriptTask(LoginHandler):
 
     def app_restart(self):
         logger.hr('App restart')
-        self.device.app_stop()
-        self.device.app_start()
+        if IS_MACINTOSH and hasattr(self.device, 'is_emulator_running'):
+            if self.device.is_emulator_running():
+                logger.info('MuMu instance is already running, restart game only')
+                if self.device.app_is_running():
+                    self.device.app_stop()
+                self.device.app_start()
+            else:
+                logger.info('MuMu instance is not running, start emulator instance first')
+                self.device.emulator_start()
+                self.device.app_start()
+        else:
+            self.device.app_stop()
+            self.device.app_start()
         self.app_handle_login()
         self.set_next_run(task='Restart', success=True, finish=True, server=True)
 
