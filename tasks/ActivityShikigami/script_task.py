@@ -25,7 +25,6 @@ from tasks.ActivityShikigami.config import SwitchSoulConfig, GeneralBattleConfig
 from tasks.Component.BaseActivity.base_activity import BaseActivity
 from tasks.Component.BaseActivity.config_activity import GeneralClimb
 from tasks.Component.SwitchSoul.switch_soul import SwitchSoul
-from tasks.ActivityShikigami.battle_flow_mixin import ActivityShikigamiBattleFlowMixin
 from tasks.GameUi.game_ui import GameUi
 import tasks.Component.GeneralBattle.config_general_battle
 import tasks.ActivityShikigami.page as game
@@ -107,17 +106,6 @@ class StateMachine(BaseTask):
         return self._count_map
 
     # ----------------------------------------------------
-
-    @property
-    def slow_factor(self) -> float:
-        """
-        Scale timing when slow mode is enabled (battery saver, low FPS).
-        """
-        slow_cfg = getattr(self.conf, "slow_mode_config", None)
-        if not slow_cfg:
-            return 1.0
-        return slow_cfg.factor if slow_cfg.enable else 1.0
-
     def put_status(self):
         """
         更新全局状态
@@ -154,7 +142,7 @@ class StateMachine(BaseTask):
         return True
 
 
-class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikigamiBattleFlowMixin, ActivityShikigamiAssets):
+class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikigamiAssets):
     """
     更新前请先看 ./README.md
     """
@@ -163,6 +151,10 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
         self.limit_time: timedelta = self.conf.general_climb.limit_time_v
         #
         for climb_type in self.conf.general_climb.run_sequence_v:
+            # 2026.04.04>>>----------------------------------------------------------------
+            if climb_type not in ['ap']:
+                continue
+            # 2026.04.04<<<----------------------------------------------------------------
             # 进入到活动的主页面，不是具体的战斗页面
             self.ui_get_current_page()
             self.ui_goto(game.page_climb_act)
@@ -194,19 +186,33 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
         self.ui_clicks([self.I_TO_BATTLE_MAIN, self.I_TO_BATTLE_MAIN_2],
                        stop=self.I_CHECK_BATTLE_MAIN, interval=1)
         self.switch_soul(self.I_BATTLE_MAIN_TO_RECORDS, self.I_CHECK_BATTLE_MAIN)
-        if not self.switch_climb_mode_in_game('pass'):
-            logger.warning('Switch climb mode to pass failed, retry enter battle page once')
-            self.ui_clicks([self.I_TO_BATTLE_MAIN, self.I_TO_BATTLE_MAIN_2],
-                           stop=self.I_CHECK_BATTLE_MAIN, interval=1)
-            if not self.switch_climb_mode_in_game('pass'):
-                logger.warning('Switch climb mode to pass failed twice, abort pass run')
-                return
-        self._run_climb_loop(
-            fire_appear_fn=self.fire_appear,
-            with_confirm=True,
-            with_ui_reward=True,
-            reward_log="Reward overlay detected, fallback click to continue",
-        )
+        self.switch_climb_mode_in_game('pass')
+
+        ocr_limit_timer = Timer(1).start()
+        click_limit_timer = Timer(4).start()
+        while 1:
+            self.screenshot()
+            self.put_status()
+            # --------------------------------------------------------------
+            if (self.appear_then_click(self.I_UI_CONFIRM, interval=0.5)
+                    or self.appear_then_click(self.I_UI_CONFIRM_SAMLL, interval=0.5)):
+                continue
+            if self.ui_reward_appear_click():
+                continue
+            if not ocr_limit_timer.reached():
+                continue
+            ocr_limit_timer.reset()
+            if not self.ocr_appear(self.O_FIRE):
+                continue
+            #  --------------------------------------------------------------
+            self.lock_team(self.conf.general_battle)
+            if not self.check_tickets_enough():
+                logger.warning(f'No tickets left, wait for next time')
+                break
+            if self.conf.general_climb.random_sleep:
+                random_sleep(probability=0.2)
+            if self.start_battle():
+                continue
 
         self.ui_click(self.I_UI_BACK_YELLOW, stop=self.I_TO_BATTLE_MAIN, interval=1)
 
@@ -218,20 +224,30 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
         self.ui_clicks([self.I_TO_BATTLE_MAIN, self.I_TO_BATTLE_MAIN_2],
                        stop=self.I_CHECK_BATTLE_MAIN, interval=1)
         self.switch_soul(self.I_BATTLE_MAIN_TO_RECORDS, self.I_CHECK_BATTLE_MAIN)
-        if not self.switch_climb_mode_in_game('ap'):
-            logger.warning('Switch climb mode to ap failed, retry enter battle page once')
-            self.ui_clicks([self.I_TO_BATTLE_MAIN, self.I_TO_BATTLE_MAIN_2],
-                           stop=self.I_CHECK_BATTLE_MAIN, interval=1)
-            if not self.switch_climb_mode_in_game('ap'):
-                logger.warning('Switch climb mode to ap failed twice, abort ap run')
-                return
-        self._run_climb_loop(
-            fire_appear_fn=self.fire_appear,
-            on_fire_missing_fn=lambda: self.appear_then_click(self.I_CHECK_BATTLE_MAIN, interval=4),
-            with_confirm=False,
-            with_ui_reward=False,
-            reward_log="Reward overlay detected, fallback click to continue",
-        )
+        # 2026.04.04>>>----------------------------------------------------------------
+        # self.switch_climb_mode_in_game('ap')
+        # 2026.04.04<<<----------------------------------------------------------------
+
+        ocr_limit_timer = Timer(1).start()
+        while 1:
+            self.screenshot()
+            self.put_status()
+            # --------------------------------------------------------------
+            if not ocr_limit_timer.reached():
+                continue
+            ocr_limit_timer.reset()
+            if not self.ocr_appear(self.O_FIRE):
+                self.appear_then_click(self.I_CHECK_BATTLE_MAIN, interval=4)
+                continue
+            #  --------------------------------------------------------------
+            self.lock_team(self.conf.general_battle)
+            if not self.check_tickets_enough():
+                logger.warning(f'No tickets left, wait for next time')
+                break
+            if self.conf.general_climb.random_sleep:
+                random_sleep(probability=0.2)
+            if self.start_battle():
+                continue
 
         self.ui_click(self.I_UI_BACK_YELLOW, stop=self.I_TO_BATTLE_MAIN, interval=1)
 
@@ -240,42 +256,26 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
         更新前请先看 ./README.md
         """
         logger.hr(f'Start run climb type BOSS')
-        self.ui_click(self.I_TO_BATTLE_BOSS, stop=self.I_CHECK_BATTLE_BOSS, interval=1)
-        if not self.appear(self.I_CHECK_BATTLE_BOSS):
-            logger.warning("Cannot enter boss battle page, skip boss run")
-            return
 
-        self.switch_soul(self.I_BATTLE_MAIN_TO_RECORDS, self.I_CHECK_BATTLE_BOSS)
-        self._run_climb_loop(
-            fire_appear_fn=self.boss_fire_appear,
-            with_confirm=True,
-            with_ui_reward=True,
-            reward_log="Boss reward overlay detected, fallback click to continue",
-        )
-
-        self.ui_click(self.I_UI_BACK_YELLOW, stop=self.I_TO_BATTLE_BOSS, interval=1)
+    def _run_ap100(self):
+        """
+        更新前请先看 ./README.md
+        """
+        logger.hr(f'Start run climb type AP100')
 
     def start_battle(self):
-        click_times = 0
-        max_times = max(2, int(round(random.randint(2, 4) * self.slow_factor)))
+        click_times, max_times = 0, random.randint(4, 8)
         while 1:
             self.screenshot()
-            # Only treat it as "in battle" if the challenge button is gone.
-            fire_appear = self.boss_fire_appear() if self.climb_type == 'boss' else self.fire_appear()
-            if self.is_in_battle(False) and not fire_appear:
+            if self.is_in_battle(False):
                 break
             if click_times >= max_times:
                 logger.warning(f'Climb {self.climb_type} cannot enter, maybe already end, try next')
                 return
-            if (self.appear_then_click(self.I_UI_CONFIRM_SAMLL, interval=1 * self.slow_factor) or
-                    self.appear_then_click(self.I_UI_CONFIRM, interval=1 * self.slow_factor)):
+            if (self.appear_then_click(self.I_UI_CONFIRM_SAMLL, interval=1) or
+                    self.appear_then_click(self.I_UI_CONFIRM, interval=1) ):
                 continue
-            fire_clicked = (
-                self.boss_fire_appear_click(interval=2 * self.slow_factor)
-                if self.climb_type == 'boss'
-                else self.fire_appear_click(interval=2 * self.slow_factor)
-            )
-            if fire_clicked:
+            if self.ocr_appear_click(self.O_FIRE, interval=2):
                 click_times += 1
                 logger.info(f'Try click fire, remain times[{max_times - click_times}]')
                 continue
@@ -290,89 +290,36 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
         self.count_map[self.climb_type] = self.current_count
         for btn in (self.C_RANDOM_LEFT, self.C_RANDOM_RIGHT, self.C_RANDOM_TOP, self.C_RANDOM_BOTTOM):
             btn.name = "BATTLE_RANDOM"
-        reward_markers = (
-            self.I_REWARD,
-            self.I_REWARD_PURPLE_SNAKE_SKIN,
-            self.I_REWARD_GOLD,
-            self.I_REWARD_GOLD_SNAKE_SKIN,
-            self.I_REWARD_EXP_SOUL_4,
-            self.I_REWARD_SOUL_5,
-            self.I_REWARD_SOUL_6,
-        )
-        win_seen = False
-        post_win_click_timer = Timer(max(1.0, 1.0 * self.slow_factor)).start()
-        post_win_timeout = Timer(max(20, int(round(20 * self.slow_factor)))).start()
-        ok_cnt, max_retry = 0, max(5, int(round(5 * self.slow_factor)))
-        battle_wait_timeout = Timer(max(45, int(round(45 * self.slow_factor)))).start()
+        ok_cnt, max_retry = 0, 8
         while 1:
-            sleep(random.uniform(0.5, 1.5) * self.slow_factor)
+            sleep(random.uniform(0.5, 1.5))
             self.screenshot()
-            ok_cnt += 1
-            if battle_wait_timeout.reached():
-                logger.warning("Battle wait timeout reached, fallback return success")
-                return True
             # 达到最大重试次数则直接交给上层处理
             if ok_cnt > max_retry:
                 break
             # 识别到挑战说明已经退出战斗
-            fire_appear = self.boss_fire_appear() if self.climb_type == 'boss' else self.fire_appear()
-            if ok_cnt > 0 and fire_appear:
+            if ok_cnt > 0 and self.ocr_appear(self.O_FIRE):
                 return True
             # 战斗失败
             if self.appear(self.I_FALSE):
                 logger.warning("Battle failed")
-                self.ui_click_until_smt_disappear(self.random_reward_click(click_now=False), self.I_FALSE, interval=1.5 * self.slow_factor)
+                self.ui_click_until_smt_disappear(self.random_reward_click(click_now=False), self.I_FALSE, interval=1.5)
                 return False
             # 战斗成功
-            if self.appear_then_click(self.I_WIN, interval=2 * self.slow_factor):
-                win_seen = True
-                post_win_click_timer.reset()
-                post_win_timeout.reset()
+            if self.appear_then_click(self.I_WIN, interval=2):
                 continue
-            # 出现结算奖励标识（兼容不同奖励形态）
-            appear_reward_like = any(self.appear(marker) for marker in reward_markers)
-            if appear_reward_like:
-                logger.info('Win battle')
-                reward_wait_timeout = Timer(max(15, int(round(15 * self.slow_factor)))).start()
-                while 1:
-                    self.screenshot()
-                    if reward_wait_timeout.reached():
-                        logger.warning("Reward wait timeout, force clicking continue area")
-                        self.random_reward_click(
-                            exclude_click=[self.C_RANDOM_LEFT, self.C_RANDOM_RIGHT, self.C_RANDOM_TOP],
-                            click_now=True
-                        )
-                        sleep(0.5 * self.slow_factor)
-                        return True
-                    appear_reward = self.appear_then_click(self.I_REWARD)
-                    appear_reward_like = appear_reward or any(self.appear(marker) for marker in reward_markers[1:])
-                    if not appear_reward_like:
-                        break
-                    if appear_reward_like:
-                        # Prefer bottom area to avoid top-bar accidental page opens.
-                        self.click(self.C_RANDOM_BOTTOM, interval=1.8 * self.slow_factor)
-                        continue
-                return True
-            # 已点击过胜利，但奖励模板被遮挡时，主动点击“点击屏幕继续”区域推进
-            if win_seen:
-                if post_win_click_timer.reached_and_reset():
-                    logger.info("Post-win fallback click to clear covered reward page")
-                    self.random_reward_click(
-                        exclude_click=[self.C_RANDOM_LEFT, self.C_RANDOM_RIGHT, self.C_RANDOM_TOP],
-                        click_now=True
-                    )
-                fire_appear = self.boss_fire_appear() if self.climb_type == 'boss' else self.fire_appear()
-                if fire_appear:
-                    return True
-                if post_win_timeout.reached():
-                    logger.warning("Post-win fallback timeout reached, continue as success")
-                    return True
+            #  出现 “魂” 和 紫蛇皮
+            if self.appear(self.I_REWARD) or self.appear(self.I_REWARD_PURPLE_SNAKE_SKIN) or \
+                    self.appear(self.I_REWARD_GOLD) or self.appear(self.I_REWARD_GOLD_SNAKE_SKIN):
+                self.random_reward_click(exclude_click=[self.C_RANDOM_TOP, self.C_RANDOM_LEFT])
+                ok_cnt += 1
                 continue
             # 已经不在战斗中了, 且奖励也识别过了, 则随机点击
-            # if ok_cnt > 0 and not self.is_in_battle(False):
-            #     self.random_reward_click(exclude_click=[self.C_RANDOM_BOTTOM])
-            #     ok_cnt += 1
-            #     continue
+            if ok_cnt > 3 and not self.is_in_battle(False):
+                self.random_reward_click(exclude_click=[self.C_RANDOM_TOP, self.C_RANDOM_LEFT])
+                self.device.stuck_record_clear()
+                ok_cnt += 1
+                continue
             # 战斗中随机滑动
             if ok_cnt == 0 and random_click_swipt_enable:
                 self.random_click_swipt()
@@ -380,11 +327,12 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
 
     def switch_soul(self, enter_button: RuleImage, cur_img: RuleImage):
         conf = self.conf.switch_soul_config
-        conf.validate_switch_soul()
         enable_switch = getattr(conf, f"enable_switch_{self.climb_type}", False)
         enable_by_name = getattr(conf, f"enable_switch_{self.climb_type}_by_name", False)
         if not enable_switch and not enable_by_name:
             return
+        logger.hr('Start switch soul', 2)
+        conf.validate_switch_soul()
         self.ui_click(enter_button, stop=self.I_CHECK_RECORDS, interval=1)
         if enable_by_name:
             group, team = getattr(conf, f"{self.climb_type}_group_team_name").split(",")
@@ -392,63 +340,27 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
         elif enable_switch:
             group_team = getattr(conf, f"{self.climb_type}_group_team")
             self.run_switch_soul(group_team)
+        self.ui_click(self.I_UI_BACK_YELLOW, stop=cur_img, interval=1)
 
-        def _reenter_battle_page():
-            if self.climb_type == 'boss':
-                self.ui_click(self.I_TO_BATTLE_BOSS, stop=self.I_CHECK_BATTLE_BOSS, interval=1)
-            else:
-                self.ui_clicks([self.I_TO_BATTLE_MAIN, self.I_TO_BATTLE_MAIN_2],
-                               stop=self.I_CHECK_BATTLE_MAIN, interval=1)
-
-        back_timeout = Timer(max(15, int(round(15 * self.slow_factor)))).start()
-        while 1:
-            self.screenshot()
-            if self.appear(cur_img):
-                break
-            # Safety guard: stop backing out if we accidentally return to main page.
-            if self.appear(self.I_CHECK_MAIN):
-                logger.warning(
-                    f"Switch soul returned to main page unexpectedly (target={cur_img.name}), recover"
-                )
-                self.ui_goto(game.page_climb_act, timeout=25)
-                _reenter_battle_page()
-                break
-            # Only click back while still inside soul records page.
-            # Avoid blind double-back that can exit to previous/main pages.
-            if self.appear(self.I_CHECK_RECORDS) and self.appear_then_click(self.I_UI_BACK_YELLOW, interval=1):
-                continue
-            if back_timeout.reached():
-                logger.warning(
-                    f"Switch soul return timeout (target={cur_img.name}), "
-                    f"re-enter battle page and continue"
-                )
-                _reenter_battle_page()
-                break
-
-    def switch_climb_mode_in_game(self, mode: str = 'ap') -> bool:
+    def switch_climb_mode_in_game(self, mode: str = 'ap'):
         map_check = {
             'ap': self.I_CLIMB_MODE_AP,
             'pass': self.I_CLIMB_MODE_PASS,
         }
         logger.info(f'Switch climb mode to {mode}')
-        target_check = map_check[mode]
-        switch_timeout = Timer(max(20, int(round(20 * self.slow_factor)))).start()
-        while 1:
-            self.screenshot()
-            if self.appear(target_check):
-                logger.info(f'Climb mode already at {mode}')
-                return True
-            if self.appear_then_click(self.I_CLIMB_MODE_SWITCH, interval=1.9 * self.slow_factor):
-                continue
-            if switch_timeout.reached():
-                logger.warning(f'Switch climb mode to {mode} timeout, try recover page once')
-                self.ui_get_current_page(skip_first_screenshot=False)
-                self.ui_goto(game.page_climb_act, timeout=20)
-                if self.appear(target_check):
-                    logger.info(f'Climb mode switched to {mode} after recovery')
-                    return True
-                logger.warning(f'Switch climb mode to {mode} still failed after recovery')
-                return False
+        self.ui_click(self.I_CLIMB_MODE_SWITCH, stop=map_check[mode], interval=1.9)
+
+    def lock_team(self, battle_conf: GeneralBattleConfig):
+        """
+        根据配置判断当前爬塔类型是否锁定阵容, 并执行锁定或解锁
+        """
+        enable_preset = getattr(battle_conf, f"enable_{self.climb_type}_preset", False)
+        if not enable_preset:
+            logger.info(f'Lock {self.climb_type} team')
+            self.ui_click(self.I_UNLOCK, stop=self.I_LOCK, interval=1.5)
+            return
+        logger.info(f'Unlock {self.climb_type} team')
+        self.ui_click(self.I_LOCK, stop=self.I_UNLOCK, interval=1.5)
 
     def check_tickets_enough(self) -> bool:
         """
@@ -456,56 +368,20 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
         :return: True 可以运行 or False
         """
         logger.hr(f'Check {self.climb_type} tickets')
-        if self.climb_type == 'boss':
-            fire_ready = self.wait_until_appear(self.I_BOSS_FIRE, wait_time=3 * self.slow_factor)
-        else:
-            fire_ready = self.wait_until_fire(wait_time=3 * self.slow_factor)
-        if not fire_ready:
+        if not self.wait_until_appear(self.O_FIRE, wait_time=3):
             logger.warning(f'Detect fire fail, try reidentify')
-            # Reward overlay may cover FIRE OCR; force click screen to continue and retry.
-            for _ in range(2):
-                self.random_reward_click(
-                    exclude_click=[self.C_RANDOM_LEFT, self.C_RANDOM_RIGHT, self.C_RANDOM_TOP],
-                    click_now=True
-                )
-                sleep(0.4 * self.slow_factor)
-                if self.climb_type == 'boss':
-                    fire_ready = self.wait_until_appear(self.I_BOSS_FIRE, wait_time=1.5 * self.slow_factor)
-                else:
-                    fire_ready = self.wait_until_fire(wait_time=1.5 * self.slow_factor)
-                if fire_ready:
-                    break
-            else:
-                return False
-        remain_times = self._read_remain_times_with_retry()
+            return False
+        self.screenshot()
+        remain_times = 0
+        if self.climb_type == 'pass':
+            remain_times = self.O_REMAIN_PASS.ocr_digit(self.device.image)
+        if self.climb_type == 'ap':
+            remain_times = self.O_REMAIN_AP.ocr_digit(self.device.image)
+        if self.climb_type == 'boss':
+            _, remain_times, _ = self.O_REMAIN_BOSS.ocr_digit_counter(self.device.image)
+        if self.climb_type == 'ap100':
+            remain_times = self.O_REMAIN_AP100.ocr_digit(self.device.image)
         return remain_times > 0
-
-    def _read_remain_times_with_retry(self, tries: int = 3) -> int:
-        samples = []
-        for _ in range(max(1, tries)):
-            self.screenshot()
-            remain_times = 0
-            if self.climb_type == 'pass':
-                remain_times = self.O_REMAIN_PASS.ocr_digit(
-                    _prepare_image_for_ocr(self.device.image, asset=self.O_REMAIN_PASS))
-            elif self.climb_type == 'ap':
-                remain_times = self.O_REMAIN_AP.ocr_digit(
-                    _prepare_image_for_ocr(self.device.image, asset=self.O_REMAIN_AP))
-            elif self.climb_type == 'boss':
-                _, remain_times, _ = self.O_REMAIN_BOSS.ocr_digit_counter(self.device.image)
-            elif self.climb_type == 'ap100':
-                remain_times = self.O_REMAIN_AP100.ocr_digit(
-                    _prepare_image_for_ocr(self.device.image, asset=self.O_REMAIN_AP100))
-            try:
-                remain_times = max(0, int(remain_times))
-            except (TypeError, ValueError):
-                remain_times = 0
-            samples.append(remain_times)
-            sleep(0.15 * self.slow_factor)
-
-        best = max(samples) if samples else 0
-        logger.info(f"{self.climb_type.upper()} tickets OCR samples: {samples}, use {best}")
-        return best
 
     def get_general_battle_conf(self) -> tasks.Component.GeneralBattle.config_general_battle.GeneralBattleConfig:
         from tasks.Component.GeneralBattle.config_general_battle import GeneralBattleConfig as gbc
@@ -546,3 +422,5 @@ if __name__ == '__main__':
     t = ScriptTask(c, d)
 
     t.run()
+
+

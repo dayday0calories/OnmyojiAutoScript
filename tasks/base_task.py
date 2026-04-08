@@ -1,7 +1,7 @@
 # This Python file uses the following encoding: utf-8
 # @author runhey
 # github https://github.com/runhey
-import cv2
+
 from time import sleep, time
 
 import random
@@ -121,8 +121,6 @@ class BaseTask(GlobalGameAssets, CostumeBase):
         截图 引入中间函数的目的是 为了解决如协作的这类突发的事件
         :return:
         """
-        # nemu_ipc 返回为RGB
-        # 其他方式未知
         self.device.screenshot()
         # 判断勾协
         self._burst()
@@ -205,6 +203,73 @@ class BaseTask(GlobalGameAssets, CostumeBase):
             x, y = target.coord()
             self.device.click(x, y, control_name=target.name)
 
+        elif appear and action:
+            x, y = action.coord()
+            if isinstance(action, RuleLongClick):
+                if duration is None:
+                    self.device.long_click(x, y, duration=action.duration / 1000, control_name=target.name)
+                else:
+                    self.device.long_click(x, y, duration=duration / 1000, control_name=target.name)
+            elif isinstance(action, RuleClick):
+                self.device.click(x, y, control_name=target.name)
+
+        return appear
+
+    def appear_multi_scale(self,
+                           target: RuleImage,
+                           interval: float = None,
+                           threshold: float = None,
+                           scales: list = None,
+                           scale_range: tuple = None):
+        """
+        多尺度图片识别，自动尝试多个缩放比例以适应图片大小的变化
+        :param target: RuleImage对象
+        :param interval: 匹配间隔时间
+        :param threshold: 匹配阈值
+        :param scales: 缩放比例列表
+        :param scale_range: 缩放范围 (start, end, step)，例如 (0.8, 1.2, 0.1)
+        :return: interval时间到达且匹配成功则返回True, 否则False
+        """
+        if interval:
+            if target.name in self.interval_timer:
+                if self.interval_timer[target.name].limit != interval:
+                    self.interval_timer[target.name] = Timer(interval)
+            else:
+                self.interval_timer[target.name] = Timer(interval)
+            if not self.interval_timer[target.name].reached():
+                return False
+
+        appear = target.match_multi_scale(self.device.image, threshold=threshold, scales=scales, scale_range=scale_range)
+
+        if appear and interval:
+            self.interval_timer[target.name].reset()
+
+        return appear
+
+    def appear_then_click_multi_scale(self,
+                                      target: RuleImage,
+                                      action: Union[RuleClick, RuleLongClick] = None,
+                                      interval: float = None,
+                                      threshold: float = None,
+                                      scales: list = None,
+                                      scale_range: tuple = None,
+                                      duration: float = None):
+        """
+        多尺度图片识别并点击，自动尝试多个缩放比例以适应图片大小的变化
+        :param target: RuleImage对象
+        :param action: 点击位置，可以是RuleClick或RuleLongClick
+        :param interval: 匹配间隔时间
+        :param threshold: 匹配阈值
+        :param scales: 缩放比例列表
+        :param scale_range: 缩放范围 (start, end, step)，例如 (0.8, 1.2, 0.1)
+        :param duration: 长按时间（毫秒）
+        :return: True or False
+        """
+        appear = self.appear_multi_scale(target, interval=interval, threshold=threshold, scales=scales, scale_range=scale_range)
+
+        if appear and not action:
+            x, y = target.coord()
+            self.device.click(x, y, control_name=target.name)
         elif appear and action:
             x, y = action.coord()
             if isinstance(action, RuleLongClick):
@@ -662,18 +727,23 @@ class BaseTask(GlobalGameAssets, CostumeBase):
 
         return True
 
-    def ui_click(self, click, stop, interval=1):
+    def ui_click(self, click, stop, interval=1, timeout=None):
         """
         循环的一个操作，直到出现stop
         :param click:
         :param stop:
-        :parm interval
+        :param interval: 点击间隔
+        :param timeout: 超时时间（秒），None表示不超时
         :return:
         """
+        timer = Timer(timeout).start() if timeout else None
         while 1:
             self.screenshot()
             if self.appear(stop):
-                break
+                return True
+            if timer and timer.reached():
+                logger.warning(f'ui_click timeout after {timeout}s')
+                return False
             if isinstance(click, RuleImage) and self.appear_then_click(click, interval=interval):
                 continue
             if isinstance(click, RuleClick) and self.click(click, interval=interval):
@@ -726,51 +796,34 @@ class BaseTask(GlobalGameAssets, CostumeBase):
             if isinstance(click, RuleOcr):
                 self.click(click)
                 continue
+
+    def ui_click_multi_scale(self, click, stop, interval=1, scale_range=None, timeout=None):
+        """
+        循环的一个操作，直到出现stop（支持多尺度图片识别）
+        :param click:
+        :param stop:
+        :param interval:
+        :param scale_range: 多尺度缩放范围 (start, end, step)
+        :param timeout: 超时时间（秒），None表示不超时
+        :return: True-找到stop条件, False-超时
+        """
+        timer = Timer(timeout).start() if timeout else None
+        while 1:
+            self.screenshot()
+            if self.appear(stop):
+                return True
+            if timer and timer.reached():
+                logger.warning(f'ui_click_multi_scale timeout after {timeout}s')
+                return False
+            if isinstance(click, RuleImage) and self.appear_then_click_multi_scale(click, scale_range=scale_range, interval=interval):
+                continue
+            if isinstance(click, RuleClick) and self.click(click, interval=interval):
+                continue
+            elif isinstance(click, RuleOcr) and self.ocr_appear_click(click, interval=interval):
+                continue
+
     def push_notify(self, content='', title=None, level=3):
         logger.info(f'Push notify: {content}')
 
     def save_image(self, task_name=None, content=None, wait_time=2, image_type=False, push_flag=False, level=3):
         logger.info(f'Save image: {task_name}')
-
-    def appear_rgb(self, target, image=None, difference: int = 10):
-        """
-        判断目标的平均颜色是否与图像中的颜色匹配。
-        参数:
-        - target: 目标对象，包含目标的文件路径和区域信息。
-        - image: 输入图像，如果未提供，则使用设备捕获的图像。
-        - difference: 颜色差异阈值，默认为10。
-        返回:
-        - 如果目标颜色与图像颜色匹配，则返回True，否则返回False。
-        """
-        # 如果未提供图像，则使用设备捕获的图像
-        # logger.info(f"target [{target}], image [{image}]")
-        if not self.appear(target):
-            logger.warning(f"[{target.name}]未匹配到")
-            return False
-
-        if image is None:
-            image = self.device.image
-
-        # 加载图像并计算其平均颜色
-        img = cv2.imread(target.file)
-        img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        average_color = cv2.mean(img_rgb)
-        # logger.info(f"[{target.name}]average_color: {average_color}")
-
-        # 提取目标区域的坐标和尺寸，并确保它们为整数
-        x, y, w, h = target.roi_front
-        x, y, w, h = int(x), int(y), int(w), int(h)
-        # 从输入图像中提取目标区域
-        img = image[y:y + h, x:x + w]
-        # 计算目标区域的平均颜色
-        color = cv2.mean(img)
-        # logger.info(f"[{target.name}] color: {color}")
-
-        # 比较目标图像和目标区域的颜色差异
-        for i in range(3):
-            if abs(average_color[i] - color[i]) > difference:
-                logger.warning(f" [{target.name}] 颜色匹配失败")
-                return False
-
-        logger.info(f"[{target.name}] 颜色匹配成功")
-        return True

@@ -12,6 +12,8 @@ from tasks.Component.config_base import ConfigBase, DateTime, MultiLine
 class HarvestConfig(BaseModel):
     # 默认启用
     enable: bool = Field(default=True, description='harvest_enable_help')
+    # 庭院事务
+    enable_courtyard_affairs: bool = Field(default=True)
     # 永久勾玉卡
     enable_jade: bool = Field(default=True)
     # 签到
@@ -35,14 +37,9 @@ class LoginCharacterConfig(BaseModel):
     # 同账号同服务器多个角色时,需要登录的角色名/服务器名
     character: str = Field(default="")
 
-class LoginWaitConfig(BaseModel):
-    wait_seconds: int = Field(default=0, description='login_wait_seconds_help')
-
-
 
 class Restart(ConfigBase):
     scheduler: RestartScheduler = Field(default_factory=RestartScheduler)
     tasks_config_reset: TasksReset = Field(default_factory=TasksReset)
     harvest_config: HarvestConfig = Field(default_factory=HarvestConfig)
     login_character_config: LoginCharacterConfig = Field(default_factory=LoginCharacterConfig)
-    login_wait_config: LoginWaitConfig = Field(default_factory=LoginWaitConfig)
