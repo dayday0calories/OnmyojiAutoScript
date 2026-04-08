@@ -1,6 +1,6 @@
-import { els } from "./dom.js";
-import { api } from "./api.js";
-import { i18n } from "./i18n.js";
+import { els } from "./dom.js?v=20260408c";
+import { api } from "./api.js?v=20260408c";
+import { i18n } from "./i18n.js?v=20260408c";
 
 const state = {
   ws: null,
@@ -542,6 +542,7 @@ function bindEvents() {
 
 async function bootstrap() {
   state.activeConfig = localStorage.getItem("oas_webui_active_config") || "";
+  i18n.setLang("zh-CN");
   await i18n.load(api);
   applyStaticTranslations();
   setSchedulerIndicator(false);

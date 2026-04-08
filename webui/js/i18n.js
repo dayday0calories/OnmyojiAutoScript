@@ -30,17 +30,65 @@ const fallbackZh = {
   "Save": "保存",
 };
 
+function detectInitialLang() {
+  const saved = localStorage.getItem("oas_webui_lang");
+  if (saved === "zh-CN" || saved === "en-US") return saved;
+
+  return "zh-CN";
+}
+
+function splitCamel(text) {
+  return String(text ?? "").replace(/([a-z0-9])([A-Z])/g, "$1 $2");
+}
+
+function variantsForKey(key) {
+  const raw = String(key ?? "").trim();
+  if (!raw) return [];
+
+  const camelSplit = splitCamel(raw);
+  const snakeToSpace = raw.replaceAll("_", " ");
+  const kebabToSpace = raw.replaceAll("-", " ");
+  const compact = raw.replace(/[\s_-]+/g, "");
+  const lowerCompact = compact.toLowerCase();
+  const candidates = [
+    raw,
+    camelSplit,
+    snakeToSpace,
+    kebabToSpace,
+    splitCamel(snakeToSpace),
+    splitCamel(kebabToSpace),
+    compact,
+    lowerCompact,
+    raw.toLowerCase(),
+    camelSplit.toLowerCase(),
+    snakeToSpace.toLowerCase(),
+    kebabToSpace.toLowerCase(),
+  ];
+
+  return [...new Set(candidates.filter(Boolean))];
+}
+
+function buildAliasDict(dict) {
+  const out = {};
+  for (const [key, value] of Object.entries(dict || {})) {
+    for (const variant of variantsForKey(key)) {
+      if (!(variant in out)) out[variant] = value;
+    }
+  }
+  return out;
+}
+
 export const i18n = {
-  currentLang: localStorage.getItem("oas_webui_lang") || "en-US",
-  zhDict: { ...fallbackZh },
+  currentLang: detectInitialLang(),
+  zhDict: buildAliasDict(fallbackZh),
 
   async load(api) {
     try {
       const [base, add] = await Promise.all([api.getZhCn(), api.getAdditionalTranslate()]);
       const addZh = add?.["zh-CN"] || {};
-      this.zhDict = { ...fallbackZh, ...(base || {}), ...(addZh || {}) };
+      this.zhDict = buildAliasDict({ ...fallbackZh, ...(base || {}), ...(addZh || {}) });
     } catch (_e) {
-      this.zhDict = { ...fallbackZh };
+      this.zhDict = buildAliasDict(fallbackZh);
     }
   },
 
@@ -56,19 +104,7 @@ export const i18n = {
   t(key) {
     const text = String(key ?? "");
     if (this.currentLang !== "zh-CN") return text;
-    const compact = text.replace(/\s+/g, "");
-    const candidates = [
-      text,
-      text.trim(),
-      text.replaceAll("_", " "),
-      text.replaceAll("-", " "),
-      compact,
-      text.toLowerCase(),
-      text.trim().toLowerCase(),
-      text.replaceAll("_", "").toLowerCase(),
-      text.replaceAll("-", "").toLowerCase(),
-    ];
-    for (const c of candidates) {
+    for (const c of variantsForKey(text)) {
       if (this.zhDict[c]) return this.zhDict[c];
     }
     return text;

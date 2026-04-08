@@ -5,8 +5,15 @@
   "hya_onmyoji": "切换阴阳师",
   "hya_onmyoji_help": "",
   "skill_mode": "技能本模式",
+  "mode_1": "只探查，满五个契灵后结束",
+  "mode_2": "只刷契灵(低级式盘)",
+  "mode_3": "刷契灵并结契(中高级式盘)",
+  "leader": "队长",
+  "member": "队员",
+  "alone": "单刷",
+  "handoff1": "接力1",
+  "handoff2": "接力2",
   "costume_shikigami_6": "月下火舞",
   "costume_shikigami_7": "赤溟幽界"
 }
-
 
