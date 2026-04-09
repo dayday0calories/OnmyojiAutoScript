@@ -35,6 +35,13 @@ class LanternClass(Enum):
 class ScriptTask(GameUi, GeneralBattle, DemonEncounterAssets, SwitchSoul):
     conf: DemonEncounter = None
 
+    @staticmethod
+    def _is_numeric_switch_target(value: str) -> bool:
+        if not isinstance(value, str):
+            return False
+        parts = [part.strip() for part in value.split(",")]
+        return len(parts) == 2 and all(part.lstrip("-").isdigit() for part in parts)
+
     def run(self):
         self.conf = self.config.demon_encounter
         if not self.check_time():
@@ -60,17 +67,29 @@ class ScriptTask(GameUi, GeneralBattle, DemonEncounterAssets, SwitchSoul):
         """
         select_best_demon = getattr(self.conf.best_demon_boss_config, f'{self.boss_type}_select', False)
         if select_best_demon:
-            group, team = getattr(self.conf.best_demon_soul_config, self.boss_type).split(",")
+            target = getattr(self.conf.best_demon_soul_config, self.boss_type)
         else:
-            group, team = getattr(self.conf.demon_soul_config, self.boss_type).split(",")
-        if group and team:
-            self.run_switch_soul_by_name(group, team)
+            target = getattr(self.conf.demon_soul_config, self.boss_type)
+
+        if self._is_numeric_switch_target(target):
+            self.run_switch_soul(target)
+        else:
+            group, team = target.split(",")
+            if group and team:
+                self.run_switch_soul_by_name(group, team)
+
             if datetime.now().weekday() == 0:
                 if select_best_demon:
-                    group, team = getattr(self.conf.best_demon_soul_config, f'{self.boss_type}_supplementary').split(",")
+                    target = getattr(self.conf.best_demon_soul_config, f'{self.boss_type}_supplementary')
                 else:
-                    group, team = getattr(self.conf.demon_soul_config, f'{self.boss_type}_supplementary').split(",")
-                self.run_switch_soul_by_name(group, team)
+                    target = getattr(self.conf.demon_soul_config, f'{self.boss_type}_supplementary')
+
+                if self._is_numeric_switch_target(target):
+                    self.run_switch_soul(target)
+                else:
+                    group, team = target.split(",")
+                    if group and team:
+                        self.run_switch_soul_by_name(group, team)
 
     def execute_boss(self):
         """

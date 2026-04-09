@@ -24,8 +24,8 @@
       "notify_config": "provider: null"
     },
     "optimization": {
-      "screenshot_interval": 0.3,
-      "combat_screenshot_interval": 1.0,
+      "screenshot_interval": 0.5,
+      "combat_screenshot_interval": 1.5,
       "task_hoarding_duration": 0,
       "when_task_queue_empty": "goto_main",
       "schedule_rule": "Filter"
