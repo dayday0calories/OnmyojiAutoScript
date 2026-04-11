@@ -24,6 +24,19 @@ def switch_parser(switch_str: str) -> tuple:
 
 class SwitchSoul(BaseTask, SwitchSoulAssets):
 
+    def handle_audio_package_popup(self) -> bool:
+        """
+        关闭进入式神录时可能弹出的“式神音频”扩展包下载提示。
+        """
+        popup_area = self.O_SS_AUDIO_POPUP.ocr(self.device.image)
+        if popup_area == (0, 0, 0, 0):
+            return False
+
+        logger.info('Handle shikigami audio package popup')
+        self.click(self.C_SS_AUDIO_NO_REMIND, interval=0.8)
+        self.click(self.C_SS_AUDIO_CANCEL, interval=0.8)
+        return True
+
     def run_switch_soul(self, target: tuple | list[tuple] | str):
         """
         保证在式神录的界面
@@ -45,6 +58,8 @@ class SwitchSoul(BaseTask, SwitchSoulAssets):
         """
         while 1:
             self.screenshot()
+            if self.handle_audio_package_popup():
+                continue
             if self.appear(self.I_SOU_SWITCH_1):
                 break
             if self.appear(self.I_SOU_SWITCH_2):

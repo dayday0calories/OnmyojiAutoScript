@@ -1,0 +1,13 @@
+{
+  "name": "oas-tauri",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build:server": "node ./scripts/build-oas-server.mjs",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0"
+  }
+}

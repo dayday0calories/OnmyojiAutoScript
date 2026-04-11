@@ -246,6 +246,35 @@ class BaseTask(GlobalGameAssets, CostumeBase):
 
         return appear
 
+    def appear_rgb(self,
+                   target: RuleImage,
+                   color: tuple = None,
+                   bias: int = 10,
+                   interval: float = None):
+        """
+        使用目标区域平均颜色进行轻量判断。
+        """
+        if interval:
+            if target.name in self.interval_timer:
+                if self.interval_timer[target.name].limit != interval:
+                    self.interval_timer[target.name] = Timer(interval)
+            else:
+                self.interval_timer[target.name] = Timer(interval)
+            if not self.interval_timer[target.name].reached():
+                return False
+
+        if color is None:
+            color = getattr(target, "color", None)
+        if color is None:
+            raise ScriptError(f"Target {target.name} missing RGB color for appear_rgb")
+
+        appear = target.match_mean_color(self.device.image, color=color, bias=bias)
+
+        if appear and interval:
+            self.interval_timer[target.name].reset()
+
+        return appear
+
     def appear_then_click_multi_scale(self,
                                       target: RuleImage,
                                       action: Union[RuleClick, RuleLongClick] = None,

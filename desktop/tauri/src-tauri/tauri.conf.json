@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "OAS WebUI",
+  "version": "0.1.0",
+  "identifier": "com.runhey.oas.webui",
+  "build": {
+    "beforeBuildCommand": "npm run build:server",
+    "frontendDist": "../src"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "OAS WebUI",
+        "width": 1440,
+        "height": 920,
+        "resizable": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "resources": [
+      "resources/oas_server/**/*"
+    ]
+  }
+}

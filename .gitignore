@@ -272,3 +272,28 @@ console.bat
 .vscode/*
 tasks/AutoCheckinBigGod/frida-server-17.6.2-android-x86_64
 oas.bat
+
+# Tauri desktop app: ignore generated output, keep only core sources/config.
+desktop/**
+!desktop/tauri/
+!desktop/tauri/package.json
+!desktop/tauri/scripts/
+!desktop/tauri/scripts/build-oas-server.mjs
+!desktop/tauri/src/
+!desktop/tauri/src/index.html
+!desktop/tauri/src/main.js
+!desktop/tauri/src-tauri/
+!desktop/tauri/src-tauri/.gitignore
+!desktop/tauri/src-tauri/build.rs
+!desktop/tauri/src-tauri/Cargo.toml
+!desktop/tauri/src-tauri/Cargo.lock
+!desktop/tauri/src-tauri/tauri.conf.json
+!desktop/tauri/src-tauri/src/
+!desktop/tauri/src-tauri/src/main.rs
+!desktop/tauri/src-tauri/icons/
+!desktop/tauri/src-tauri/icons/icon.png
+
+# Tauri generated artifacts
+desktop/tauri/src-tauri/target/
+desktop/tauri/src-tauri/resources/
+desktop/tauri/src-tauri/gen/

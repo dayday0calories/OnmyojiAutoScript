@@ -27,6 +27,10 @@ class SwitchSoulAssets:
 	C_SOU_GROUP_7 = RuleClick(roi_front=(1090,505,156,51), roi_back=(1090,505,156,51), name="sou_group_7")
 	# 阵容选择按钮位置 
 	C_SOU_TEAM_SELECT = RuleClick(roi_front=(977,157,21,21), roi_back=(977,157,21,21), name="sou_team_select")
+	# 30天内不再提醒 
+	C_SS_AUDIO_NO_REMIND = RuleClick(roi_front=(405,394,92,55), roi_back=(405,394,92,55), name="ss_audio_no_remind")
+	# 取消下载扩展包 
+	C_SS_AUDIO_CANCEL = RuleClick(roi_front=(409,477,149,62), roi_back=(409,477,149,62), name="ss_audio_cancel")
 
 
 	# Image Rule Assets
@@ -69,6 +73,8 @@ class SwitchSoulAssets:
 
 
 	# Ocr Rule Assets
+	# 式神音频扩展包下载弹窗标题 
+	O_SS_AUDIO_POPUP = RuleOcr(roi=(445,169,315,51), area=(445,169,315,51), mode="Full", method="Default", keyword="式神音频", name="ss_audio_popup")
 	# 队伍预设分组 
 	O_SS_GROUP_NAME = RuleOcr(roi=(1087,91,155,566), area=(1110,94,116,533), mode="Full", method="Default", keyword="", name="ss_group_name")
 	# 阵容匹配 
@@ -84,5 +90,4 @@ class SwitchSoulAssets:
 	S_SS_TEAM_SWIPE_UP = RuleSwipe(roi_front=(720,439,21,21), roi_back=(717,308,21,21), mode="default", name="ss_team_swipe_up")
 	# 阵容向上滑动 
 	S_SS_TEAM_SWIPE_DOWN = RuleSwipe(roi_front=(709,308,21,21), roi_back=(709,449,21,21), mode="default", name="ss_team_swipe_down")
-
 
