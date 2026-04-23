@@ -97,7 +97,9 @@ class ReplaceShikigami(BaseTask, ReplaceShikigamiAssets):
         start_time = time.time()   # 全流程起始时间
         no_progress_start = time.time()  # 最近一次“有进展”时间
         click_interval_timer = Timer(1.5).start()  # 点击选择式神间隔
+        stop_image_missing_timer = Timer(1.2)
         clicked = False
+        confirmed = False
         while 1:
             # ——1. 先做超时检查——
             if time.time() - start_time > TIMEOUT_SEC:
@@ -108,7 +110,7 @@ class ReplaceShikigami(BaseTask, ReplaceShikigamiAssets):
             if time.time() - no_progress_start > NO_PROGRESS_SEC:
                 logger.warning(f'Set shikigami no progress for {NO_PROGRESS_SEC}s, stop current replace loop')
                 # 清掉点击记录，避免退出时残留的高频点击触发全局防呆。
-                self.click_record_clear()
+                self.device.click_record_clear()
                 return False
             # 恢复点击操作
             if click_interval_timer.reached_and_reset():
@@ -117,10 +119,20 @@ class ReplaceShikigami(BaseTask, ReplaceShikigamiAssets):
             self.screenshot()
 
             if not self.appear(stop_image):
-                break
+                if not stop_image_missing_timer.started():
+                    stop_image_missing_timer.start()
+                if stop_image_missing_timer.reached():
+                    if confirmed:
+                        break
+                    logger.warning('Stop image disappeared before placement confirm, retry current replace loop')
+                    self.device.click_record_clear()
+                    return False
+            else:
+                stop_image_missing_timer.reset()
 
             if self.appear_then_click(self.I_U_CONFIRM_SMALL, interval=0.5):
                 no_progress_start = time.time()
+                confirmed = True
                 clicked = False  # 点击了确认, 恢复选式神的操作
                 continue
 
@@ -135,7 +147,8 @@ class ReplaceShikigami(BaseTask, ReplaceShikigamiAssets):
                 continue
             if self.appear_then_click(self.I_U_CIRCLE_ALTERNATE, interval=2.5):
                 no_progress_start = time.time()
-                self.appear_then_click(self.I_U_CONFIRM_ALTERNATE, interval=1.5)
+                if self.appear_then_click(self.I_U_CONFIRM_ALTERNATE, interval=1.5):
+                    confirmed = True
                 continue
         logger.info('Set shikigami: %d' % shikigami_order)
         return True

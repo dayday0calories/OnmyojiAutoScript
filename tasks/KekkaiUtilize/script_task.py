@@ -156,6 +156,12 @@ class ScriptTask(GameUi, ReplaceShikigami, KekkaiUtilizeAssets):
                 timer_check.reset()
                 continue
 
+            # 偶发误开聊天侧栏，优先关闭后再继续识别寮界面元素
+            if self.appear_then_click(self.I_CHAT_CLOSE_BUTTON, interval=1):
+                logger.info('Close random chat sidebar on guild page')
+                timer_check.reset()
+                continue
+
             if timer_check.reached():
                 return False
 

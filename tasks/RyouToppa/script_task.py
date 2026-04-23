@@ -209,6 +209,86 @@ class ScriptTask(GeneralBattle, GameUi, SwitchSoul, RyouToppaAssets):
         else:
             self.custom_next_run(task='RyouToppa', custom_time=self.config.ryou_toppa.raid_config.next_ryoutoppa_time, time_delta=1)
 
+    def battle_wait(self, random_click_swipt_enable: bool) -> bool:
+        """
+        寮突在部分结算场景会直接回到突破列表，不会稳定出现通用奖励页。
+        识别到已回到突破页时，直接视为战斗结束。
+        """
+        self.device.stuck_record_add('BATTLE_STATUS_S')
+        self.device.click_record_clear()
+        logger.info("Start battle process")
+        win: bool = False
+        while 1:
+            self.screenshot()
+            if self.appear(self.I_TOPPA_RECORD, threshold=0.8):
+                logger.info("Returned to toppa board, treat battle as completed")
+                return True
+            if self.appear(self.I_WIN, threshold=0.8) or self.appear(self.I_DE_WIN):
+                logger.info("Battle result is win")
+                if self.appear(self.I_DE_WIN):
+                    self.ui_click_until_disappear(self.I_DE_WIN)
+                win = True
+                break
+            if self.appear(self.I_FALSE, threshold=0.8):
+                logger.info("Battle result is false")
+                win = False
+                break
+            if self.appear(self.I_REWARD, threshold=0.6):
+                win = True
+                break
+            if self.appear(self.I_REWARD_GOLD, threshold=0.8):
+                win = True
+                break
+            if random_click_swipt_enable:
+                self.random_click_swipt()
+
+        logger.info("Reconfirm the results of the battle")
+        while 1:
+            self.screenshot()
+            if self.appear(self.I_TOPPA_RECORD, threshold=0.8):
+                logger.info("Returned to toppa board after win, skip reward wait")
+                return True
+            if win:
+                action_click = random.choice([self.C_WIN_1, self.C_WIN_2, self.C_WIN_3])
+                if self.appear_then_click(self.I_WIN, action=action_click, interval=0.5):
+                    continue
+                if not self.appear(self.I_WIN):
+                    break
+            else:
+                if self.appear_then_click(self.I_FALSE, threshold=0.6):
+                    continue
+                if not self.appear(self.I_FALSE, threshold=0.6):
+                    return False
+
+        reward_wait = Timer(8).start()
+        while 1:
+            self.screenshot()
+            if self.appear(self.I_TOPPA_RECORD, threshold=0.8):
+                logger.info("Returned to toppa board after reward phase, battle completed")
+                return True
+            if self.appear(self.I_REWARD) or self.appear(self.I_REWARD_GOLD):
+                break
+            if reward_wait.reached():
+                logger.info("No generic reward page, treat current battle result as final")
+                return win
+
+        logger.info("Get reward")
+        while 1:
+            self.screenshot()
+            if self.appear(self.I_TOPPA_RECORD, threshold=0.8):
+                logger.info("Returned to toppa board during reward collection, battle completed")
+                return True
+            action_click = random.choice([self.C_REWARD_1, self.C_REWARD_2, self.C_REWARD_3])
+            if (
+                self.appear_then_click(self.I_REWARD, action=action_click, interval=1.5)
+                or self.appear_then_click(self.I_REWARD_GOLD, action=action_click, interval=1.5)
+            ):
+                continue
+            if not self.appear(self.I_REWARD) and not self.appear(self.I_REWARD_GOLD):
+                break
+
+        return win
+
     def start_ryou_toppa(self):
         """
         开启寮突破
