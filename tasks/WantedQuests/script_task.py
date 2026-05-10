@@ -353,6 +353,7 @@ class ScriptTask(WQExplore, SecretScriptTask, WantedQuestsAssets):
         GOTO_BUTTON = [self.I_GOTO_1, self.I_GOTO_2, self.I_GOTO_3, self.I_GOTO_4]
         name_funcs: dict = {
             '挑战': self.challenge,
+            '式神': self.challenge,
             '探索': self.explore,
             '秘闻': self.secret
         }
@@ -401,7 +402,9 @@ class ScriptTask(WQExplore, SecretScriptTask, WantedQuestsAssets):
             order_list = self.config.model.wanted_quests.wanted_quests_config.battle_priority
             order_list = order_list.replace(' ', '').replace('\n', '')
             order_list: list = re.split(r'>', order_list)
-            result[0] = order_list.index(type_wq) if type_wq in order_list else -1
+            # OCR识别"式神"但用户配置用"挑战"，做映射
+            type_wq_for_order = '挑战' if type_wq == '式神' else type_wq
+            result[0] = order_list.index(type_wq_for_order) if type_wq_for_order in order_list else -1
             result[4] = name_funcs.get(type_wq, lambda: logger.warning('No task can be challenged'))
             result[5] = type_wq
             logger.info(f'[Wanted Quests] type: {type_wq} destination: {wq_destination} number: {wq_number} ')
@@ -448,7 +451,7 @@ class ScriptTask(WQExplore, SecretScriptTask, WantedQuestsAssets):
             return None
         # sort
         info_wq_list.sort(key=lambda x: x[0])
-        filtered = list(filter(lambda x: (x[5] == '秘闻' or x[5] == '挑战') and x[2] >= 3, info_wq_list))
+        filtered = list(filter(lambda x: x[5] in ('秘闻', '挑战', '式神') and x[2] >= 3, info_wq_list))
         if filtered:
             info_wq_list = filtered
         best_type, destination, once_number, goto_button, func, _ = info_wq_list[0]
@@ -497,8 +500,15 @@ class ScriptTask(WQExplore, SecretScriptTask, WantedQuestsAssets):
         wq_config = GeneralBattleConfig(lock_team_enable=True)
         self.run_general_battle(config=wq_config)
         self.wait_until_appear(self.I_WQC_FIRE, wait_time=4)
-        self.ui_click_until_disappear(self.I_UI_BACK_RED)
-        # 我忘记了打完后是否需要关闭 挑战界面
+        # 关闭 挑战界面
+        while 1:
+            self.screenshot()
+            if self.appear(self.I_CHECK_EXPLORATION):
+                break
+            if self.appear_then_click(self.I_UI_BACK_RED, interval=1):
+                continue
+            if self.appear_then_click(self.I_UI_BACK_YELLOW, interval=1.5):
+                continue
         return True
 
     def secret(self, goto, num=1):
@@ -539,6 +549,7 @@ class ScriptTask(WQExplore, SecretScriptTask, WantedQuestsAssets):
         while 1:
             self.screenshot()
             if self.appear(self.I_CHECK_EXPLORATION):
+                self.wait_until_stable(self.I_CHECK_EXPLORATION)
                 break
             if self.appear_then_click(self.I_UI_BACK_RED, interval=1):
                 continue
@@ -848,7 +859,7 @@ class ScriptTask(WQExplore, SecretScriptTask, WantedQuestsAssets):
 
     def is_wq_remained(self):
         # 检测是否还存在任务
-        return self.appear(self.I_WQ_LIST_TOP_BOTTOM_CHECK)
+        return self.appear(self.O_WQ_WANTED)
 
 
 
