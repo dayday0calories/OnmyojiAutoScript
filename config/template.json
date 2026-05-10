@@ -497,6 +497,7 @@
       "invite_friend_name": "",
       "cooperation_type": "Any",
       "battle_priority": "挑战 > 秘闻 > 探索",
+      "skip_exploration": false,
       "cooperation_only": false,
       "unwanted_boss_names": "酒吞童子,阎魔"
     },

@@ -61,9 +61,12 @@ class ScriptTask(WQExplore, SecretScriptTask, WantedQuestsAssets):
         number_challenge = self.O_WQ_NUMBER.ocr(self.device.image)
         error_count = 0
         # Keep a short cooldown for mission rows that just failed to enter.
-        # Key is the OCR row area tuple (x, y, w, h).
-        mission_retry_after: dict[tuple[int, int, int, int], datetime] = {}
-        mission_fail_count: dict[tuple[int, int, int, int], int] = {}
+        # Row state includes progress because swiping can move a different
+        # wanted quest into the same screen coordinates.
+        mission_retry_after: dict[tuple[tuple[int, int, int, int], int, int], datetime] = {}
+        mission_fail_count: dict[tuple[tuple[int, int, int, int], int, int], int] = {}
+        skipped_mission_rows: set[tuple[tuple[int, int, int, int], int, int]] = set()
+        skipped_row_hits = 0
         while 1:
             self.screenshot()
             if not self.is_wq_remained():
@@ -88,8 +91,18 @@ class ScriptTask(WQExplore, SecretScriptTask, WantedQuestsAssets):
                 sleep(1)
                 continue
             area_key = tuple(area)
+            row_key = (area_key, cu, total)
+            if row_key in skipped_mission_rows:
+                skipped_row_hits += 1
+                if skipped_row_hits > 8:
+                    logger.info('Only skipped wanted quest rows remain')
+                    break
+                self.swipe(self.S_WQ_LIST_UP, interval=1)
+                sleep(1)
+                continue
+            skipped_row_hits = 0
             # Skip a recently failed row for a short window to avoid repeated spam clicks.
-            if area_key in mission_retry_after and datetime.now() < mission_retry_after[area_key]:
+            if row_key in mission_retry_after and datetime.now() < mission_retry_after[row_key]:
                 self.swipe(self.S_WQ_LIST_UP, interval=1)
                 sleep(1)
                 continue
@@ -97,18 +110,24 @@ class ScriptTask(WQExplore, SecretScriptTask, WantedQuestsAssets):
             error_count=0
             self.O_WQ_TEXT_ALL.area = area
             mission_ok = self.execute_mission(self.O_WQ_TEXT_ALL, total - cu, number_challenge)
+            if mission_ok is None:
+                skipped_mission_rows.add(row_key)
+                skipped_row_hits += 1
+                self.swipe(self.S_WQ_LIST_UP, interval=1)
+                sleep(1)
+                continue
             if mission_ok is False:
-                mission_fail_count[area_key] = mission_fail_count.get(area_key, 0) + 1
+                mission_fail_count[row_key] = mission_fail_count.get(row_key, 0) + 1
                 # 20s, 40s, 60s ... up to 120s
-                cooldown_sec = min(120, 20 * mission_fail_count[area_key])
-                mission_retry_after[area_key] = datetime.now() + timedelta(seconds=cooldown_sec)
-                logger.warning(f'Mission row enter failed, cooldown {cooldown_sec}s for area={area_key}')
+                cooldown_sec = min(120, 20 * mission_fail_count[row_key])
+                mission_retry_after[row_key] = datetime.now() + timedelta(seconds=cooldown_sec)
+                logger.warning(f'Mission row enter failed, cooldown {cooldown_sec}s for row={row_key}')
                 # Move list to reduce chance of immediately re-selecting the same row.
                 self.swipe(self.S_WQ_LIST_UP, interval=1)
                 sleep(1)
                 continue
-            mission_fail_count.pop(area_key, None)
-            mission_retry_after.pop(area_key, None)
+            mission_fail_count.pop(row_key, None)
+            mission_retry_after.pop(row_key, None)
             sleep(1.5)
 
 
@@ -362,6 +381,9 @@ class ScriptTask(WQExplore, SecretScriptTask, WantedQuestsAssets):
             # ,荒川之怒·壹，4，前往按钮，function
             result = [-1, '', -1, GOTO_BUTTON[index], self.challenge, '']
             type_wq = OCR_WQ_TYPE[index].ocr(self.device.image)
+            if self.get_config().skip_exploration and type_wq == '探索':
+                logger.info('Skip exploration wanted quest')
+                return None
             info_wq_1 = OCR_WQ_INFO[index].ocr(self.device.image)
             info_wq_1 = info_wq_1.replace('：', ':').replace('（', '(').replace('）', ')')
             info_wq_1 = info_wq_1.replace('：', ':')
@@ -423,7 +445,7 @@ class ScriptTask(WQExplore, SecretScriptTask, WantedQuestsAssets):
         if not info_wq_list:
             logger.warning('No wanted quests can be challenged')
             self.ui_click(self.I_TRACE_TRUE, self.I_TRACE_FALSE)
-            return False
+            return None
         # sort
         info_wq_list.sort(key=lambda x: x[0])
         filtered = list(filter(lambda x: (x[5] == '秘闻' or x[5] == '挑战') and x[2] >= 3, info_wq_list))

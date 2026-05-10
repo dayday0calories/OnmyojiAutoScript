@@ -48,18 +48,22 @@ class SwitchSoul(BaseTask, SwitchSoulAssets):
             except ValueError:
                 logger.error('Switch soul config error')
                 return
-        self.click_preset()
+        if not self.click_preset():
+            logger.warning('run_switch_soul: skip switch due to preset timeout')
+            return
         self.switch_souls(target)
 
-    def click_preset(self) -> None:
+    def click_preset(self) -> bool:
         """
-        点击预设
+        点击预设，返回False表示超时未能进入预设界面
         :return:
         """
+        from module.base.timer import Timer
+        from tasks.GameUi.page import page_shikigami_records
+        timeout = Timer(30, count=60).start()
+        off_page_timer = Timer(5, count=10).start()
         while 1:
             self.screenshot()
-            if self.handle_audio_package_popup():
-                continue
             if self.appear(self.I_SOU_SWITCH_1):
                 break
             if self.appear(self.I_SOU_SWITCH_2):
@@ -70,10 +74,46 @@ class SwitchSoul(BaseTask, SwitchSoulAssets):
                 break
             if self.appear(self.I_SOU_TEAM_PRESENT):
                 break
-            if self.appear(self.I_SOUL_PRESET):
+
+            records_marker_visible = self.appear(self.I_SOU_CHECK_IN)
+            preset_visible = self.appear(self.I_SOUL_PRESET)
+            in_shikigami_records = records_marker_visible or preset_visible
+            if in_shikigami_records:
+                off_page_timer.reset()
+            if records_marker_visible:
+                if self.handle_audio_package_popup():
+                    timeout.reset()
+                    continue
+
+            if preset_visible:
                 self.click(self.I_SOUL_PRESET, interval=3)
+                timeout.reset()
+                continue
+
+            if not in_shikigami_records and off_page_timer.reached():
+                logger.warning('click_preset: no longer in shikigami records, try route back before continuing')
+                try:
+                    self.ui_get_current_page()
+                    self.ui_goto(page_shikigami_records)
+                    timeout.reset()
+                    off_page_timer.reset()
+                except Exception as e:
+                    logger.error(f'Failed to navigate back to shikigami records: {e}')
+                    return False
+                continue
+
+            if timeout.reached():
+                logger.warning('click_preset timeout: preset panel never appeared, may be on wrong page')
+                try:
+                    self.ui_get_current_page()
+                    self.ui_goto(page_shikigami_records)
+                    timeout.reset()
+                except Exception as e:
+                    logger.error(f'Failed to navigate to shikigami records: {e}')
+                    return False
                 continue
         logger.info('Click preset in switch soul')
+        return True
 
     def switch_soul_one(self, group: int, team: int) -> None:
         """
@@ -187,7 +227,9 @@ class SwitchSoul(BaseTask, SwitchSoulAssets):
         :return:
         """
         if isinstance(groupName, str) and isinstance(teamName, str):
-            self.click_preset()
+            if not self.click_preset():
+                logger.warning('run_switch_soul_by_name: skip switch due to preset timeout')
+                return
             self.switch_soul_by_name(groupName, teamName)
 
     def switch_soul_by_name(self, groupName, teamName):

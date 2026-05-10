@@ -46,16 +46,13 @@ class MoonSea(MoonSeaMap, MoonSeaL101, MoonSeaL102, MoonSeaL103, MoonSeaL104, Mo
         logger.info('Exit Moon Sea')
 
     def _handle_double_reward_popup(self) -> bool:
-        """
-        兜底处理“是否消耗万相赐福获得双倍掉落”弹窗。
+        “””
+        兜底处理”是否消耗万相赐福获得双倍掉落”弹窗。
         该弹窗有时会在 boss 结算后延迟出现，脱离 boss_battle() 处理流程。
-        默认点击取消，避免卡在地图循环中。
-        """
+        只点取消，避免 I_BOSS_USE_DOUBLE 误匹配奖励窗口内的道具图标。
+        “””
         if self.appear_then_click(self.I_UI_CANCEL, interval=1):
             logger.info('Close double-reward popup by cancel')
-            return True
-        if self.appear_then_click(self.I_BOSS_USE_DOUBLE, interval=1):
-            logger.info('Handle double-reward popup by using reward')
             return True
         return False
 
@@ -65,7 +62,9 @@ class MoonSea(MoonSeaMap, MoonSeaL101, MoonSeaL102, MoonSeaL103, MoonSeaL104, Mo
         if not self._start():
             return False
         while 1:
-            self.screenshot()            
+            self.screenshot()
+            if self.ui_reward_appear_click():
+                continue
             if self._handle_double_reward_popup():
                 continue
                 
@@ -200,6 +199,10 @@ class MoonSea(MoonSeaMap, MoonSeaL101, MoonSeaL102, MoonSeaL103, MoonSeaL104, Mo
             self.screenshot()
             if self.appear(self.I_BOSS_SHARE):
                 break
+            if self.appear(self.I_MSTART) or self.appear(self.I_MENTER):
+                # Game returned directly to lobby after reward, skipping share screen
+                logger.info('Returned to lobby after boss, skip share screen')
+                return True
             if self.appear(self.I_BOSS_BATTLE_GIVEUP):
                 # 打boss失败了
                 logger.warning('Boss battle give up')
