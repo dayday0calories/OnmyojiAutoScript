@@ -342,7 +342,20 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
             'pass': self.I_CLIMB_MODE_PASS,
         }
         logger.info(f'Switch climb mode to {mode}')
-        self.ui_click(self.I_CLIMB_MODE_SWITCH, stop=map_check[mode], interval=1.9)
+        self.screenshot()
+        if self.appear(map_check[mode]):
+            logger.info(f'Climb mode already {mode}')
+            return True
+        if mode == 'ap' and not self.appear(self.I_CLIMB_MODE_SWITCH):
+            logger.info('Climb mode switch not found, continue with default AP mode')
+            return True
+        if not self.ui_click(self.I_CLIMB_MODE_SWITCH, stop=map_check[mode], interval=1.9, timeout=8):
+            if mode == 'ap':
+                logger.warning('Switch climb mode to ap timeout, continue with default AP mode')
+                return True
+            logger.warning(f'Switch climb mode to {mode} failed')
+            return False
+        return True
 
     def lock_team(self, battle_conf: GeneralBattleConfig):
         """
@@ -368,13 +381,16 @@ class ScriptTask(StateMachine, GameUi, BaseActivity, SwitchSoul, ActivityShikiga
         self.screenshot()
         remain_times = 0
         if self.climb_type == 'pass':
-            remain_times = self.O_REMAIN_PASS.ocr_digit(self.device.image)
+            remain_times = self.O_REMAIN_PASS.ocr_digit(
+                _prepare_image_for_ocr(self.device.image, asset=self.O_REMAIN_PASS))
         if self.climb_type == 'ap':
-            remain_times = self.O_REMAIN_AP.ocr_digit(self.device.image)
+            remain_times = self.O_REMAIN_AP.ocr_digit(
+                _prepare_image_for_ocr(self.device.image, asset=self.O_REMAIN_AP))
         if self.climb_type == 'boss':
             _, remain_times, _ = self.O_REMAIN_BOSS.ocr_digit_counter(self.device.image)
         if self.climb_type == 'ap100':
-            remain_times = self.O_REMAIN_AP100.ocr_digit(self.device.image)
+            remain_times = self.O_REMAIN_AP100.ocr_digit(
+                _prepare_image_for_ocr(self.device.image, asset=self.O_REMAIN_AP100))
         return remain_times > 0
 
     def get_general_battle_conf(self) -> tasks.Component.GeneralBattle.config_general_battle.GeneralBattleConfig:
