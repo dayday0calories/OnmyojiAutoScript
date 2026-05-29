@@ -216,5 +216,3 @@ class SixRealmsAssets:
 	# Image Rule Assets
 	# 绽放退出 
 	I_ZHAOFU = RuleImage(roi_front=(1157,628,57,59), roi_back=(1135,603,97,111), threshold=0.8, method="Template matching", file="./tasks/SixRealms/l105/l105_zhaofu.png")
-
-

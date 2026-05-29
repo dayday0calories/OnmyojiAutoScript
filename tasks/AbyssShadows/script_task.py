@@ -27,7 +27,7 @@ from module.base.utils import point2str
 from module.base.timer import Timer
 from module.exception import GamePageUnknownError
 from pathlib import Path
-from tasks.AbyssShadows.config import AbyssShadows
+from tasks.AbyssShadows.config import AbyssShadows, AbyssShadowsDifficulty
 from tasks.AbyssShadows.assets import AbyssShadowsAssets
 
 class AreaType:
@@ -87,6 +87,44 @@ class ScriptTask(GeneralBattle, GameUi, SwitchSoul, AbyssShadowsAssets):
     boss_fight_count = 0  # 首领战斗次数
     general_fight_count = 0  # 副将战斗次数
     elite_fight_count = 0  # 精英战斗次数
+
+    def _combat_time_enabled(self, cfg: AbyssShadows) -> bool:
+        combat_cfg = getattr(cfg, 'abyss_shadows_combat_time', None)
+        return bool(combat_cfg and getattr(combat_cfg, 'CombatTime_enable', False))
+
+    def _schedule_next_abyss_run(self, cfg: AbyssShadows, custom_time_attr: str, time_delta: int) -> None:
+        custom_time = getattr(cfg.abyss_shadows_time, custom_time_attr, None)
+        if custom_time:
+            self.custom_next_run(task='AbyssShadows', custom_time=custom_time, time_delta=time_delta)
+            return
+        target_time = (datetime.now() + timedelta(days=time_delta)).replace(
+            hour=19, minute=0, second=0, microsecond=0
+        )
+        self.set_next_run(task='AbyssShadows', target=target_time)
+
+    def _switch_initial_souls(self, cfg: AbyssShadows) -> None:
+        process_cfg = cfg.process_manage
+        if not process_cfg.enable_switch_soul_in_as:
+            return
+        presets = [
+            process_cfg.preset_boss,
+            process_cfg.preset_general,
+            process_cfg.preset_elite,
+        ]
+        targets = []
+        for preset in presets:
+            if not preset:
+                continue
+            try:
+                group, team = preset.split(',')
+                targets.append((int(group), int(team)))
+            except ValueError:
+                logger.warning(f'Invalid AbyssShadows preset config: {preset}')
+        if not targets:
+            return
+        self.ui_get_current_page()
+        self.ui_goto(page_shikigami_records)
+        self.run_switch_soul(targets)
     
     def run(self):
         """ 狭间暗域主函数
@@ -95,19 +133,12 @@ class ScriptTask(GeneralBattle, GameUi, SwitchSoul, AbyssShadowsAssets):
         """
         cfg: AbyssShadows = self.config.abyss_shadows
 
-        if cfg.switch_soul_config.enable:
-            self.ui_get_current_page()
-            self.ui_goto(page_shikigami_records)
-            self.run_switch_soul(cfg.switch_soul_config.switch_group_team)
-        if cfg.switch_soul_config.enable_switch_by_name:
-            self.ui_get_current_page()
-            self.ui_goto(page_shikigami_records)
-            self.run_switch_soul_by_name(cfg.switch_soul_config.group_name, cfg.switch_soul_config.team_name)
+        self._switch_initial_souls(cfg)
         today = datetime.now().weekday()
         if today not in [4, 5, 6]:
             logger.info(f"Today is not abyss shadows day, exit")
             # 设置下次运行时间为本周五
-            self.custom_next_run(task='AbyssShadows', custom_time=cfg.abyss_shadows_time.custom_run_time_friday, time_delta=4-today)
+            self._schedule_next_abyss_run(cfg, 'custom_run_time_friday', 4-today)
             raise TaskEnd
         success = True
         # 进入狭间
@@ -126,7 +157,7 @@ class ScriptTask(GeneralBattle, GameUi, SwitchSoul, AbyssShadowsAssets):
         self.device.stuck_record_clear()
 
         # 未开启智能伤害准备攻打精英、副将、首领
-        if not cfg.abyss_shadows_combat_time.CombatTime_enable:
+        if not self._combat_time_enabled(cfg):
             while 1:
                 # 点击战报按钮
                 find_list = [EmemyType.BOSS, EmemyType.GENERAL, EmemyType.ELITE]
@@ -159,7 +190,7 @@ class ScriptTask(GeneralBattle, GameUi, SwitchSoul, AbyssShadowsAssets):
                         break
 
         # 开启智能伤害
-        if cfg.abyss_shadows_combat_time.CombatTime_enable:
+        if self._combat_time_enabled(cfg):
             while True:
                 # 1. 先攻打 1 个 BOSS
                 if self.boss_fight_count < 2:
@@ -204,15 +235,15 @@ class ScriptTask(GeneralBattle, GameUi, SwitchSoul, AbyssShadowsAssets):
             if today == 4:
                 # 周五推迟到周六
                 logger.info(f"The next abyss shadows day is Saturday")
-                self.custom_next_run(task='AbyssShadows', custom_time=cfg.abyss_shadows_time.custom_run_time_saturday, time_delta=1)
+                self._schedule_next_abyss_run(cfg, 'custom_run_time_saturday', 1)
             elif today == 5:
                 # 周六推迟到周日
                 logger.info(f"The next abyss shadows day is Sunday")
-                self.custom_next_run(task='AbyssShadows', custom_time=cfg.abyss_shadows_time.custom_run_time_sunday, time_delta=1)
+                self._schedule_next_abyss_run(cfg, 'custom_run_time_sunday', 1)
             elif today == 6:
                 # 周日推迟到下周五
                 logger.info(f"The next abyss shadows day is Friday")
-                self.custom_next_run(task='AbyssShadows', custom_time=cfg.abyss_shadows_time.custom_run_time_friday, time_delta=5)
+                self._schedule_next_abyss_run(cfg, 'custom_run_time_friday', 5)
         else:
             self.set_next_run(task='AbyssShadows', finish=True, server=True, success=False)
         raise TaskEnd
@@ -336,8 +367,12 @@ class ScriptTask(GeneralBattle, GameUi, SwitchSoul, AbyssShadowsAssets):
         :return 
         '''
         click_times = 0
+        cfg: AbyssShadows = self.config.abyss_shadows
         while 1:
             self.screenshot()
+            if cfg.abyss_shadows_time.try_start_abyss_shadows and self._try_start_abyss_shadows_controls():
+                click_times = 0
+                continue
             # 区域图片与入口图片不一致，使用点击进去
             
             if self.appear(self.I_ABYSS_DRAGON):
@@ -356,6 +391,50 @@ class ScriptTask(GeneralBattle, GameUi, SwitchSoul, AbyssShadowsAssets):
             if self.appear(self.I_ABYSS_NAVIGATION):
                 break
         return True
+
+    def _try_start_abyss_shadows_controls(self) -> bool:
+        cfg: AbyssShadows = self.config.abyss_shadows
+        difficulty = cfg.abyss_shadows_time.difficulty
+        difficulty_assets = {
+            AbyssShadowsDifficulty.EASY: self.I_DIFFICULTY_EASY,
+            AbyssShadowsDifficulty.NORMAL: self.I_DIFFICULTY_NORMAL,
+            AbyssShadowsDifficulty.HARD: self.I_DIFFICULTY_HARD,
+        }
+        if self.appear_then_click(self.I_START_ENSURE, interval=1):
+            logger.info('Confirm start abyss shadows')
+            return True
+        if self.appear_then_click(self.I_ENSURE_BUTTON, interval=1):
+            logger.info('Confirm abyss shadows dialog')
+            return True
+        if self.appear_then_click(self.I_OPEN_ABYSS_SHADOWS, interval=1):
+            logger.info('Click open abyss shadows')
+            self._confirm_abyss_shadows_start()
+            return True
+        if self.appear_then_click(self.I_BTN_START, interval=1):
+            logger.info('Click start abyss shadows')
+            self._confirm_abyss_shadows_start()
+            return True
+        if self.appear_then_click(self.I_SELECT_DIFFICULTY, interval=1):
+            logger.info('Click select difficulty')
+            return True
+        if self.appear_then_click(difficulty_assets[difficulty], interval=1):
+            logger.info(f'Select abyss shadows difficulty: {difficulty.value}')
+            return True
+        return False
+
+    def _confirm_abyss_shadows_start(self) -> bool:
+        confirm_timer = Timer(3).start()
+        while 1:
+            self.screenshot()
+            if self.appear_then_click(self.I_START_ENSURE, interval=0.5):
+                logger.info('Confirm start abyss shadows')
+                return True
+            if self.appear_then_click(self.I_ENSURE_BUTTON, interval=0.5):
+                logger.info('Confirm abyss shadows dialog')
+                return True
+            if confirm_timer.reached():
+                logger.warning('Start abyss shadows confirm dialog not found')
+                return False
 
     def find_enemy(self, enemy_type: EmemyType) -> bool:
         ''' 寻找敌人,并开始寻路进入战斗
@@ -521,14 +600,15 @@ class ScriptTask(GeneralBattle, GameUi, SwitchSoul, AbyssShadowsAssets):
 
         # 进入战斗后，开始计时
         start_time = time.time()
-        if cfg.abyss_shadows_combat_time.CombatTime_enable:
+        combat_cfg = getattr(cfg, 'abyss_shadows_combat_time', None)
+        if self._combat_time_enabled(cfg):
             self.device.stuck_record_add('BATTLE_STATUS_S')
             if Monster_type == "BOSS":  # BOSS战斗
-                combat_time = cfg.abyss_shadows_combat_time.boss_combat_time
+                combat_time = combat_cfg.boss_combat_time
             elif Monster_type == "GENERAL":  # 是副将战斗
-                combat_time = cfg.abyss_shadows_combat_time.general_combat_time
+                combat_time = combat_cfg.general_combat_time
             elif Monster_type == "ELITE":  #  精英战斗
-                combat_time = cfg.abyss_shadows_combat_time.elite_combat_time
+                combat_time = combat_cfg.elite_combat_time
             else:
                 combat_time = 60  # 默认为 60 秒
             # 等待设定的战斗时间

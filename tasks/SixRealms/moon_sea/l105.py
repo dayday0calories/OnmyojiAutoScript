@@ -1,4 +1,5 @@
 from module.logger import logger
+from module.base.timer import Timer
 from tasks.SixRealms.moon_sea.skills import MoonSeaSkills
 
 
@@ -11,10 +12,14 @@ class MoonSeaL105(MoonSeaSkills):
         """
         logger.hr('Start Island battle')
         logger.info('Island 105')
+        zhaofu_timer = Timer(3).start()
         while 1:
             self.screenshot()
             if self.appear_then_click(self.I_ZHAOFU, interval=1):
                 break
+            if zhaofu_timer.reached():
+                logger.warning('Zhaofu button not found, skip island 105')
+                return False
             '''
         if not self.wait_until_appear(self.I_ZHAOFU, wait_time=1):
             self.save_image(task_name="Island 105", image_type=True, wait_time=1)

@@ -91,7 +91,7 @@
   },
   {
     "itemName": "open_abyss_shadows",
-    "imageName": "res_open_abyss_shadows.png",
+    "imageName": "res_open_abyss_shadows_abyss.png",
     "roiFront": "1133,602,74,58",
     "roiBack": "1133,602,74,58",
     "method": "Template matching",
